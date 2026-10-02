@@ -1,0 +1,33 @@
+┌────────────────────────────────┐
+                               │       Frontend (Web / App)     │
+                               │  (React / Next.js / Vue / UI) │
+                               └──────────────┬─────────────────┘
+                                              │ REST / GraphQL
+                                              ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                       API Gateway                                       │
+│                    (Authentication, Authorization, Rate Limiting, RBAC)                  │
+└──────┬──────────────────────────────┬──────────────────────────────┬────────────────────┘
+       │                              │                              │
+       ▼                              ▼                              ▼
+┌──────────────┐              ┌──────────────┐              ┌────────────────┐
+│ School/Class │              │ Scheduling & │              │  Grades &      │
+│ Management   │              │ Allocations  │              │  Student Notes │
+└──────┬───────┘              └──────┬───────┘              └──────┬─────────┘
+       │                             │                             │
+       └─────────────────────────────┼─────────────────────────────┘
+                                     │
+                                     ▼
+                      ┌──────────────────────────────┐
+                      │    PostgreSQL Database       │
+                      │  (Multi-tenant by school_id) │
+                      └──────────────────────────────┘
+
+
+#########################################################################################################
+Role,Schools,Schedule & Rooms,Grades & Notes,Dashboard View
+Super Admin,Full access (all schools),Full access,Read-only,Platform-wide stats
+School Admin,Own school only,Create / Edit / Assign,Read-only,School operations & schedules
+Teacher,Read-only,View assigned courses,Create / Edit own students,Class schedule & gradebook
+Student,Read-only,View own timetable,Read-only (own grades),Personal schedule & grades
+Parent,Read-only,View child's timetable,Read-only (child's grades/notes),Children's academic progress

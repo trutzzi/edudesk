@@ -1,0 +1,20 @@
+{
+  "name": "edu-desk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "School management platform: Next.js frontend (apps/web) + Express backend (apps/backend)",
+  "scripts": {
+    "dev": "concurrently -k -n backend,web -c blue,green \"npm:dev:backend\" \"npm:dev:web\"",
+    "install:all": "npm install --prefix apps/backend && npm install --prefix apps/web",
+    "dev:backend": "npm run dev --prefix apps/backend",
+    "dev:web": "npm run dev --prefix apps/web",
+    "build": "npm run build --prefix apps/backend && npm run build --prefix apps/web",
+    "migrate:up": "npm run migrate:up --prefix apps/backend",
+    "migrate:down": "npm run migrate:down --prefix apps/backend",
+    "test": "npm test --prefix apps/backend && npm test --prefix apps/web",
+    "start:local": "npm run migrate:up && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
