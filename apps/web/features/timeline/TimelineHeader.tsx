@@ -29,7 +29,10 @@ export function TimelineHeader({ zoom, scale, today, nowX }: Props) {
 
   return (
     <div className="flex border-b border-slate-200 bg-slate-50 text-xs text-slate-500">
-      <div className="sticky left-0 z-20 flex w-56 shrink-0 items-end border-r border-slate-200 bg-slate-50 px-4 py-2 font-semibold uppercase tracking-wide">
+      <div
+        data-label-column
+        className="sticky left-0 z-20 flex w-(--label-width) shrink-0 items-end border-r border-slate-200 bg-slate-50 px-3 py-2 font-semibold uppercase tracking-wide sm:px-4"
+      >
         {t('courseColumn')}
       </div>
       <div className="relative h-14 flex-1">

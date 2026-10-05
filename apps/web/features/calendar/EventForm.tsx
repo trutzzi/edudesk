@@ -67,7 +67,7 @@ export function EventForm({ classes, defaultDate, onSaved, onCancel }: Props) {
         <Field label={t('end')} name="endDate" type="date" min={startDate} defaultValue={defaultDate} required />
       </div>
       <div className="flex flex-wrap items-end gap-4">
-        <div className="w-48">
+        <div className="w-full sm:w-48">
           <SelectField label={t('class')} name="classId" defaultValue="">
             <option value="">{t('wholeSchool')}</option>
             {classes.map(({ id, name }) => (
@@ -77,7 +77,7 @@ export function EventForm({ classes, defaultDate, onSaved, onCancel }: Props) {
             ))}
           </SelectField>
         </div>
-        <div className="ml-auto flex gap-2">
+        <div className="flex w-full justify-end gap-2 sm:ml-auto sm:w-auto">
           <button type="button" onClick={onCancel} className={buttonClass('ghost')}>
             {t('cancel')}
           </button>

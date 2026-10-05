@@ -19,9 +19,12 @@ export function NavActions() {
   if (!user) {
     return (
       <>
-        <Link href="/login" className={buttonClass('ghost')}>
-          {t('signIn')}
-        </Link>
+        {/* Phones: the hero below already has Sign in, so the bar keeps one button */}
+        <span className="hidden sm:inline-flex">
+          <Link href="/login" className={buttonClass('ghost')}>
+            {t('signIn')}
+          </Link>
+        </span>
         <Link href="/register" className={buttonClass()}>
           {tLanding('getStarted')}
         </Link>

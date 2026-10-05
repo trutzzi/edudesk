@@ -9,11 +9,12 @@ const variants = {
   danger: 'text-red-600 hover:bg-red-50 hover:text-red-700',
 };
 
+// Phones get finger-sized targets (40–44px tall); from sm up, the compact desktop sizes
 const sizes = {
-  sm: 'px-3.5 py-1.5 text-xs',
-  md: 'px-4 py-2 text-sm',
+  sm: 'min-h-10 px-3.5 py-1.5 text-sm sm:min-h-0 sm:text-xs',
+  md: 'min-h-11 px-4 py-2 text-sm sm:min-h-0',
   lg: 'px-8 py-3.5 text-base',
-  block: 'mt-2 w-full px-4 py-3 text-sm',
+  block: 'mt-2 min-h-12 w-full px-4 py-3 text-base sm:text-sm',
 };
 
 export function buttonClass(variant: keyof typeof variants = 'primary', size: keyof typeof sizes = 'md') {

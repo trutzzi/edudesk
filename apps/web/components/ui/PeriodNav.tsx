@@ -13,7 +13,9 @@ interface Props {
   todayLabel?: string;
 }
 
-const arrowClass = 'rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900';
+// 44px squares on phones, so the arrows are easy to hit with a thumb
+const arrowClass =
+  'inline-flex h-11 w-11 items-center justify-center rounded-lg text-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 sm:h-9 sm:w-9 sm:text-base';
 
 // [Today] ‹ › Label — the navigation shared by the timeline, calendar and timetable.
 // Renders side by side elements, so it sits inside the caller's toolbar row.
@@ -33,7 +35,7 @@ export function PeriodNav({ label, onToday, onPrevious, onNext, todayLabel }: Pr
           <span aria-hidden>›</span>
         </button>
       </div>
-      <h2 className="text-lg font-bold first-letter:uppercase" aria-live="polite">
+      <h2 className="text-base font-bold first-letter:uppercase sm:text-lg" aria-live="polite">
         {label}
       </h2>
     </>

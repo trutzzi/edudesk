@@ -42,18 +42,18 @@ export function ClassList() {
         <form
           onSubmit={createClass}
           aria-label={t('newClass')}
-          className="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+          className="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5"
         >
           <div className="w-full">
             <FormError message={error} />
           </div>
-          <div className="w-40">
+          <div className="w-full sm:w-40">
             <Field label={t('name')} name="name" placeholder={t('namePlaceholder')} required maxLength={50} autoFocus />
           </div>
-          <div className="w-40">
+          <div className="w-full sm:w-40">
             <Field label={t('schoolYear')} name="schoolYear" defaultValue={defaultYear} pattern="\d{4}-\d{4}" required />
           </div>
-          <div className="ml-auto flex gap-2">
+          <div className="flex w-full justify-end gap-2 sm:ml-auto sm:w-auto">
             <button type="button" onClick={() => setAdding(false)} className={buttonClass('ghost')}>
               {t('cancel')}
             </button>
