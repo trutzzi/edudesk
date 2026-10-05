@@ -53,7 +53,9 @@ afterwards, it goes back to the previous images. The last three releases are kep
 
 ### Server setup (once)
 
-The server needs Docker with the compose plugin, and nginx. No Node.js is installed on it.
+The server needs Docker with the compose plugin. No Node.js is installed on it. HTTPS comes from the
+Caddy container already on the server (`albumflow-caddy-1`), which EduDesk's containers join through
+the `albumflow_default` network.
 
 ```bash
 sudo adduser --disabled-password --gecos "" deploy
@@ -65,9 +67,9 @@ sudo chmod 600 /var/www/edudesk/shared/backend.env
 ```
 
 In `backend.env`, set `NODE_ENV=production`, a `POSTGRES_PASSWORD`, and
-`DATABASE_URL=postgres://edudesk:<that password>@db:5432/edudesk`. The containers only listen on
-`127.0.0.1` (web on 3100, API on 4100); put nginx with HTTPS in front of them using
-`deploy/nginx.conf.example`, which serves both from one domain.
+`DATABASE_URL=postgres://edudesk:<that password>@db:5432/edudesk`. Then add the site from
+`deploy/Caddyfile.example` to Caddy's config, which serves both apps from one domain. Outside Docker
+the containers only listen on `127.0.0.1` (web on 3100, API on 4100).
 
 ### GitHub settings
 
@@ -85,7 +87,7 @@ these as variables or secrets:
 | `DEPLOY_KNOWN_HOSTS`  | Secret: the output of `ssh-keyscan -p <port> <host>`              |
 
 To roll back by hand, set `IMAGE_TAG` in `/var/www/edudesk/.env` to an older folder name in
-`releases/` and run `docker compose up -d` in `/var/www/edudesk`. Logs: `docker compose logs -f api`.
+`releases/` and run `docker compose up -d` in `/var/www/edudesk`. Logs: `docker compose logs -f edudesk-api`.
 
 ### Security
 
@@ -94,7 +96,7 @@ To roll back by hand, set `IMAGE_TAG` in `/var/www/edudesk/.env` to an older fol
 - With `NODE_ENV=production` the API refuses to start unless `JWT_SECRET` (at least 32 random
   characters, e.g. `openssl rand -hex 32`), `DATABASE_URL`, `CORS_ORIGIN`, `APP_URL` and `SMTP_URL`
   are set.
-- Set `CORS_ORIGIN` to the web app's exact origin, and `TRUST_PROXY=1` behind nginx.
+- Set `CORS_ORIGIN` to the web app's exact origin, and `TRUST_PROXY=1` behind Caddy.
 - The database has no published port: only the API container can reach it.
 - Never run `npm run seed` against production (it refuses to when `NODE_ENV=production`): every
   sample account has a known password.

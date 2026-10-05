@@ -44,8 +44,8 @@ export IMAGE_TAG="$TAG"
 
 echo "Migrating the database"
 docker compose up -d --wait db
-docker compose run --rm --no-deps api npx --no-install node-pg-migrate up
-docker compose run --rm --no-deps api node dist/scripts/holidays.js
+docker compose run --rm --no-deps edudesk-api npx --no-install node-pg-migrate up
+docker compose run --rm --no-deps edudesk-api node dist/scripts/holidays.js
 
 echo "Starting $TAG"
 echo "IMAGE_TAG=$TAG" > .env
@@ -63,7 +63,7 @@ done
 
 if [[ "$healthy" != true ]]; then
   echo "The API didn't become healthy. Its last log lines:" >&2
-  docker compose logs --tail 40 api >&2 || true
+  docker compose logs --tail 40 edudesk-api >&2 || true
   if [[ -n "$PREVIOUS_TAG" && "$PREVIOUS_TAG" != "$TAG" ]]; then
     echo "Going back to $PREVIOUS_TAG" >&2
     echo "IMAGE_TAG=$PREVIOUS_TAG" > .env

@@ -1,0 +1,16 @@
+# EduDesk's site in the server's Caddy (albumflow-caddy-1). Append it to
+# /opt/albumflow/infra/caddy/Caddyfile and reload Caddy; it gets the HTTPS certificate by itself.
+# /api/ goes to the API container, everything else to the web app, so NEXT_PUBLIC_API_URL,
+# CORS_ORIGIN and APP_URL are all https://edudesk.valentintruta.ro, with TRUST_PROXY=1.
+
+edudesk.valentintruta.ro {
+	encode zstd gzip
+
+	handle /api/* {
+		reverse_proxy edudesk-api:4000
+	}
+
+	handle {
+		reverse_proxy edudesk-web:3000
+	}
+}

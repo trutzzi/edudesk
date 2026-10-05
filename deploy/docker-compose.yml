@@ -1,6 +1,10 @@
 # EduDesk on the server: the API, the web app and their own PostgreSQL.
 # remote-deploy.sh copies this file to <app dir>/docker-compose.yml and writes IMAGE_TAG to <app dir>/.env.
 # Settings and passwords come from <app dir>/shared/backend.env (see apps/backend/.env.example).
+#
+# The server's Caddy (albumflow-caddy-1, on the albumflow_default network) serves the domain and
+# forwards to edudesk-api:4000 and edudesk-web:3000; see deploy/Caddyfile.example. The service names
+# carry an edudesk- prefix because every service name becomes a hostname on that shared network.
 name: edudesk
 
 services:
@@ -18,10 +22,12 @@ services:
       interval: 5s
       timeout: 3s
       retries: 20
-    # No ports: only the API reaches it, over the compose network
+    # No ports, and not on the proxy network: only the API reaches it
+    networks: [default]
 
-  api:
+  edudesk-api:
     image: edudesk-api:${IMAGE_TAG:?IMAGE_TAG is not set}
+    container_name: edudesk-api
     restart: unless-stopped
     env_file: shared/backend.env
     environment:
@@ -30,17 +36,26 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    # Only reachable from the server itself; nginx forwards to it
+    networks: [default, proxy]
+    # Also on the server's loopback, for the deploy's health check
     ports:
       - 127.0.0.1:4100:4000
 
-  web:
+  edudesk-web:
     image: edudesk-web:${IMAGE_TAG:?IMAGE_TAG is not set}
+    container_name: edudesk-web
     restart: unless-stopped
     depends_on:
-      - api
+      - edudesk-api
+    networks: [default, proxy]
     ports:
       - 127.0.0.1:3100:3000
+
+networks:
+  # Caddy's network, created by albumflow's compose project
+  proxy:
+    name: albumflow_default
+    external: true
 
 volumes:
   pgdata:
