@@ -92,7 +92,8 @@ jobs:
             apps/backend/package-lock.json release/backend/
           cp -r apps/web/.next/standalone/. release/web/
           cp -r apps/web/.next/static release/web/.next/static
-          cp -r apps/web/public release/web/public
+          # public/ only exists once the app has static files in it
+          if [ -d apps/web/public ]; then cp -r apps/web/public release/web/public; fi
           cp -r deploy release/deploy
       - name: Set up SSH
         env:
