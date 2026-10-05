@@ -1,7 +1,7 @@
 'use client';
 
-import { useCallback } from 'react';
 import { useLocale } from 'next-intl';
+import { useCallback } from 'react';
 
 interface Titled {
   title: string;
@@ -12,8 +12,5 @@ interface Titled {
 // An event's title in the current language
 export function useEventTitle() {
   const locale = useLocale();
-  return useCallback(
-    (event: Titled) => (locale !== 'ro' && event.englishTitle ? event.englishTitle : event.title),
-    [locale],
-  );
+  return useCallback((event: Titled) => (locale !== 'ro' && event.englishTitle ? event.englishTitle : event.title), [locale]);
 }

@@ -1,5 +1,5 @@
-import { ErrorAlert } from './Alert';
 import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
+import { ErrorAlert } from './Alert';
 
 const controlClass =
   'w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500';
@@ -27,7 +27,7 @@ interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 export function SelectField({ label, name, id = name, children, ...props }: SelectFieldProps) {
-  return (  
+  return (
     <div>
       <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-slate-700">
         {label}
@@ -41,9 +41,7 @@ export function SelectField({ label, name, id = name, children, ...props }: Sele
 
 export function FormError({ message }: { message: string | null }) {
   if (!message) return null;
-  return (
-    <ErrorAlert className="mb-6">{message}</ErrorAlert>
-  );
+  return <ErrorAlert className="mb-6">{message}</ErrorAlert>;
 }
 
 // The smaller control used in toolbars and dense tables

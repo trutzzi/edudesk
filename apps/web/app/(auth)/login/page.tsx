@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { RedirectIfSignedIn } from '../RedirectIfSignedIn';
-import { LoginForm } from './LoginForm';
+import Link from 'next/link';
+import { LoginForm } from '@/features/auth/LoginForm';
+import { RedirectIfSignedIn } from '@/features/auth/RedirectIfSignedIn';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Common');

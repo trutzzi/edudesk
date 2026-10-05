@@ -1,8 +1,8 @@
 'use client';
 
-import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
-import { buttonClass } from '@/components/ui/button';
+import type { ReactNode } from 'react';
+import { buttonClass } from './button';
 
 interface Props {
   label: ReactNode;

@@ -1,4 +1,4 @@
-import type { Role } from '@/app/context/AuthContext';
+import type { Role } from '@/features/auth/AuthProvider';
 
 const ADMIN_ROLES: Role[] = ['school_admin', 'super_admin'];
 

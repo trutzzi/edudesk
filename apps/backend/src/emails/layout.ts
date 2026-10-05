@@ -1,4 +1,4 @@
-import type { Mail } from '../utils/mailer.js';
+import type { Mail } from './mailer.js';
 
 export type EmailLocale = 'en' | 'ro';
 

@@ -35,3 +35,6 @@ export function distinctColors(keys: string[]) {
   const unique = [...new Set(keys)].sort();
   return new Map(unique.map((key, i) => [key, i < PALETTE.length ? PALETTE[i]! : colorFor(key)]));
 }
+
+// Diagonal rose stripes marking a holiday, in the timeline and timetables (a full class name, for Tailwind)
+export const HOLIDAY_STRIPES = 'bg-[repeating-linear-gradient(135deg,transparent_0_6px,rgb(254_205_211/0.5)_6px_8px)]';

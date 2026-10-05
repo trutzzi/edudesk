@@ -12,9 +12,20 @@
     "migrate:up": "npm run migrate:up --prefix apps/backend",
     "migrate:down": "npm run migrate:down --prefix apps/backend",
     "test": "npm test --prefix apps/backend && npm test --prefix apps/web",
-    "start:local": "npm run migrate:up && npm run dev"
+    "start:local": "npm run migrate:up && npm run dev",
+    "typecheck": "npm run typecheck --prefix apps/backend && npm run typecheck --prefix apps/web",
+    "prepare": "husky",
+    "lint": "npm run lint --prefix apps/backend && npm run lint --prefix apps/web",
+    "lint:fix": "npm run lint:fix --prefix apps/backend && npm run lint:fix --prefix apps/web",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:coverage": "npm run test:coverage --prefix apps/backend && npm run test:coverage --prefix apps/web",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:coverage"
   },
   "devDependencies": {
-    "concurrently": "^10.0.5"
+    "concurrently": "^10.0.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.9"
   }
 }

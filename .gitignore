@@ -13,6 +13,9 @@ build/
 .env.*
 !.env.example
 
+# test coverage reports
+coverage/
+
 # logs
 npm-debug.log*
 *.log
@@ -21,3 +24,9 @@ npm-debug.log*
 .DS_Store
 .vscode/
 .idea/
+
+# AI assistant files (next dev regenerates AGENTS.md)
+AGENTS.md
+CLAUDE.md
+.claude/
+.cursor/

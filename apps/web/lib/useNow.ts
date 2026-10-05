@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
-import { nowIn } from '@/lib/timeline';
+import { nowIn } from '@/lib/dates/clock';
 
 const TICK_MS = 15_000;
 

@@ -13,7 +13,8 @@ const COPY = {
   },
   ro: {
     subject: (school: string) => `Ai fost invitat la ${school} pe EduDesk`,
-    body: (inviter: string, school: string, role: string) => `${inviter} te-a invitat să te alături școlii ${school} pe EduDesk ca ${role}.`,
+    body: (inviter: string, school: string, role: string) =>
+      `${inviter} te-a invitat să te alături școlii ${school} pe EduDesk ca ${role}.`,
     roles: { school_admin: 'administrator', teacher: 'profesor', student: 'elev', parent: 'părinte' },
     next: 'Deschide linkul pentru a-ți crea contul sau pentru a adăuga școala la contul pe care îl ai deja.',
     button: 'Acceptă invitația',

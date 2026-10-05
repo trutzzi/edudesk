@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { Logo } from '@/components/Logo';
-import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
+import { Logo } from '@/components/layout/Logo';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (

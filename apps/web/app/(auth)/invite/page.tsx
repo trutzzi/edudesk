@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { AcceptInvitation } from './AcceptInvitation';
+import { AcceptInvitation } from '@/features/auth/AcceptInvitation';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('People');

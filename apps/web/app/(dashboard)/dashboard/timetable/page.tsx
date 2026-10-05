@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { MyTimetable } from './MyTimetable';
 import { PageHeader } from '@/components/ui/PageHeader';
+import { MyTimetable } from '@/features/timetable/MyTimetable';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('MyTimetable');

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { RedirectIfSignedIn } from '../RedirectIfSignedIn';
-import { VerifyEmail } from './VerifyEmail';
+import { RedirectIfSignedIn } from '@/features/auth/RedirectIfSignedIn';
+import { VerifyEmail } from '@/features/auth/VerifyEmail';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Verify');

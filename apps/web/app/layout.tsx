@@ -1,10 +1,10 @@
+import './globals.css';
 import type { Metadata } from 'next';
-import { Geist } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
-import { AuthProvider } from '@/app/context/AuthContext';
-import { ErrorReporter } from '@/components/ErrorReporter';
-import './globals.css';
+import { Geist } from 'next/font/google';
+import { ErrorReporter } from '@/components/layout/ErrorReporter';
+import { AuthProvider } from '@/features/auth/AuthProvider';
 
 const geist = Geist({
   variable: '--font-geist-sans',

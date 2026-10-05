@@ -60,7 +60,7 @@ export const up = (pgm) => {
     'lessons_course_fkey',
     `FOREIGN KEY (course_id, class_id, teacher_id, start_date, end_date)
      REFERENCES courses (id, class_id, teacher_id, start_date, end_date)
-     ON UPDATE CASCADE ON DELETE CASCADE`
+     ON UPDATE CASCADE ON DELETE CASCADE`,
   );
 
   // Two lessons clash when they're on the same weekday, their times overlap and their courses' dates overlap.

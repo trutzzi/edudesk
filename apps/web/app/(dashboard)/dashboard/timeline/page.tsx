@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { Timeline } from './Timeline';
 import { PageHeader } from '@/components/ui/PageHeader';
+import { Timeline } from '@/features/timeline/Timeline';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Timeline');

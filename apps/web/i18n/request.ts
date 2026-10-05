@@ -1,5 +1,5 @@
-import { cookies, headers } from 'next/headers';
 import { getRequestConfig } from 'next-intl/server';
+import { cookies, headers } from 'next/headers';
 import { isLocale, LOCALE_COOKIE, matchLocale } from './config';
 
 // No locale in the URL: the RO/EN switch stores the choice in a cookie, otherwise follow the browser

@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { useAuth } from '@/app/context/AuthContext';
+import { useEffect } from 'react';
 import { buttonClass } from '@/components/ui/button';
+import { useAuth } from '@/features/auth/AuthProvider';
 import { reportClientError } from '@/lib/reportError';
 
 // Shown in place of a dashboard page that crashed while rendering; the header and menu stay usable

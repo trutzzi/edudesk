@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { PageHeader } from '@/components/ui/PageHeader';
-import { AdminOverview } from './AdminOverview';
-import { SystemHealth } from './health/SystemHealth';
-import { StatsGrid } from './StatsGrid';
+import { SystemHealth } from '@/features/health/SystemHealth';
+import { AdminOverview } from '@/features/overview/AdminOverview';
+import { StatsGrid } from '@/features/overview/StatsGrid';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Common');

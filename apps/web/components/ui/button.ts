@@ -5,6 +5,8 @@ const variants = {
   primary: 'bg-indigo-600 text-white shadow-sm shadow-indigo-200 hover:bg-indigo-700',
   secondary: 'border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-100',
   ghost: 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+  // For destructive actions: quiet until hovered
+  danger: 'text-red-600 hover:bg-red-50 hover:text-red-700',
 };
 
 const sizes = {

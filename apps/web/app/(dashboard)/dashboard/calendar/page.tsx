@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { SchoolCalendar } from './SchoolCalendar';
 import { PageHeader } from '@/components/ui/PageHeader';
+import { SchoolCalendar } from '@/features/calendar/SchoolCalendar';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Calendar');

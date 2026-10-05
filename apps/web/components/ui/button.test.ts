@@ -17,6 +17,10 @@ describe('buttonClass', () => {
     expect(classes).not.toContain('bg-indigo-600');
   });
 
+  it('has a quiet red variant for destructive actions', () => {
+    expect(buttonClass('danger', 'sm')).toContain('text-red-600');
+  });
+
   it('makes block buttons full width', () => {
     expect(buttonClass('primary', 'block')).toContain('w-full');
   });
