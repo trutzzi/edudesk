@@ -23,6 +23,17 @@ if [[ ! -f shared/backend.env ]]; then
   echo "Missing $APP_DIR/shared/backend.env: create it from apps/backend/.env.example before deploying." >&2
   exit 1
 fi
+# Without these the database can't start, or the API can't reach it; say so instead of "unhealthy"
+for setting in POSTGRES_PASSWORD DATABASE_URL JWT_SECRET; do
+  if ! grep -q "^$setting=." shared/backend.env; then
+    echo "$setting is missing or empty in $APP_DIR/shared/backend.env" >&2
+    exit 1
+  fi
+done
+if ! grep -q '^DATABASE_URL=.*@db:5432/' shared/backend.env; then
+  echo "DATABASE_URL must point at the compose database: postgres://edudesk:<POSTGRES_PASSWORD>@db:5432/edudesk" >&2
+  exit 1
+fi
 
 echo "Loading the images"
 gunzip -c "$RELEASE_DIR/images.tar.gz" | docker load
