@@ -40,7 +40,8 @@ jobs:
             apps/backend/coverage
             apps/web/coverage
 
-  # After the checks pass on main: build, upload a release over SSH, and switch the server to it.
+  # After the checks pass on main: build the Docker images, upload them over SSH, and restart the
+  # server's containers on them.
   # Settings live in the production environment, as variables or secrets (see Deploying in README.md).
   deploy:
     needs: check
@@ -72,29 +73,18 @@ jobs:
             exit 1
           fi
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: apps/*/package-lock.json
-      - run: npm ci --prefix apps/backend && npm ci --prefix apps/web
-        env:
-          HUSKY: 0
-      - run: npm run build --prefix apps/backend
-      # The API's address is built into the browser code
-      - run: npm run build --prefix apps/web
+      - name: Build the images
         env:
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL || secrets.NEXT_PUBLIC_API_URL }}
+        run: |
+          docker build -t "edudesk-api:$GITHUB_SHA" apps/backend
+          docker build -t "edudesk-web:$GITHUB_SHA" --build-arg NEXT_PUBLIC_API_URL apps/web
       - name: Assemble the release
         run: |
-          mkdir -p release/backend release/web
-          cp -r apps/backend/dist apps/backend/migrations apps/backend/data apps/backend/package.json \
-            apps/backend/package-lock.json release/backend/
-          cp -r apps/web/.next/standalone/. release/web/
-          cp -r apps/web/.next/static release/web/.next/static
-          # public/ only exists once the app has static files in it
-          if [ -d apps/web/public ]; then cp -r apps/web/public release/web/public; fi
-          cp -r deploy release/deploy
+          mkdir release
+          docker save "edudesk-api:$GITHUB_SHA" "edudesk-web:$GITHUB_SHA" | gzip > release/images.tar.gz
+          cp deploy/docker-compose.yml deploy/remote-deploy.sh release/
+          ls -lh release
       - name: Set up SSH
         env:
           SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
@@ -106,12 +96,12 @@ jobs:
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
       - name: Upload the release
         run: |
-          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -p $PORT" \
-            release/ "$DEPLOY_USER@$HOST:$APP_DIR/releases/$GITHUB_SHA/"
+          ssh -i ~/.ssh/deploy_key -p "$PORT" "$DEPLOY_USER@$HOST" "mkdir -p '$APP_DIR/releases/$GITHUB_SHA'"
+          scp -i ~/.ssh/deploy_key -P "$PORT" release/* "$DEPLOY_USER@$HOST:$APP_DIR/releases/$GITHUB_SHA/"
       - name: Switch the server to it
         run: |
           ssh -i ~/.ssh/deploy_key -p "$PORT" "$DEPLOY_USER@$HOST" \
-            "bash '$APP_DIR/releases/$GITHUB_SHA/deploy/remote-deploy.sh' '$APP_DIR' '$GITHUB_SHA'"
+            "bash '$APP_DIR/releases/$GITHUB_SHA/remote-deploy.sh' '$APP_DIR' '$GITHUB_SHA'"
       - name: Remove the SSH key
         if: always()
         run: rm -f ~/.ssh/deploy_key

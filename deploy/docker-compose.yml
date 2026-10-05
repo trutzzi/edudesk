@@ -1,0 +1,47 @@
+# EduDesk on the server: the API, the web app and their own PostgreSQL.
+# remote-deploy.sh copies this file to <app dir>/docker-compose.yml and writes IMAGE_TAG to <app dir>/.env.
+# Settings and passwords come from <app dir>/shared/backend.env (see apps/backend/.env.example).
+name: edudesk
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: shared/backend.env
+    environment:
+      POSTGRES_USER: edudesk
+      POSTGRES_DB: edudesk
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U edudesk -d edudesk']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    # No ports: only the API reaches it, over the compose network
+
+  api:
+    image: edudesk-api:${IMAGE_TAG:?IMAGE_TAG is not set}
+    restart: unless-stopped
+    env_file: shared/backend.env
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+    depends_on:
+      db:
+        condition: service_healthy
+    # Only reachable from the server itself; nginx forwards to it
+    ports:
+      - 127.0.0.1:4100:4000
+
+  web:
+    image: edudesk-web:${IMAGE_TAG:?IMAGE_TAG is not set}
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - 127.0.0.1:3100:3000
+
+volumes:
+  pgdata:
+    name: edudesk-pgdata

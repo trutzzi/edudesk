@@ -45,44 +45,47 @@ The app runs on http://localhost:3000 and the API on http://localhost:4000.
 ## Deploying
 
 Every push to `main` that passes the checks is deployed by the `deploy` job in
-`.github/workflows/ci.yml`. It builds both apps, uploads them over SSH to a new folder in
-`releases/` on the server, and runs `deploy/remote-deploy.sh` there. That script installs the API's
-dependencies, runs the migrations and the holiday import, points `current` at the new release and
-reloads both apps with pm2. If any step fails, the previous release keeps running. The last five
-releases are kept.
+`.github/workflows/ci.yml`. It builds two Docker images (`apps/backend/Dockerfile` and
+`apps/web/Dockerfile`), uploads them over SSH and runs `deploy/remote-deploy.sh` on the server. That
+script loads the images, runs the migrations and the holiday import, and restarts the containers from
+`deploy/docker-compose.yml`: the API, the web app and their own PostgreSQL. If the API isn't healthy
+afterwards, it goes back to the previous images. The last three releases are kept.
 
 ### Server setup (once)
 
-On a Linux server with Node 22, PostgreSQL and nginx:
+The server needs Docker with the compose plugin, and nginx. No Node.js is installed on it.
 
 ```bash
-sudo npm install -g pm2
+sudo adduser --disabled-password --gecos "" deploy
+sudo usermod -aG docker deploy              # lets CI run docker; equivalent to root, so guard the key
+# add the deploy key's public half to /home/deploy/.ssh/authorized_keys
 sudo mkdir -p /var/www/edudesk/{releases,shared} && sudo chown -R deploy: /var/www/edudesk
-nano /var/www/edudesk/shared/backend.env   # from apps/backend/.env.example, NODE_ENV=production
-chmod 600 /var/www/edudesk/shared/backend.env
-pm2 startup                                 # run the command it prints, so apps restart on boot
+sudo -u deploy nano /var/www/edudesk/shared/backend.env   # from apps/backend/.env.example
+sudo chmod 600 /var/www/edudesk/shared/backend.env
 ```
 
-`deploy` is the user CI signs in as: give it its own SSH key and no sudo. Put a reverse proxy with
-HTTPS in front of both apps (`deploy/nginx.conf.example`), and keep ports 3000 and 4000 closed to
-the outside so traffic only arrives through nginx.
+In `backend.env`, set `NODE_ENV=production`, a `POSTGRES_PASSWORD`, and
+`DATABASE_URL=postgres://edudesk:<that password>@db:5432/edudesk`. The containers only listen on
+`127.0.0.1` (web on 3100, API on 4100); put nginx with HTTPS in front of them using
+`deploy/nginx.conf.example`, which serves both from one domain.
 
 ### GitHub settings
 
-Under **Settings → Environments**, create `production` (you can require an approval there), and add:
+Under **Settings → Environments**, create `production` (you can require an approval there), and add
+these as variables or secrets:
 
-| Kind     | Name                  | Value                                                                  |
-| -------- | --------------------- | ---------------------------------------------------------------------- |
-| Variable | `DEPLOY_HOST`         | The server's address                                                   |
-| Variable | `DEPLOY_PORT`         | SSH port, if not 22                                                    |
-| Variable | `DEPLOY_USER`         | `deploy`                                                               |
-| Variable | `DEPLOY_PATH`         | `/var/www/edudesk`                                                     |
-| Variable | `NEXT_PUBLIC_API_URL` | The public API address, e.g. `https://api.edudesk.example.com`         |
-| Secret   | `DEPLOY_SSH_KEY`      | The private key whose public half is in the server's `authorized_keys` |
-| Secret   | `DEPLOY_KNOWN_HOSTS`  | The output of `ssh-keyscan -p <port> <host>`                           |
+| Name                  | Value                                                             |
+| --------------------- | ----------------------------------------------------------------- |
+| `DEPLOY_HOST`         | The server's address                                              |
+| `DEPLOY_PORT`         | SSH port, if not 22                                               |
+| `DEPLOY_USER`         | `deploy`                                                          |
+| `DEPLOY_PATH`         | `/var/www/edudesk`                                                |
+| `NEXT_PUBLIC_API_URL` | The site's public address, e.g. `https://edudesk.example.com`     |
+| `DEPLOY_SSH_KEY`      | Secret: the private key whose public half is in `authorized_keys` |
+| `DEPLOY_KNOWN_HOSTS`  | Secret: the output of `ssh-keyscan -p <port> <host>`              |
 
-To roll back, point `current` at an older folder in `releases/` and run `pm2 reload all`.
-If a migration has to be undone too, run `npx node-pg-migrate down` in that release's `backend` first.
+To roll back by hand, set `IMAGE_TAG` in `/var/www/edudesk/.env` to an older folder name in
+`releases/` and run `docker compose up -d` in `/var/www/edudesk`. Logs: `docker compose logs -f api`.
 
 ### Security
 
@@ -92,8 +95,7 @@ If a migration has to be undone too, run `npx node-pg-migrate down` in that rele
   characters, e.g. `openssl rand -hex 32`), `DATABASE_URL`, `CORS_ORIGIN`, `APP_URL` and `SMTP_URL`
   are set.
 - Set `CORS_ORIGIN` to the web app's exact origin, and `TRUST_PROXY=1` behind nginx.
-- Use a database user that only has access to this database, and `?sslmode=require` in
-  `DATABASE_URL` when the database is on another machine.
+- The database has no published port: only the API container can reach it.
 - Never run `npm run seed` against production (it refuses to when `NODE_ENV=production`): every
   sample account has a known password.
 - `NEXT_PUBLIC_API_URL` is built into the browser code, so it must only ever hold the public API URL.
