@@ -20,9 +20,56 @@
     "badge": "One platform for your whole school",
     "titleLine1": "School management,",
     "titleLine2": "simplified & connected",
-    "description": "Teachers, students, parents and administrators in one place. Live stats, easy grading and schedules that stay up to date.",
+    "description": "Classes, courses, timetables and the school calendar in one place, kept up to date for administrators, teachers, students and parents.",
     "getStarted": "Get started",
-    "goToDashboard": "Go to your dashboard →"
+    "goToDashboard": "Go to your dashboard →",
+    "featuresTitle": "Everything a school runs on",
+    "featuresSubtitle": "Set up your school once, and everyone sees a schedule that stays current.",
+    "features": {
+      "classes": {
+        "title": "Classes and courses",
+        "text": "Create classes, enrol students and give each course a teacher, a weekly schedule and the dates it runs."
+      },
+      "timetable": {
+        "title": "Personal timetables",
+        "text": "Teachers, students and parents see their own lessons by day, week or month, with a marker for right now."
+      },
+      "timeline": {
+        "title": "School-wide timeline",
+        "text": "Admins see every course and lesson across the year, grouped by class or teacher, and can zoom from a term down to a day."
+      },
+      "calendar": {
+        "title": "School calendar",
+        "text": "Exams, trips and parents' meetings for the school or one class. Public holidays are added for you and cancel that day's lessons."
+      },
+      "people": {
+        "title": "Invitations and roles",
+        "text": "Invite teachers, students and parents by email. Each person sees only what their role allows."
+      },
+      "health": {
+        "title": "Overview and monitoring",
+        "text": "Live numbers for your school, and a log of errors and slow requests so problems get noticed."
+      }
+    },
+    "rolesTitle": "Made for everyone at school",
+    "roles": {
+      "admin": {
+        "title": "School admins",
+        "text": "Set up classes, courses and schedules, manage people and plan the calendar."
+      },
+      "teacher": {
+        "title": "Teachers",
+        "text": "See your timetable and your classes, and invite your students."
+      },
+      "student": {
+        "title": "Students",
+        "text": "Know what's next today, this week and this month."
+      },
+      "parent": {
+        "title": "Parents",
+        "text": "Follow your child's timetable and the school's events."
+      }
+    }
   },
   "Login": {
     "title": "Welcome back",

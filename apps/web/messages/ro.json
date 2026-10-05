@@ -20,9 +20,56 @@
     "badge": "O singură platformă pentru toată școala",
     "titleLine1": "Managementul școlii,",
     "titleLine2": "simplu și conectat",
-    "description": "Profesori, elevi, părinți și administratori într-un singur loc. Statistici în timp real, notare ușoară și orare mereu actualizate.",
+    "description": "Clase, cursuri, orare și calendarul școlii într-un singur loc, mereu actualizate pentru administratori, profesori, elevi și părinți.",
     "getStarted": "Începe acum",
-    "goToDashboard": "Mergi la panoul tău →"
+    "goToDashboard": "Mergi la panoul tău →",
+    "featuresTitle": "Tot ce are nevoie o școală",
+    "featuresSubtitle": "Configurezi școala o singură dată, iar fiecare vede un orar mereu la zi.",
+    "features": {
+      "classes": {
+        "title": "Clase și cursuri",
+        "text": "Creezi clase, înscrii elevi și dai fiecărui curs un profesor, un orar săptămânal și perioada în care se ține."
+      },
+      "timetable": {
+        "title": "Orare personale",
+        "text": "Profesorii, elevii și părinții își văd orele pe zi, săptămână sau lună, cu un marcaj pentru momentul de acum."
+      },
+      "timeline": {
+        "title": "Cronologia școlii",
+        "text": "Administratorii văd toate cursurile și orele din an, grupate pe clase sau profesori, de la un semestru până la o zi."
+      },
+      "calendar": {
+        "title": "Calendarul școlii",
+        "text": "Examene, excursii și ședințe cu părinții pentru toată școala sau pentru o clasă. Sărbătorile legale apar automat și anulează orele din acea zi."
+      },
+      "people": {
+        "title": "Invitații și roluri",
+        "text": "Inviți profesori, elevi și părinți prin email. Fiecare vede doar ce îi permite rolul."
+      },
+      "health": {
+        "title": "Privire de ansamblu și monitorizare",
+        "text": "Cifre la zi despre școală și un jurnal al erorilor și cererilor lente, ca problemele să fie observate."
+      }
+    },
+    "rolesTitle": "Pentru toată lumea din școală",
+    "roles": {
+      "admin": {
+        "title": "Administratori",
+        "text": "Configurează clase, cursuri și orare, gestionează persoanele și planifică calendarul."
+      },
+      "teacher": {
+        "title": "Profesori",
+        "text": "Își văd orarul și clasele și își invită elevii."
+      },
+      "student": {
+        "title": "Elevi",
+        "text": "Știu ce urmează azi, săptămâna aceasta și luna aceasta."
+      },
+      "parent": {
+        "title": "Părinți",
+        "text": "Urmăresc orarul copilului și evenimentele școlii."
+      }
+    }
   },
   "Login": {
     "title": "Bine ai revenit",
