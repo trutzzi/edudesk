@@ -33,6 +33,8 @@ services:
     environment:
       NODE_ENV: production
       PORT: 4000
+      # Every request arrives through Caddy; without this, rate limits count all visitors as one IP
+      TRUST_PROXY: 1
     depends_on:
       db:
         condition: service_healthy
