@@ -40,7 +40,8 @@ jobs:
             apps/backend/coverage
             apps/web/coverage
 
-  # After the checks pass on main: build, upload a release over SSH, and switch the server to it
+  # After the checks pass on main: build, upload a release over SSH, and switch the server to it.
+  # Settings live in the production environment, as variables or secrets (see Deploying in README.md).
   deploy:
     needs: check
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -51,14 +52,14 @@ jobs:
       group: deploy-production
       cancel-in-progress: false
     env:
-      HOST: ${{ vars.DEPLOY_HOST }}
-      PORT: ${{ vars.DEPLOY_PORT || '22' }}
-      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
-      APP_DIR: ${{ vars.DEPLOY_PATH }}
+      HOST: ${{ vars.DEPLOY_HOST || secrets.DEPLOY_HOST }}
+      PORT: ${{ vars.DEPLOY_PORT || secrets.DEPLOY_PORT || '22' }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER || secrets.DEPLOY_USER }}
+      APP_DIR: ${{ vars.DEPLOY_PATH || secrets.DEPLOY_PATH }}
     steps:
       - name: Check the deploy settings
         env:
-          API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          API_URL: ${{ vars.NEXT_PUBLIC_API_URL || secrets.NEXT_PUBLIC_API_URL }}
           SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
         run: |
@@ -83,7 +84,7 @@ jobs:
       # The API's address is built into the browser code
       - run: npm run build --prefix apps/web
         env:
-          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL || secrets.NEXT_PUBLIC_API_URL }}
       - name: Assemble the release
         run: |
           mkdir -p release/backend release/web
