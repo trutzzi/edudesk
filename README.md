@@ -1,6 +1,30 @@
 # EduDesk
 
-School management for admins, teachers, students and parents.
+School management for admins, teachers, students and parents. A school sets up its classes, courses and
+calendar once, and everyone sees a timetable that stays up to date. The app is in English and Romanian.
+
+## What it does
+
+- **Classes and courses**: create classes, enrol students, and give each course a teacher, a weekly
+  schedule and the dates it runs. Lessons are generated from the schedule.
+- **Personal timetables**: teachers, students and parents see their own lessons by day, week or month,
+  with a marker for the current time.
+- **School-wide timeline**: admins see every course and lesson across the year, grouped by class or
+  teacher, zooming from a term down to a single day.
+- **School calendar**: exams, trips, parents' meetings and other events for the whole school or one class.
+  Romanian public holidays are included and cancel that day's lessons.
+- **Invitations and roles**: admins invite teachers, students and parents by email; teachers invite their
+  own students. Each person only sees what their role allows.
+- **Overview and monitoring**: live statistics for the school, plus a log of failed and slow requests and
+  of errors in the web app.
+
+| Role         | Can                                                                                 |
+| ------------ | ----------------------------------------------------------------------------------- |
+| Super admin  | See statistics and system health for every school on the platform                   |
+| School admin | Set up the school, classes, courses and schedules; invite people; plan the calendar |
+| Teacher      | See their timetable and the classes they teach; invite students to those classes    |
+| Student      | See their own timetable and the school calendar                                     |
+| Parent       | See their child's timetable and the school calendar                                 |
 
 - `apps/web` – Next.js frontend
 - `apps/backend` – Express API + PostgreSQL
@@ -20,18 +44,59 @@ The app runs on http://localhost:3000 and the API on http://localhost:4000.
 
 ## Deploying
 
-- Keep secrets in the host's environment settings, never in the repository. Only the `.env.example`
-  templates are committed; `.env` and `.env.local` are ignored.
-- Set `NODE_ENV=production` for the API. It then refuses to start unless `JWT_SECRET` (at least 32
-  random characters, e.g. `openssl rand -hex 32`), `DATABASE_URL`, `CORS_ORIGIN`, `APP_URL` and
-  `SMTP_URL` are set.
-- Serve both apps over HTTPS, set `CORS_ORIGIN` to the web app's exact origin, and `TRUST_PROXY=1`
-  behind a single reverse proxy.
-- Use `?sslmode=require` in `DATABASE_URL` for a hosted database, and a database user that only has
-  access to this database.
-- Run `npm run migrate:up` in `apps/backend`. Never run `npm run seed` against production (it refuses
-  to when `NODE_ENV=production`): every sample account has a known password.
-- `NEXT_PUBLIC_API_URL` is built into the browser bundle, so it must only ever hold the public API URL.
+Every push to `main` that passes the checks is deployed by the `deploy` job in
+`.github/workflows/ci.yml`. It builds both apps, uploads them over SSH to a new folder in
+`releases/` on the server, and runs `deploy/remote-deploy.sh` there. That script installs the API's
+dependencies, runs the migrations and the holiday import, points `current` at the new release and
+reloads both apps with pm2. If any step fails, the previous release keeps running. The last five
+releases are kept.
+
+### Server setup (once)
+
+On a Linux server with Node 22, PostgreSQL and nginx:
+
+```bash
+sudo npm install -g pm2
+sudo mkdir -p /var/www/edudesk/{releases,shared} && sudo chown -R deploy: /var/www/edudesk
+nano /var/www/edudesk/shared/backend.env   # from apps/backend/.env.example, NODE_ENV=production
+chmod 600 /var/www/edudesk/shared/backend.env
+pm2 startup                                 # run the command it prints, so apps restart on boot
+```
+
+`deploy` is the user CI signs in as: give it its own SSH key and no sudo. Put a reverse proxy with
+HTTPS in front of both apps (`deploy/nginx.conf.example`), and keep ports 3000 and 4000 closed to
+the outside so traffic only arrives through nginx.
+
+### GitHub settings
+
+Under **Settings → Environments**, create `production` (you can require an approval there), and add:
+
+| Kind     | Name                  | Value                                                                  |
+| -------- | --------------------- | ---------------------------------------------------------------------- |
+| Variable | `DEPLOY_HOST`         | The server's address                                                   |
+| Variable | `DEPLOY_PORT`         | SSH port, if not 22                                                    |
+| Variable | `DEPLOY_USER`         | `deploy`                                                               |
+| Variable | `DEPLOY_PATH`         | `/var/www/edudesk`                                                     |
+| Variable | `NEXT_PUBLIC_API_URL` | The public API address, e.g. `https://api.edudesk.example.com`         |
+| Secret   | `DEPLOY_SSH_KEY`      | The private key whose public half is in the server's `authorized_keys` |
+| Secret   | `DEPLOY_KNOWN_HOSTS`  | The output of `ssh-keyscan -p <port> <host>`                           |
+
+To roll back, point `current` at an older folder in `releases/` and run `pm2 reload all`.
+If a migration has to be undone too, run `npx node-pg-migrate down` in that release's `backend` first.
+
+### Security
+
+- Secrets live only in `shared/backend.env` on the server and in GitHub secrets, never in the
+  repository. Only the `.env.example` templates are committed.
+- With `NODE_ENV=production` the API refuses to start unless `JWT_SECRET` (at least 32 random
+  characters, e.g. `openssl rand -hex 32`), `DATABASE_URL`, `CORS_ORIGIN`, `APP_URL` and `SMTP_URL`
+  are set.
+- Set `CORS_ORIGIN` to the web app's exact origin, and `TRUST_PROXY=1` behind nginx.
+- Use a database user that only has access to this database, and `?sslmode=require` in
+  `DATABASE_URL` when the database is on another machine.
+- Never run `npm run seed` against production (it refuses to when `NODE_ENV=production`): every
+  sample account has a known password.
+- `NEXT_PUBLIC_API_URL` is built into the browser code, so it must only ever hold the public API URL.
 
 ## Code quality
 
