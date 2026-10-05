@@ -6,6 +6,7 @@ import {
   emailName,
   PARENT_FIRST_NAMES,
   PERIODS,
+  samplePassword,
   SCHOOL_YEAR,
   STUDENTS,
   TEACHERS,
@@ -17,7 +18,7 @@ import { insertUser } from './users.js';
 
 // Adds teachers, classes, students, parents, courses, a weekly timetable and calendar events to a school
 export async function fillSchool(client: PoolClient, schoolId: string, emailDomain: string) {
-  const passwordHash = await hashPassword('password123');
+  const passwordHash = await hashPassword(samplePassword());
 
   const taken = (await client.query<{ name: string }>('SELECT name FROM classes WHERE school_id = $1', [schoolId])).rows.map(({ name }) =>
     name.toUpperCase(),

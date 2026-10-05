@@ -84,3 +84,9 @@ export const EXTRA_COURSES = [
   { name: 'Biologie', hoursPerWeek: 2 },
   { name: 'Geografie', hoursPerWeek: 1 },
 ];
+
+// The sample accounts' password: SEED_PASSWORD when set (production requires it), else a well-known one
+export const DEV_PASSWORD = 'password123';
+export const samplePassword = () => process.env.SEED_PASSWORD || DEV_PASSWORD;
+// How the console names it, so a chosen password never ends up in logs
+export const passwordHint = () => (process.env.SEED_PASSWORD ? 'the SEED_PASSWORD' : DEV_PASSWORD);

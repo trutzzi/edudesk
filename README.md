@@ -155,7 +155,13 @@ Imports use `@/…` paths; tests sit next to the file they test.
 
 ## Data
 
-Run these in `apps/backend`. Every sample account has the password `password123`.
+Run these in `apps/backend`. Every sample account has the password `password123`, or `SEED_PASSWORD`
+when set. On the server it must be set (12+ characters), since the site is public:
+
+```bash
+cd /var/www/edudesk && read -rsp "Sample password: " SP && echo
+docker compose run --rm -e SEED_PASSWORD="$SP" edudesk-api node dist/scripts/seed/index.js; unset SP
+```
 
 | Command                             | What it does                                                                           |
 | ----------------------------------- | -------------------------------------------------------------------------------------- |

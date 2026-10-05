@@ -1,6 +1,15 @@
 import { withTransaction } from '../../db/transaction.js';
 import { hashPassword } from '../../lib/password.js';
-import { emailName, EXTRA_COURSES, PERIODS, TEACHER_CLASS_PARENTS, TEACHER_CLASS_STUDENTS, WEEKDAYS, YEAR } from './data.js';
+import {
+  emailName,
+  EXTRA_COURSES,
+  samplePassword,
+  PERIODS,
+  TEACHER_CLASS_PARENTS,
+  TEACHER_CLASS_STUDENTS,
+  WEEKDAYS,
+  YEAR,
+} from './data.js';
 import { freePeriods } from './timetable.js';
 import { insertUser } from './users.js';
 
@@ -17,7 +26,7 @@ export async function seedTeacher(email: string) {
     if (!teacher.school_id) throw new Error(`${email} isn't in a school yet`);
 
     const emailDomain = `${emailName(teacher.code)}.edudesk.test`;
-    const passwordHash = await hashPassword('password123');
+    const passwordHash = await hashPassword(samplePassword());
     const added: string[] = [];
 
     // 1. Students for the teacher's classes that have none

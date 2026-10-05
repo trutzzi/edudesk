@@ -1,6 +1,6 @@
 import { withTransaction } from '../../db/transaction.js';
 import { hashPassword } from '../../lib/password.js';
-import { DEMO_CODE, emailName } from './data.js';
+import { DEMO_CODE, emailName, passwordHint, samplePassword } from './data.js';
 import { fillSchool } from './fillSchool.js';
 import { insertUser } from './users.js';
 
@@ -26,14 +26,14 @@ export async function seedDemoSchool(reset: boolean) {
       DEMO_CODE,
     ]);
     const schoolId = school.rows[0]!.id;
-    await insertUser(client, schoolId, await hashPassword('password123'), {
+    await insertUser(client, schoolId, await hashPassword(samplePassword()), {
       firstName: 'Admin',
       lastName: 'Demo',
       email: 'admin@demo.edu',
       role: 'school_admin',
     });
     const { classNames } = await fillSchool(client, schoolId, 'demo.edu');
-    console.log(`Demo school created with classes ${classNames.join(', ')}. Sign in as admin@demo.edu / password123`);
+    console.log(`Demo school created with classes ${classNames.join(', ')}. Sign in as admin@demo.edu with ${passwordHint()}`);
   });
 }
 
@@ -52,7 +52,7 @@ export async function seedExistingSchool(code: string) {
 
     const { classNames } = await fillSchool(client, school.id, emailDomain);
     console.log(
-      `Added classes ${classNames.join(', ')} to ${school.name}. Sample accounts end in @${emailDomain} (password123), ` +
+      `Added classes ${classNames.join(', ')} to ${school.name}. Sample accounts end in @${emailDomain} (${passwordHint()}), ` +
         `e.g. elena.popescu@${emailDomain}`,
     );
   });
