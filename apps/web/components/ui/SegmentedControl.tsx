@@ -40,7 +40,7 @@ export function SegmentedControl<T extends string>({ label, segments, value, onC
             aria-pressed={active}
             disabled={disabled}
             onClick={() => !active && onChange(segment.value)}
-            className={`rounded-md transition ${size === 'xs' ? 'px-2.5 py-1' : 'px-3 py-1'} ${
+            className={`rounded-md transition ${size === 'xs' ? 'min-h-8 px-2.5 py-1 sm:min-h-0' : 'min-h-9 px-3 py-1.5 sm:min-h-0 sm:py-1'} ${
               active ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-900'
             }`}
           >

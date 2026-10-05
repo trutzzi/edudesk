@@ -3,3 +3,22 @@
 @theme inline {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
+
+@layer base {
+  html {
+    /* Keep text at the size we set when a phone is rotated */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* No grey flash on tap, and no 300ms wait for a double-tap zoom on buttons and links */
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}

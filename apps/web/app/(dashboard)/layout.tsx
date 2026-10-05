@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { DashboardHeader } from '@/components/layout/DashboardHeader';
-import { DashboardNav } from '@/components/layout/DashboardNav';
+import { DashboardNav, hasTabBar } from '@/components/layout/DashboardNav';
 import { Spinner } from '@/components/ui/Spinner';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { NoSchool, SchoolSetup } from '@/features/onboarding/SchoolSetup';
@@ -33,10 +33,17 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       {inSchool ? (
         <>
           <DashboardNav role={user.role} />
-          <main className="mx-auto w-full max-w-7xl flex-1 space-y-8 p-6 lg:p-8">{children}</main>
+          {/* On phones the bottom tab bar covers the last 3.5rem, plus the home indicator's area */}
+          <main
+            className={`mx-auto w-full max-w-7xl flex-1 space-y-6 p-4 sm:space-y-8 sm:p-6 lg:p-8 ${
+              hasTabBar(user.role) ? 'pb-[calc(5.5rem+env(safe-area-inset-bottom))]' : ''
+            }`}
+          >
+            {children}
+          </main>
         </>
       ) : (
-        <main className="flex-1 p-6 lg:p-8">{user.role === 'school_admin' ? <SchoolSetup /> : <NoSchool />}</main>
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">{user.role === 'school_admin' ? <SchoolSetup /> : <NoSchool />}</main>
       )}
     </>
   );

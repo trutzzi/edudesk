@@ -12,14 +12,14 @@ export function DashboardHeader({ user, onLogout }: { user: User; onLogout: () =
   const tRoles = useTranslations('Roles');
 
   return (
-    <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 pb-3 pt-[calc(0.75rem+env(safe-area-inset-top))] sm:px-6 sm:py-4 lg:px-8">
       <Logo />
       <div className="flex items-center gap-2 sm:gap-4">
         <LocaleSwitcher />
-        {/* Phones only have room for the language switch and log out */}
-        <div className="hidden items-center gap-3 sm:flex">
+        {/* Phones only have room for the language switch, the avatar and log out */}
+        <div className="flex items-center gap-3" title={`${user.firstName} ${user.lastName} · ${tRoles(user.role)}`}>
           <Avatar firstName={user.firstName} lastName={user.lastName} size="md" />
-          <div>
+          <div className="hidden sm:block">
             <p className="text-sm font-semibold leading-none">
               {user.firstName} {user.lastName}
             </p>

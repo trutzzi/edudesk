@@ -48,13 +48,13 @@ export function TimelineGroupRows({ group, open, onToggle, zoom, scale, now, liv
   return (
     <div role="rowgroup">
       <div className="relative flex border-b border-slate-100 bg-slate-50/60">
-        <div className="sticky left-0 z-20 flex w-56 shrink-0 items-center gap-2 border-r border-slate-200 bg-slate-50 px-2 py-2">
+        <div className="sticky left-0 z-20 flex w-(--label-width) shrink-0 items-center gap-2 border-r border-slate-200 bg-slate-50 px-2 py-2">
           <button
             type="button"
             onClick={onToggle}
             aria-expanded={open}
             aria-label={open ? t('collapse', { name: group.label }) : t('expand', { name: group.label })}
-            className="flex h-6 w-6 items-center justify-center rounded text-slate-500 hover:bg-slate-200"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded text-slate-500 hover:bg-slate-200 sm:h-6 sm:w-6"
           >
             <span aria-hidden className={`transition-transform ${open ? 'rotate-90' : ''}`}>
               ›
@@ -62,7 +62,7 @@ export function TimelineGroupRows({ group, open, onToggle, zoom, scale, now, liv
           </button>
           <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${color.dot}`} />
           <span className="truncate text-sm font-bold">{group.label}</span>
-          <span className="ml-auto shrink-0 text-xs text-slate-400">{t('courses', { count: group.rows.length })}</span>
+          <span className="ml-auto hidden shrink-0 text-xs text-slate-400 sm:inline">{t('courses', { count: group.rows.length })}</span>
         </div>
         {/* A faint summary of everything in the group */}
         <div className="relative h-10 flex-1">
@@ -84,7 +84,7 @@ export function TimelineGroupRows({ group, open, onToggle, zoom, scale, now, liv
       {open &&
         group.rows.map((row) => (
           <div key={row.key} className="relative flex border-b border-slate-100 hover:bg-indigo-50/30">
-            <div className="sticky left-0 z-20 flex w-56 shrink-0 items-center gap-2 border-r border-slate-200 bg-white py-2 pl-10 pr-3">
+            <div className="sticky left-0 z-20 flex w-(--label-width) shrink-0 items-center gap-2 border-r border-slate-200 bg-white py-2 pl-6 pr-2 sm:pl-10 sm:pr-3">
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium text-slate-800">{row.label}</p>
                 <p className="truncate text-xs text-slate-500">{row.sublabel}</p>
