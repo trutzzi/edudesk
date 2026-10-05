@@ -4,7 +4,10 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { PersonList } from '@/components/PersonList';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { compactControlClass, FormError } from '@/components/ui/Field';
+import { SectionTitle } from '@/components/ui/SectionTitle';
 import { useSend } from '@/lib/api/useSend';
 import type { Person } from './types';
 
@@ -38,10 +41,10 @@ export function ClassStudents({ classId, students, schoolStudents, onChanged }: 
   }
 
   return (
-    <section aria-labelledby="students-title" className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 id="students-title" className="text-lg font-bold">
-        {t('studentsTitle')} <span className="text-sm font-medium text-slate-400">({students.length})</span>
-      </h2>
+    <section aria-labelledby="students-title" className={`space-y-4 ${cardClass()}`}>
+      <SectionTitle id="students-title" count={students.length}>
+        {t('studentsTitle')}
+      </SectionTitle>
 
       <FormError message={error} />
 
@@ -69,7 +72,7 @@ export function ClassStudents({ classId, students, schoolStudents, onChanged }: 
       )}
 
       {students.length === 0 ? (
-        <p className="py-6 text-center text-sm text-slate-500">{t('noStudents')}</p>
+        <EmptyState>{t('noStudents')}</EmptyState>
       ) : (
         <PersonList
           people={students}

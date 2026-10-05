@@ -1,4 +1,5 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+import { API_URL } from './api/client';
+
 // One broken page shouldn't flood the log: each message once, and a few per page load
 const MAX_REPORTS_PER_PAGE = 5;
 const reported = new Set<string>();

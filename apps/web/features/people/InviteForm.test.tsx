@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { api } from '@/lib/api/client';
 import { renderWithIntl } from '@/test/renderWithIntl';
+import { signIn } from '@/test/signIn';
 import { InviteForm } from './InviteForm';
 
 vi.mock('@/lib/api/client', async (importOriginal) => ({
@@ -22,7 +23,7 @@ const renderForm = () =>
   );
 
 beforeEach(() => {
-  localStorage.setItem('edudesk.session', JSON.stringify({ token: 'abc', user: { role: 'school_admin', schoolId: 's1' } }));
+  signIn({ role: 'school_admin' }, 'abc');
   vi.mocked(api).mockResolvedValue({ id: 'i1' });
 });
 

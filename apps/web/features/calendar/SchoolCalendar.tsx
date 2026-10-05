@@ -4,6 +4,7 @@ import { useFormatter, useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { ErrorAlert, InfoNote } from '@/components/ui/Alert';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
 import { PeriodNav } from '@/components/ui/PeriodNav';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { useApi } from '@/lib/api/useApi';
@@ -109,17 +110,13 @@ export function SchoolCalendar() {
           <div className="sm:hidden">
             <CalendarAgenda events={inMonth} onSelect={setSelected} />
           </div>
-          <div
-            role="group"
-            aria-label={t('monthGrid')}
-            className="hidden overflow-x-auto rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:block"
-          >
+          <div role="group" aria-label={t('monthGrid')} className={`hidden overflow-x-auto sm:block ${cardClass()}`}>
             <div className="min-w-[640px]">
               <div className="mb-3 grid gap-2" style={{ gridTemplateColumns: COLUMNS }}>
                 {weekdayNames.map((name, i) => (
                   <div
                     key={name}
-                    className={`rounded-b-xl rounded-t-sm py-2 text-center text-xs font-bold uppercase tracking-wide text-white shadow-sm ${WEEKDAY_COLORS[i]}`}
+                    className={`rounded-t-sm rounded-b-xl py-2 text-center text-xs font-bold tracking-wide text-white uppercase shadow-sm ${WEEKDAY_COLORS[i]}`}
                   >
                     {name}
                   </div>

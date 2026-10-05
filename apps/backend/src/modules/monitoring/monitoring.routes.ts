@@ -1,9 +1,9 @@
 import express from 'express';
 import { authenticateJWT, currentUser, optionalJWT, requireRole, schoolIdOf, type AuthenticatedRequest } from '../../http/auth.js';
 import { HttpError } from '../../http/errors.js';
+import { readBody } from '../../http/query.js';
 import { normalizePath } from '../../lib/paths.js';
 import { isNonEmptyString } from '../../lib/validation.js';
-import { readBody } from '../../http/query.js';
 import { listLogs, LOG_PAGE_SIZE, pingDatabase, recordLog, summarizeLogs, type LogLevel, type LogSource } from './logs.repository.js';
 
 const router = express.Router();

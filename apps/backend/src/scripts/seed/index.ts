@@ -32,6 +32,10 @@ try {
   if (teacherEmail) await seedTeacher(teacherEmail);
   else if (schoolCode) await seedExistingSchool(schoolCode);
   else await seedDemoSchool(args.includes('--reset'));
+} catch (err) {
+  // A wrong code or email is a usage mistake: say what's wrong, without a stack trace
+  console.error(err instanceof Error ? err.message : err);
+  process.exitCode = 1;
 } finally {
   await pool.end();
 }

@@ -1,4 +1,5 @@
 import { pool } from '../../db/pool.js';
+import { TEACHER_JSON } from '../../db/sql.js';
 
 // Whose lessons to list. Each is a fixed SQL condition over cl (classes) and co (courses); $3 is the id.
 export const LESSON_SCOPES = {
@@ -34,7 +35,7 @@ export async function lessonsBetween(from: string, to: string, scope: LessonScop
             day::date::text AS date,
             to_char(l.start_time, 'HH24:MI') AS "startTime", to_char(l.end_time, 'HH24:MI') AS "endTime",
             json_build_object('id', cl.id, 'name', cl.name) AS class,
-            json_build_object('id', t.id, 'firstName', t.first_name, 'lastName', t.last_name) AS teacher
+            ${TEACHER_JSON} AS teacher
      FROM lessons l
      JOIN courses co ON co.id = l.course_id
      JOIN classes cl ON cl.id = co.class_id

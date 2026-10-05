@@ -1,7 +1,7 @@
 import express from 'express';
 import { authenticateJWT, currentUser, requireRole, requireSchool, schoolIdOf, type AuthenticatedRequest } from '../../http/auth.js';
 import { HttpError } from '../../http/errors.js';
-import { readDateRange, readId, readBody } from '../../http/query.js';
+import { readBody, readDateRange, readId } from '../../http/query.js';
 import { daysBetween, isDateString, isNonEmptyString, isUuid } from '../../lib/validation.js';
 import { createEvent, deleteEvent, EVENT_KINDS, listPublicHolidays, listSchoolEvents, type EventKind } from './events.repository.js';
 

@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { api } from '@/lib/api/client';
 import { renderWithIntl } from '@/test/renderWithIntl';
+import { signIn } from '@/test/signIn';
 import { SchoolCalendar } from './SchoolCalendar';
 
 vi.mock('@/lib/api/client', async (importOriginal) => ({
@@ -30,12 +31,6 @@ const publicHoliday = {
   class: null,
   national: true,
 };
-
-const signIn = (role: string) =>
-  localStorage.setItem(
-    'edudesk.session',
-    JSON.stringify({ token: 'abc', user: { id: 'u1', firstName: 'Ana', lastName: 'Pop', role, schoolId: 's1' } }),
-  );
 
 // Both views are in the page; CSS shows the grid from sm up and the list on phones
 const grid = () => within(screen.getByRole('group', { name: 'Month grid' }));
@@ -65,7 +60,7 @@ afterEach(() => {
 
 describe('SchoolCalendar', () => {
   it('loads the whole weeks around the month', async () => {
-    signIn('teacher');
+    signIn({ role: 'teacher' }, 'abc');
     renderCalendar();
 
     // October 2026 starts on a Thursday and ends on a Saturday
@@ -75,7 +70,7 @@ describe('SchoolCalendar', () => {
   });
 
   it('splits an event that crosses a week into one bar per week', async () => {
-    signIn('teacher');
+    signIn({ role: 'teacher' }, 'abc');
     renderCalendar();
 
     // Sat 24 – Sun 25 Oct, then Mon 26 Oct – Sun 1 Nov
@@ -83,7 +78,7 @@ describe('SchoolCalendar', () => {
   });
 
   it('lists the month on phones in date order, one entry per event', async () => {
-    signIn('teacher');
+    signIn({ role: 'teacher' }, 'abc');
     renderCalendar();
 
     await grid().findAllByRole('button', { name: /Vacanța de toamnă/ });
@@ -101,7 +96,7 @@ describe('SchoolCalendar', () => {
   });
 
   it('lets admins add and delete events', async () => {
-    signIn('school_admin');
+    signIn({ role: 'school_admin' }, 'abc');
     renderCalendar();
     const user = userEvent.setup();
 
@@ -119,7 +114,7 @@ describe('SchoolCalendar', () => {
   });
 
   it('shows public holidays in the current language, without a delete button', async () => {
-    signIn('school_admin');
+    signIn({ role: 'school_admin' }, 'abc');
     renderCalendar();
     const user = userEvent.setup();
 

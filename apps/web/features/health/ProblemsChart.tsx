@@ -50,7 +50,7 @@ export function ProblemsChart({ buckets, byDay }: { buckets: Bucket[]; byDay: bo
         {/* Y axis: 0, half and the maximum */}
         <div
           aria-hidden
-          className="relative w-6 shrink-0 text-right text-[11px] tabular-nums text-slate-400"
+          className="relative w-6 shrink-0 text-right text-[11px] text-slate-400 tabular-nums"
           style={{ height: CHART_HEIGHT }}
         >
           {[max, max / 2, 0].map((tick) => (
@@ -97,7 +97,7 @@ export function ProblemsChart({ buckets, byDay }: { buckets: Bucket[]; byDay: bo
                   )}
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 hidden -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-900 px-2.5 py-1.5 text-xs text-white shadow-lg group-hover:block group-focus-visible:block"
+                    className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 hidden -translate-x-1/2 rounded-lg bg-slate-900 px-2.5 py-1.5 text-xs whitespace-nowrap text-white shadow-lg group-hover:block group-focus-visible:block"
                   >
                     <p className="font-semibold">{label(bucket.start)}</p>
                     <p>
@@ -112,7 +112,7 @@ export function ProblemsChart({ buckets, byDay }: { buckets: Bucket[]; byDay: bo
             })}
           </div>
 
-          <div aria-hidden className="mt-1 flex text-[11px] tabular-nums text-slate-400">
+          <div aria-hidden className="mt-1 flex text-[11px] text-slate-400 tabular-nums">
             {buckets.map((bucket, index) => (
               <span key={bucket.start} className="flex-1 text-center">
                 {showTick(index) ? label(bucket.start) : ''}

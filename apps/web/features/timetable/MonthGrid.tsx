@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormatter, useTranslations } from 'next-intl';
+import { cardClass } from '@/components/ui/card';
 import { EVENT_COLORS, HOLIDAY_STRIPES } from '@/lib/colors';
 import { addDays, parseDay } from '@/lib/dates/days';
 import { useEventTitle } from '@/lib/useEventTitle';
@@ -25,13 +26,13 @@ export function MonthGrid({ month, weeks, view, onOpenWeek }: Props) {
   const format = useFormatter();
   const eventTitle = useEventTitle();
   const weekdays = Array.from({ length: 7 }, (_, i) =>
-    format.dateTime(parseDay(addDays(weeks[0]!, i)), { weekday: 'short', timeZone: 'UTC' }),
+    format.dateTime(parseDay(addDays(weeks[0], i)), { weekday: 'short', timeZone: 'UTC' }),
   );
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+    <div className={`overflow-x-auto ${cardClass('sm')}`}>
       <div className="min-w-[760px] space-y-2">
-        <div className="grid gap-2 text-center text-xs font-bold uppercase tracking-wide text-slate-500" style={COLUMNS}>
+        <div className="grid gap-2 text-center text-xs font-bold tracking-wide text-slate-500 uppercase" style={COLUMNS}>
           {weekdays.map((name) => (
             <div key={name} className="py-1">
               {name}
@@ -85,7 +86,7 @@ export function MonthGrid({ month, weeks, view, onOpenWeek }: Props) {
                           className={`flex items-center gap-1 truncate rounded px-1 text-[11px] ${live ? 'bg-indigo-100 font-semibold text-indigo-800' : 'text-slate-700'}`}
                         >
                           <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${view.colorOf(lesson).dot}`} />
-                          <span className="tabular-nums text-slate-500">{lesson.startTime}</span>
+                          <span className="text-slate-500 tabular-nums">{lesson.startTime}</span>
                           <span className="truncate">{lesson.courseName}</span>
                         </p>
                       );

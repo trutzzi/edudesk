@@ -32,7 +32,7 @@ export function DashboardNav({ role }: { role: Role }) {
   return (
     <nav
       aria-label={t('sections')}
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md sm:static sm:block sm:border-b sm:border-t-0 sm:bg-white sm:px-6 sm:pb-0 sm:backdrop-blur-none lg:px-8 ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md sm:static sm:block sm:border-t-0 sm:border-b sm:bg-white sm:px-6 sm:pb-0 sm:backdrop-blur-none lg:px-8 ${
         hasTabBar(role) ? '' : 'hidden'
       }`}
     >

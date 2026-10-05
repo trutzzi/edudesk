@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormatter, useTranslations } from 'next-intl';
+import { cardClass } from '@/components/ui/card';
 import { EVENT_COLORS, HOLIDAY_STRIPES } from '@/lib/colors';
 import { parseDay } from '@/lib/dates/days';
 import { hourWindow, toMinutes } from '@/lib/dates/time';
@@ -28,7 +29,7 @@ export function TimeGrid({ days, view }: { days: string[]; view: TimetableView }
   const cursorVisible = nowTop !== null && nowTop >= 0 && nowTop <= gridHeight;
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div className={`overflow-x-auto ${cardClass('none')}`}>
       <div className="min-w-[640px]">
         <div className="grid border-b border-slate-200 bg-slate-50" style={columns}>
           <div />
@@ -61,7 +62,7 @@ export function TimeGrid({ days, view }: { days: string[]; view: TimetableView }
             {hours.map((hour, i) => (
               <span
                 key={hour}
-                className="absolute right-2 -translate-y-1/2 text-xs tabular-nums text-slate-400"
+                className="absolute right-2 -translate-y-1/2 text-xs text-slate-400 tabular-nums"
                 style={{ top: i * HOUR_HEIGHT }}
               >
                 {i > 0 && `${String(hour).padStart(2, '0')}:00`}
@@ -69,8 +70,8 @@ export function TimeGrid({ days, view }: { days: string[]; view: TimetableView }
             ))}
             {cursorVisible && view.now && (
               <span
-                className="absolute right-1 z-10 -translate-y-1/2 rounded-full bg-indigo-600 px-1.5 py-0.5 text-[11px] font-bold tabular-nums text-white"
-                style={{ top: nowTop! }}
+                className="absolute right-1 z-10 -translate-y-1/2 rounded-full bg-indigo-600 px-1.5 py-0.5 text-[11px] font-bold text-white tabular-nums"
+                style={{ top: nowTop }}
               >
                 {formatMinutes(view.now.minutes)}
               </span>
@@ -109,7 +110,7 @@ export function TimeGrid({ days, view }: { days: string[]; view: TimetableView }
                       </p>
                       <p className="truncate opacity-80">{view.detailOf(lesson)}</p>
                       {live && (
-                        <span className="absolute right-1 top-1 rounded-full bg-indigo-600 px-1.5 text-[10px] font-bold uppercase text-white">
+                        <span className="absolute top-1 right-1 rounded-full bg-indigo-600 px-1.5 text-[10px] font-bold text-white uppercase">
                           {t('inProgress')}
                         </span>
                       )}
@@ -118,8 +119,8 @@ export function TimeGrid({ days, view }: { days: string[]; view: TimetableView }
                 })}
 
                 {isToday && cursorVisible && (
-                  <div aria-hidden className="pointer-events-none absolute inset-x-0 z-10" style={{ top: nowTop! }}>
-                    <div className="absolute -left-1.5 -top-1.5 h-3 w-3 rounded-full bg-indigo-600" />
+                  <div aria-hidden className="pointer-events-none absolute inset-x-0 z-10" style={{ top: nowTop }}>
+                    <div className="absolute -top-1.5 -left-1.5 h-3 w-3 rounded-full bg-indigo-600" />
                     <div className="h-0.5 bg-indigo-600" />
                   </div>
                 )}

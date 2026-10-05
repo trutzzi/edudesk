@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { PersonList } from '@/components/PersonList';
 import { ErrorAlert, InfoNote } from '@/components/ui/Alert';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
+import { SectionTitle } from '@/components/ui/SectionTitle';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { SuccessNote } from '@/components/ui/SuccessNote';
 import { useAuth } from '@/features/auth/AuthProvider';
@@ -76,16 +78,12 @@ export function MyStudents() {
             {t('classes')}
           </h2>
           {classes.data.map((schoolClass) => (
-            <article
-              key={schoolClass.id}
-              aria-labelledby={`class-${schoolClass.id}`}
-              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-            >
+            <article key={schoolClass.id} aria-labelledby={`class-${schoolClass.id}`} className={cardClass()}>
               <div className="flex items-center gap-3">
                 <span className={`h-3 w-3 rounded-full ${colorFor(schoolClass.id).dot}`} />
-                <h3 id={`class-${schoolClass.id}`} className="text-lg font-bold">
+                <SectionTitle as="h3" id={`class-${schoolClass.id}`}>
                   {schoolClass.name}
-                </h3>
+                </SectionTitle>
                 <span className="text-sm text-slate-400">
                   {schoolClass.schoolYear} · {schoolClass.students.length}
                 </span>
@@ -101,10 +99,8 @@ export function MyStudents() {
           ))}
         </section>
 
-        <section aria-labelledby="pending-title" className="space-y-2 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 id="pending-title" className="text-lg font-bold">
-            {tPeople('pending')}
-          </h2>
+        <section aria-labelledby="pending-title" className={`space-y-2 ${cardClass()}`}>
+          <SectionTitle id="pending-title">{tPeople('pending')}</SectionTitle>
           {invitations.data ? (
             <InvitationList invitations={invitations.data} onChanged={invitations.reload} />
           ) : (

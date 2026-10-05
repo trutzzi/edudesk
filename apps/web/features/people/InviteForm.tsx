@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useState, type FormEvent } from 'react';
 import { buttonClass } from '@/components/ui/button';
 import { Field, FormError, SelectField } from '@/components/ui/Field';
+import { SectionTitle } from '@/components/ui/SectionTitle';
 import { useSend } from '@/lib/api/useSend';
 import { INVITABLE_ROLES, type InvitableRole, type Member } from './types';
 
@@ -23,7 +24,7 @@ export function InviteForm({ classes, students, roles = INVITABLE_ROLES, require
   const tRoles = useTranslations('Roles');
   const locale = useLocale();
   const { send, pending, error } = useSend();
-  const [role, setRole] = useState<InvitableRole>(roles[0]!);
+  const [role, setRole] = useState<InvitableRole>(roles[0]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,7 +48,7 @@ export function InviteForm({ classes, students, roles = INVITABLE_ROLES, require
       aria-label={t('inviteTitle')}
       className="space-y-4 rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm"
     >
-      <h2 className="text-lg font-bold">{t('inviteTitle')}</h2>
+      <SectionTitle>{t('inviteTitle')}</SectionTitle>
       <FormError message={error} />
       <div className="grid gap-4 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)]">
         <Field label={t('email')} name="email" type="email" autoComplete="off" required autoFocus />

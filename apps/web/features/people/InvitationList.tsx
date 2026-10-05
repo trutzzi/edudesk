@@ -2,6 +2,7 @@
 
 import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { FormError } from '@/components/ui/Field';
 import { useSend } from '@/lib/api/useSend';
 import type { Invitation } from './types';
@@ -34,7 +35,7 @@ export function InvitationList({ invitations, onChanged }: Props) {
   }
 
   if (invitations.length === 0) {
-    return <p className="py-6 text-center text-sm text-slate-500">{t('noPending')}</p>;
+    return <EmptyState>{t('noPending')}</EmptyState>;
   }
 
   return (

@@ -84,13 +84,13 @@ export function TimelineGroupRows({ group, open, onToggle, zoom, scale, now, liv
       {open &&
         group.rows.map((row) => (
           <div key={row.key} className="relative flex border-b border-slate-100 hover:bg-indigo-50/30">
-            <div className="sticky left-0 z-20 flex w-(--label-width) shrink-0 items-center gap-2 border-r border-slate-200 bg-white py-2 pl-6 pr-2 sm:pl-10 sm:pr-3">
+            <div className="sticky left-0 z-20 flex w-(--label-width) shrink-0 items-center gap-2 border-r border-slate-200 bg-white py-2 pr-2 pl-6 sm:pr-3 sm:pl-10">
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium text-slate-800">{row.label}</p>
                 <p className="truncate text-xs text-slate-500">{row.sublabel}</p>
               </div>
               {liveCourseIds.has(row.key) && (
-                <span className="ml-auto flex shrink-0 items-center gap-1 text-[10px] font-semibold uppercase text-emerald-600">
+                <span className="ml-auto flex shrink-0 items-center gap-1 text-[10px] font-semibold text-emerald-600 uppercase">
                   <LiveDot />
                   <span className="sr-only sm:not-sr-only">{t('inProgress')}</span>
                 </span>

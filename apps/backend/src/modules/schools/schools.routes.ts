@@ -2,9 +2,9 @@ import express from 'express';
 import { withTransaction } from '../../db/transaction.js';
 import { authenticateJWT, currentUser, requireRole, type AuthenticatedRequest } from '../../http/auth.js';
 import { HttpError } from '../../http/errors.js';
+import { readBody } from '../../http/query.js';
 import { toSession } from '../../lib/session.js';
 import { isNonEmptyString, isPgError, isTimeZone, PG_ERRORS } from '../../lib/validation.js';
-import { readBody } from '../../http/query.js';
 import { createSchool, linkUserToSchool } from './schools.repository.js';
 
 const router = express.Router();

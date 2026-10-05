@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { cardClass } from '@/components/ui/card';
 import { LiveDot } from '@/components/ui/LiveDot';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { colorFor } from '@/lib/colors';
@@ -27,8 +28,8 @@ export function NowPanel({ lessons, now, current, loading }: Props) {
   const next = today.find((lesson) => toMinutes(lesson.startTime) > now.minutes);
 
   return (
-    <section aria-labelledby="now-panel-title" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 id="now-panel-title" className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-500">
+    <section aria-labelledby="now-panel-title" className={cardClass()}>
+      <h2 id="now-panel-title" className="flex items-center gap-2 text-sm font-bold tracking-wide text-slate-500 uppercase">
         <LiveDot live={current.length > 0} size="md" />
         {t('title')}
       </h2>

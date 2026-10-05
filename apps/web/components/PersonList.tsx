@@ -11,7 +11,8 @@ interface PersonAction {
   label: string;
   // What the button does to whom, for screen readers ("Remove Ana Pop from the class")
   ariaLabel: string;
-  onClick: () => void;
+  // May be async (a removal that calls the API); its errors are the caller's to show, e.g. through useSend
+  onClick: () => void | Promise<unknown>;
   disabled?: boolean;
 }
 
@@ -40,10 +41,10 @@ export function PersonList<T extends ListedPerson>({ people, columns = 1, action
             {button && (
               <button
                 type="button"
-                onClick={button.onClick}
+                onClick={() => void button.onClick()}
                 disabled={button.disabled}
                 aria-label={button.ariaLabel}
-                className="shrink-0 rounded-lg px-2 py-1 text-xs font-semibold text-slate-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                className="min-h-10 shrink-0 rounded-lg px-3 py-1 text-sm font-semibold text-slate-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50 sm:min-h-0 sm:px-2 sm:text-xs"
               >
                 {button.label}
               </button>
