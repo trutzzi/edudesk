@@ -9,6 +9,7 @@ import { useApi } from '@/lib/api/useApi';
 import { nowIn } from '@/lib/dates/clock';
 import { addDays, daysInRange, isWeekend, parseDay } from '@/lib/dates/days';
 import { hourWindow, toMinutes } from '@/lib/dates/time';
+import { isPhone } from '@/lib/media';
 import type { CoursesResponse, LessonsResponse, SchoolEvent } from '@/lib/types/school';
 import { browserTimeZone, useNow } from '@/lib/useNow';
 import { type GroupBy, groupItems, matchesSearch, type TimelineItem } from './grouping';
@@ -26,7 +27,8 @@ export function Timeline() {
 
   // Today in the browser's time zone; close enough to pick the first page and today's lessons
   const [today] = useState(() => nowIn(browserTimeZone()).day);
-  const [zoom, setZoom] = useState<Zoom>('week');
+  // A single day suits a phone's width; larger screens start on the week
+  const [zoom, setZoom] = useState<Zoom>(() => (isPhone() ? 'day' : 'week'));
   const [anchor, setAnchor] = useState(today);
   const [groupBy, setGroupBy] = useState<GroupBy>('class');
   const [search, setSearch] = useState('');

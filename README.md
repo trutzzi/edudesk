@@ -142,6 +142,22 @@ runs the same checks plus the build on every pull request.
 The backend tests start a throwaway local server per request, so they retry a failed test twice; on a busy
 machine another process occasionally answers on the same random port. A real failure still fails.
 
+### Agent review
+
+Every pull request also gets a review from Claude (`.github/workflows/agent-review.yml`): a **frontend**
+reviewer when `apps/web/` changes and a **backend** reviewer for anything else, each with its checklist in
+`.github/review-checklists/`. They read the diff cold, leave inline comments and one summary comment with a
+verdict — ✅ READY, ⚠️ SUGGESTIONS or ⛔ BLOCKING — which becomes a check beside the merge button. They can't
+push, approve or merge; that stays with a person. Drafts and forks are skipped.
+
+To turn it on, run `claude setup-token` (with a Claude subscription) and save the token as a repository secret:
+
+```bash
+gh secret set CLAUDE_CODE_OAUTH_TOKEN
+```
+
+The workflow only runs as it is on `main`, so a pull request that changes it is reviewed once it's merged.
+
 ## Project structure
 
 **`apps/backend`** (Express + PostgreSQL)

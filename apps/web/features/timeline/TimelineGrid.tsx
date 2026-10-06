@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import type { SchoolEvent } from '@/lib/types/school';
 import type { TimelineGroup } from './grouping';
-import { LABEL_WIDTH, MIN_TRACK_WIDTH, pct } from './layout';
+import { LABEL_WIDTH, LABEL_WIDTH_CLASS, MIN_TRACK_WIDTH, pct } from './layout';
 import type { Zoom } from './ranges';
 import type { Scale } from './scales';
 import { TimelineBackground } from './TimelineBackground';
@@ -37,7 +37,8 @@ export function TimelineGrid({ zoom, scale, groups, events, now, liveCourseIds, 
     const el = scrollRef.current;
     if (!el || nowX === null || handledScroll.current === scrollRequest) return;
     handledScroll.current = scrollRequest;
-    el.scrollLeft = LABEL_WIDTH + nowX * (el.scrollWidth - LABEL_WIDTH) - el.clientWidth / 2;
+    const labelWidth = el.querySelector<HTMLElement>('[data-label-column]')?.offsetWidth ?? 0;
+    el.scrollLeft = labelWidth + nowX * (el.scrollWidth - labelWidth) - el.clientWidth / 2;
   }, [scrollRequest, nowX]);
 
   const toggle = (key: string) =>
@@ -51,10 +52,12 @@ export function TimelineGrid({ zoom, scale, groups, events, now, liveCourseIds, 
   return (
     <div
       ref={scrollRef}
-      className={`relative overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm transition-opacity ${loading ? 'opacity-60' : ''}`}
+      className={`relative overflow-x-auto overscroll-x-contain rounded-2xl border border-slate-200 bg-white shadow-sm transition-opacity ${LABEL_WIDTH_CLASS} ${
+        loading ? 'opacity-60' : ''
+      }`}
       aria-busy={loading}
     >
-      <div style={{ minWidth: LABEL_WIDTH + MIN_TRACK_WIDTH[zoom] }}>
+      <div style={{ minWidth: `calc(${LABEL_WIDTH} + ${MIN_TRACK_WIDTH[zoom]}px)` }}>
         <TimelineHeader zoom={zoom} scale={scale} today={now?.day} nowX={nowX} />
 
         <div className="relative">

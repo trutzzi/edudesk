@@ -213,7 +213,9 @@
     "more": "+{count} more",
     "loadError": "Couldn't load the calendar. Refresh the page to try again.",
     "noSchool": "Your account is not linked to an institution yet.",
-    "national": "National public holiday"
+    "national": "National public holiday",
+    "agenda": "This month's events",
+    "monthGrid": "Month grid"
   },
   "Classes": {
     "title": "Rooms",

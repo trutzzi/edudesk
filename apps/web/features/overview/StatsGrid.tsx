@@ -43,21 +43,21 @@ export function StatsGrid() {
   if (error !== undefined) return <ErrorAlert>{t('loadError')}</ErrorAlert>;
 
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
       {CARDS.map(({ key, tone, icon }) => (
-        <div key={key} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between">
+        <div key={key} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+          <div className="flex items-start justify-between gap-2 sm:items-center">
             <span className="text-sm font-medium text-slate-500">{t(`stats.${key}`)}</span>
-            <div className={`rounded-xl border p-2.5 ${tone}`}>
+            <div className={`shrink-0 rounded-xl border p-2 sm:p-2.5 ${tone}`}>
               <svg aria-hidden className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icon} />
               </svg>
             </div>
           </div>
           {stats ? (
-            <p className="mt-4 text-3xl font-bold">{format.number(stats[key])}</p>
+            <p className="mt-3 text-2xl font-bold sm:mt-4 sm:text-3xl">{format.number(stats[key])}</p>
           ) : (
-            <Skeleton className="mt-4 h-9 w-16 rounded-lg bg-slate-200" />
+            <Skeleton className="mt-3 h-8 w-16 rounded-lg bg-slate-200 sm:mt-4 sm:h-9" />
           )}
         </div>
       ))}

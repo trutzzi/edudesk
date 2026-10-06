@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useEffect, useRef } from 'react';
 import { buttonClass } from '@/components/ui/button';
 import { useSend } from '@/lib/api/useSend';
 import { EVENT_COLORS } from '@/lib/colors';
@@ -22,6 +23,12 @@ export function EventDetails({ event, canDelete, onClose, onDeleted }: Props) {
   const eventDates = useEventDates();
   const { send, pending, error } = useSend();
   const color = EVENT_COLORS[event.kind];
+  const panel = useRef<HTMLElement>(null);
+
+  // On a phone the event was likely tapped further down the list; bring its details into view
+  useEffect(() => {
+    panel.current?.scrollIntoView?.({ behavior: 'smooth', block: 'nearest' });
+  }, []);
 
   async function remove() {
     if ((await send(`/api/events/${event.id}`, { method: 'DELETE' })).ok) onDeleted();
@@ -29,8 +36,9 @@ export function EventDetails({ event, canDelete, onClose, onDeleted }: Props) {
 
   return (
     <section
+      ref={panel}
       aria-label={eventTitle(event)}
-      className={`flex flex-wrap items-center gap-4 rounded-2xl border border-slate-200 p-4 shadow-sm ${color.soft}`}
+      className={`flex scroll-mt-24 flex-wrap items-center gap-4 rounded-2xl border border-slate-200 p-4 shadow-sm ${color.soft}`}
     >
       <span className={`h-10 w-1.5 rounded-full ${color.bar}`} />
       <div className="min-w-0">

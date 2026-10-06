@@ -213,7 +213,9 @@
     "more": "+încă {count}",
     "loadError": "Calendarul nu a putut fi încărcat. Reîncarcă pagina pentru a încerca din nou.",
     "noSchool": "Contul tău nu este încă asociat unei instituții.",
-    "national": "Sărbătoare legală"
+    "national": "Sărbătoare legală",
+    "agenda": "Evenimentele lunii",
+    "monthGrid": "Grila lunii"
   },
   "Classes": {
     "title": "Săli",
