@@ -112,7 +112,7 @@ jobs:
                  and one line on what you checked.
             Be specific and brief. Never approve, request changes formally, push or merge.
           claude_args: |
-            --max-turns 40
+            --max-turns 100
             --allowedTools "Read,Glob,Grep,mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(git log:*),Bash(git diff:*),Bash(git show:*)"
 
       # The action hides the agent's output; when it fails, show just its final message
