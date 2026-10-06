@@ -31,7 +31,7 @@ export function TimelineHeader({ zoom, scale, today, nowX }: Props) {
     <div className="flex border-b border-slate-200 bg-slate-50 text-xs text-slate-500">
       <div
         data-label-column
-        className="sticky left-0 z-20 flex w-(--label-width) shrink-0 items-end border-r border-slate-200 bg-slate-50 px-3 py-2 font-semibold uppercase tracking-wide sm:px-4"
+        className="sticky left-0 z-20 flex w-(--label-width) shrink-0 items-end border-r border-slate-200 bg-slate-50 px-3 py-2 font-semibold tracking-wide uppercase sm:px-4"
       >
         {t('courseColumn')}
       </div>
@@ -48,7 +48,7 @@ export function TimelineHeader({ zoom, scale, today, nowX }: Props) {
         {scale.bottom.map((segment) => (
           <div
             key={segment.key}
-            className={`absolute bottom-0 h-7 truncate border-l border-t border-slate-200 pt-1.5 text-center tabular-nums ${
+            className={`absolute bottom-0 h-7 truncate border-t border-l border-slate-200 pt-1.5 text-center tabular-nums ${
               zoom === 'month' && isWeekend(segment.day) ? 'text-slate-400' : ''
             } ${!timeZoom && segment.day === today ? 'font-bold text-indigo-600' : ''}`}
             style={{ left: pct(segment.left), width: pct(segment.width) }}
@@ -58,7 +58,7 @@ export function TimelineHeader({ zoom, scale, today, nowX }: Props) {
         ))}
         {nowX !== null && (
           <span
-            className="absolute bottom-0.5 z-10 -translate-x-1/2 rounded-full bg-indigo-600 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white"
+            className="absolute bottom-0.5 z-10 -translate-x-1/2 rounded-full bg-indigo-600 px-1.5 py-0.5 text-[10px] font-bold text-white uppercase"
             style={{ left: pct(nowX) }}
           >
             {t('now')}

@@ -35,7 +35,7 @@ export function TimelineBackground({ zoom, scale, events }: { zoom: Zoom; scale:
         <div
           key={segment.key}
           className={`absolute inset-y-0 border-l ${
-            segment.hour === undefined || segment.hour === scale.bottom[0]!.hour ? 'border-slate-200' : 'border-slate-100'
+            segment.hour === undefined || segment.hour === scale.bottom[0].hour ? 'border-slate-200' : 'border-slate-100'
           }`}
           style={{ left: pct(segment.left) }}
         />

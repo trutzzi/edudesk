@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import type { FormEvent } from 'react';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
 import { Field, FormError, SelectField } from '@/components/ui/Field';
 import { useAuth, type Session } from '@/features/auth/AuthProvider';
 import { useSend } from '@/lib/api/useSend';
@@ -28,7 +29,7 @@ export function SchoolSetup() {
     <div className="mx-auto max-w-xl space-y-6">
       {/* An admin may have been invited to an existing school instead of starting a new one */}
       <PendingInvitations />
-      <section aria-labelledby="school-setup-title" className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <section aria-labelledby="school-setup-title" className={cardClass('lg')}>
         <h1 id="school-setup-title" className="text-2xl font-bold">
           {t('title')}
         </h1>
@@ -67,7 +68,7 @@ export function NoSchool() {
     <div className="mx-auto max-w-xl">
       <PendingInvitations
         empty={(checkAgain) => (
-          <section className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+          <section className={`text-center ${cardClass('lg')}`}>
             <h1 className="text-xl font-bold">{t('noSchoolTitle')}</h1>
             <p className="mt-2 text-sm text-slate-600">{t('noSchoolBody', { email: user?.email ?? '' })}</p>
             <button type="button" onClick={checkAgain} className={`${buttonClass('secondary')} mt-5`}>

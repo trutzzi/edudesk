@@ -1,4 +1,5 @@
 import { pool } from '../../db/pool.js';
+import { COURSE_DATES, TEACHER_JSON } from '../../db/sql.js';
 
 const DEFAULT_TIMEZONE = 'Europe/Bucharest';
 
@@ -21,9 +22,9 @@ export interface CourseInRange {
 export async function listCoursesBetween(schoolId: string, from: string, to: string) {
   const { rows } = await pool.query<CourseInRange>(
     `SELECT co.id, co.name,
-            co.start_date::text AS "startDate", co.end_date::text AS "endDate",
+            ${COURSE_DATES},
             json_build_object('id', cl.id, 'name', cl.name) AS class,
-            json_build_object('id', t.id, 'firstName', t.first_name, 'lastName', t.last_name) AS teacher
+            ${TEACHER_JSON} AS teacher
      FROM courses co
      JOIN classes cl ON cl.id = co.class_id
      JOIN users t ON t.id = co.teacher_id

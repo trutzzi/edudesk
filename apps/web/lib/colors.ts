@@ -16,7 +16,7 @@ export type Color = (typeof PALETTE)[number];
 export function colorFor(key: string): Color {
   let hash = 0;
   for (const char of key) hash = (hash * 31 + char.charCodeAt(0)) | 0;
-  return PALETTE[Math.abs(hash) % PALETTE.length]!;
+  return PALETTE[Math.abs(hash) % PALETTE.length];
 }
 
 export const EVENT_COLORS = {
@@ -33,7 +33,7 @@ export const EVENT_KINDS = Object.keys(EVENT_COLORS) as EventKind[];
 // Different colors for everything on one screen (up to the palette size), always in the same order
 export function distinctColors(keys: string[]) {
   const unique = [...new Set(keys)].sort();
-  return new Map(unique.map((key, i) => [key, i < PALETTE.length ? PALETTE[i]! : colorFor(key)]));
+  return new Map(unique.map((key, i) => [key, i < PALETTE.length ? PALETTE[i] : colorFor(key)]));
 }
 
 // Diagonal rose stripes marking a holiday, in the timeline and timetables (a full class name, for Tailwind)

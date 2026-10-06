@@ -11,7 +11,7 @@ export default tseslint.config(
     languageOptions: {
       globals: globals.node,
       parserOptions: {
-        projectService: { allowDefaultProject: ['eslint.config.js', 'vitest.config.ts'] },
+        projectService: { allowDefaultProject: ['eslint.config.js', 'vitest.config.ts', 'scripts/*.mjs'] },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -26,7 +26,7 @@ export default tseslint.config(
   },
   {
     // Scripts report progress on the terminal
-    files: ['src/scripts/**', 'src/index.ts'],
+    files: ['src/scripts/**', 'src/index.ts', 'scripts/**'],
     rules: { 'no-console': 'off' },
   },
   {

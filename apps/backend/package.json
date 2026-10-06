@@ -12,8 +12,8 @@
     "migrate:up": "node-pg-migrate up",
     "migrate:down": "node-pg-migrate down",
     "test": "vitest run",
-    "seed": "tsx src/scripts/seed/index.ts",
-    "holidays": "tsx src/scripts/holidays.ts",
+    "seed": "node scripts/run.mjs seed",
+    "holidays": "node scripts/run.mjs holidays",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -43,12 +43,14 @@
     "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import-x": "^4.17.1",
     "globals": "^17.13.0",
     "supertest": "^7.3.0",
     "tsx": "^4.23.15",
     "typescript": "~6.0",
     "typescript-eslint": "^8.71.0",
     "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

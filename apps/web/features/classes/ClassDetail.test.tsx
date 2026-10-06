@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { api } from '@/lib/api/client';
 import { renderWithIntl } from '@/test/renderWithIntl';
+import { signIn } from '@/test/signIn';
 import { ClassDetail } from './ClassDetail';
 
 const push = vi.fn();
@@ -37,7 +38,7 @@ const details = {
 };
 
 beforeEach(() => {
-  localStorage.setItem('edudesk.session', JSON.stringify({ token: 'abc', user: { role: 'school_admin', schoolId: 's1' } }));
+  signIn({ role: 'school_admin' }, 'abc');
   vi.mocked(api).mockImplementation(async (path, options) => {
     if (options?.method || options?.body) return null;
     if (path === '/api/users?role=student') return [ioana, radu];

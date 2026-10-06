@@ -1,4 +1,4 @@
-import { addDays, daysInRange, diffDays, endOfMonth, isoWeekday, startOfMonth, startOfWeek, addMonths } from '@/lib/dates/days';
+import { addDays, addMonths, daysInRange, diffDays, endOfMonth, isoWeekday, startOfMonth, startOfWeek } from '@/lib/dates/days';
 
 export interface Segment {
   key: string;
@@ -74,7 +74,7 @@ export function timeScale(days: string[], startHour: number, endHour: number): S
 
 // Where a bar from (day, minutes) to (day, minutes) goes, clipped to what's visible
 export function barPosition(scale: Scale, start: { day: string; minutes?: number }, end: { day: string; minutes?: number }) {
-  const first = scale.days[0]!;
+  const first = scale.days[0];
   const last = scale.days.at(-1)!;
   const clippedStart = start.day < first;
   const clippedEnd = end.day > last;

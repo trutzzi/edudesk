@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useState, type FormEvent } from 'react';
 import { buttonClass } from '@/components/ui/button';
 import { Field, FormError, SelectField } from '@/components/ui/Field';
+import { SectionTitle } from '@/components/ui/SectionTitle';
 import { api, errorMessage } from '@/lib/api/client';
 import { useAuth, type Session } from './AuthProvider';
 import { ResendVerification } from './ResendVerification';
@@ -43,7 +44,7 @@ export function RegisterForm() {
   if (sentTo) {
     return (
       <div role="status" className="space-y-4 text-center">
-        <h2 className="text-lg font-bold">{t('checkEmailTitle')}</h2>
+        <SectionTitle>{t('checkEmailTitle')}</SectionTitle>
         <p className="text-sm text-slate-600">{t('checkEmailBody', { email: sentTo })}</p>
         <p className="text-xs text-slate-500">{t('noEmail')}</p>
         <ResendVerification email={sentTo} />

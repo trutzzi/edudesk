@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
 import { ErrorAlert } from '@/components/ui/Alert';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
 import { Field, FormError } from '@/components/ui/Field';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useApi } from '@/lib/api/useApi';
@@ -39,11 +40,7 @@ export function ClassList() {
   return (
     <div className="space-y-6">
       {adding ? (
-        <form
-          onSubmit={createClass}
-          aria-label={t('newClass')}
-          className="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5"
-        >
+        <form onSubmit={createClass} aria-label={t('newClass')} className={`flex flex-wrap items-end gap-4 ${cardClass()}`}>
           <div className="w-full">
             <FormError message={error} />
           </div>
@@ -82,7 +79,7 @@ export function ClassList() {
             <li key={schoolClass.id}>
               <Link
                 href={`/dashboard/classes/${schoolClass.id}`}
-                className="group block rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-indigo-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className={`group block transition hover:border-indigo-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none ${cardClass()}`}
               >
                 <div className="flex items-center justify-between">
                   <span className={`h-3 w-3 rounded-full ${colorFor(schoolClass.id).dot}`} />

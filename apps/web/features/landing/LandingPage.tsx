@@ -25,12 +25,12 @@ export async function LandingPage() {
 
       <main className="flex-1">
         <section className="mx-auto flex max-w-5xl flex-col items-center px-4 py-12 text-center sm:px-6 sm:py-16 lg:py-24">
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-700">
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3.5 py-1.5 text-xs font-semibold tracking-wider text-indigo-700 uppercase">
             <span className="h-2 w-2 rounded-full bg-indigo-600" />
             {t('badge')}
           </span>
 
-          <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+          <h1 className="mb-6 text-4xl leading-tight font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
             {t('titleLine1')}
             <br />
             <span className="bg-linear-to-r from-indigo-600 to-sky-500 bg-clip-text text-transparent">{t('titleLine2')}</span>

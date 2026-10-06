@@ -1,5 +1,6 @@
 import type { PoolClient } from 'pg';
 import { pool } from '../../db/pool.js';
+import { COURSE_DATES, TEACHER_JSON } from '../../db/sql.js';
 import type { Role } from '../../lib/roles.js';
 import type { WeeklyLesson } from './weeklyLessons.js';
 
@@ -19,10 +20,8 @@ const VISIBLE_COURSES: Record<Role, { where: string; param: 'schoolId' | 'userId
   },
 };
 
-// `::text` keeps dates as "2026-09-01"; pg would otherwise make them local-midnight Dates, which JSON
-// shifts to the previous day in UTC
 const COURSE_COLUMNS = `co.id, co.name, co.description,
-  co.start_date::text AS "startDate", co.end_date::text AS "endDate",
+  ${COURSE_DATES},
   co.class_id AS "classId", co.teacher_id AS "teacherId"`;
 
 const LESSON_COLUMNS = `id, weekday, to_char(start_time, 'HH24:MI') AS "startTime",
@@ -67,9 +66,9 @@ export async function listVisibleCourses(user: { id: string; role: Role; schoolI
   const params = scope.param === 'schoolId' ? [user.schoolId] : scope.param === 'userId' ? [user.id] : [];
   const { rows } = await pool.query<VisibleCourse>(
     `SELECT co.id, co.name, co.description,
-            co.start_date::text AS "startDate", co.end_date::text AS "endDate",
+            ${COURSE_DATES},
             json_build_object('id', cl.id, 'name', cl.name, 'schoolYear', cl.school_year) AS class,
-            json_build_object('id', t.id, 'firstName', t.first_name, 'lastName', t.last_name) AS teacher
+            ${TEACHER_JSON} AS teacher
      FROM courses co
      JOIN classes cl ON cl.id = co.class_id
      JOIN users t ON t.id = co.teacher_id

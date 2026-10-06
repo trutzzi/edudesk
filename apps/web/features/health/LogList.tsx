@@ -3,6 +3,7 @@
 import { useFormatter, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { buttonClass } from '@/components/ui/button';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { FormError } from '@/components/ui/Field';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -73,7 +74,7 @@ function Entries({ query }: { query: string }) {
       return next;
     });
 
-  if (entries.length === 0) return <p className="py-6 text-center text-sm text-slate-500">{t('noEntries')}</p>;
+  if (entries.length === 0) return <EmptyState>{t('noEntries')}</EmptyState>;
 
   return (
     <>
@@ -87,7 +88,7 @@ function Entries({ query }: { query: string }) {
                   <span aria-hidden>{style.icon}</span>
                   {entry.level === 'error' ? t('levelError') : t('levelWarn')}
                 </span>
-                <time dateTime={entry.createdAt} className="text-xs tabular-nums text-slate-500">
+                <time dateTime={entry.createdAt} className="text-xs text-slate-500 tabular-nums">
                   {format.dateTime(new Date(entry.createdAt), { weekday: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                 </time>
                 {entry.source === 'web' ? (

@@ -3,8 +3,8 @@ import { hashPassword } from '../../lib/password.js';
 import {
   emailName,
   EXTRA_COURSES,
-  samplePassword,
   PERIODS,
+  samplePassword,
   TEACHER_CLASS_PARENTS,
   TEACHER_CLASS_STUDENTS,
   WEEKDAYS,

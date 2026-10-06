@@ -64,7 +64,7 @@ export function CalendarWeekRow({ weekStart, month, today, events, onSelect }: P
               type="button"
               onClick={() => onSelect(item)}
               title={`${eventTitle(item)} · ${eventDates(item)}`}
-              className={`pointer-events-auto mb-1 flex min-w-0 items-center gap-1.5 overflow-hidden border border-black/5 py-0.5 pl-0.5 pr-2 text-left text-xs font-semibold shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${color.soft} ${color.text} ${
+              className={`pointer-events-auto mb-1 flex min-w-0 items-center gap-1.5 overflow-hidden border border-black/5 py-0.5 pr-2 pl-0.5 text-left text-xs font-semibold shadow-sm transition hover:brightness-95 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:outline-none ${color.soft} ${color.text} ${
                 clippedStart ? 'rounded-l-none border-l-0' : 'rounded-l-full'
               } ${clippedEnd ? 'rounded-r-none border-r-0' : 'rounded-r-full'}`}
               style={{ gridColumn: `${startColumn + 1} / ${endColumn + 2}`, gridRow: lane + 1 }}

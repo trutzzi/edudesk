@@ -5,7 +5,10 @@ import { useMemo, useState } from 'react';
 import { PersonList } from '@/components/PersonList';
 import { ErrorAlert } from '@/components/ui/Alert';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { compactControlClass, FormError } from '@/components/ui/Field';
+import { SectionTitle } from '@/components/ui/SectionTitle';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { SuccessNote } from '@/components/ui/SuccessNote';
 import { useAuth } from '@/features/auth/AuthProvider';
@@ -75,11 +78,11 @@ export function People() {
       )}
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <section aria-labelledby="members-title" className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <section aria-labelledby="members-title" className={`space-y-4 ${cardClass()}`}>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 id="members-title" className="text-lg font-bold">
-              {t('members')} <span className="text-sm font-medium text-slate-400">({members.data?.length ?? 0})</span>
-            </h2>
+            <SectionTitle id="members-title" count={members.data?.length ?? 0}>
+              {t('members')}
+            </SectionTitle>
             <input
               type="search"
               value={search}
@@ -94,11 +97,11 @@ export function People() {
           {!members.data ? (
             <Skeleton className="h-40 rounded-xl bg-slate-100" />
           ) : groups.length === 0 ? (
-            <p className="py-6 text-center text-sm text-slate-500">{t('noMatches')}</p>
+            <EmptyState>{t('noMatches')}</EmptyState>
           ) : (
             groups.map(({ role, people }) => (
               <div key={role}>
-                <h3 className="mb-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+                <h3 className="mb-1 text-xs font-bold tracking-wide text-slate-500 uppercase">
                   {t(`groups.${role}`)} ({people.length})
                 </h3>
                 <PersonList
@@ -120,10 +123,8 @@ export function People() {
           )}
         </section>
 
-        <section aria-labelledby="pending-title" className="space-y-2 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 id="pending-title" className="text-lg font-bold">
-            {t('pending')}
-          </h2>
+        <section aria-labelledby="pending-title" className={`space-y-2 ${cardClass()}`}>
+          <SectionTitle id="pending-title">{t('pending')}</SectionTitle>
           {invitations.data ? (
             <InvitationList invitations={invitations.data} onChanged={invitations.reload} />
           ) : (

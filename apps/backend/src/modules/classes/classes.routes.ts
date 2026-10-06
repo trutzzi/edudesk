@@ -1,7 +1,7 @@
 import express from 'express';
 import { authenticateJWT, currentUser, requireRole, requireSchool, schoolIdOf, type AuthenticatedRequest } from '../../http/auth.js';
 import { HttpError } from '../../http/errors.js';
-import { readId, readBody } from '../../http/query.js';
+import { readBody, readId } from '../../http/query.js';
 import { isNonEmptyString, isPgError, isUuid, PG_ERRORS } from '../../lib/validation.js';
 import {
   addStudentToClass,
