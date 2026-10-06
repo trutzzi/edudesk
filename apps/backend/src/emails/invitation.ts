@@ -33,7 +33,7 @@ interface InvitationEmail {
   locale: EmailLocale;
 }
 
-const DEFAULT_APP_NAME = 'Blue';
+const DEFAULT_APP_NAME = 'EduDesk';
 
 export function invitationEmail({ to, inviter, school, appName, role, link, locale }: InvitationEmail) {
   const copy = COPY[locale];

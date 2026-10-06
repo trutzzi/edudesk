@@ -14,7 +14,7 @@ describe('DashboardHeader', () => {
 
     expect(screen.getByText('Ana Pop')).toBeInTheDocument();
     expect(screen.getByText('Therapist')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Blue/ })).toHaveAttribute('href', '/');
+    expect(screen.getByRole('link', { name: /EduDesk/ })).toHaveAttribute('href', '/');
   });
 
   it('shows the role in the chosen language', () => {

@@ -16,7 +16,7 @@ const SWATCHES = ['#4f46e5', '#2563eb', '#0ea5e9', '#0d9488', '#16a34a', '#ca8a0
 const LOGO_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 const MAX_LOGO_BYTES = 512 * 1024;
 
-// How the app looks to the institution's people: its name in place of "Blue", its main color and its logo.
+// How the app looks to the institution's people: its name in place of "EduDesk", its main color and its logo.
 // The color previews on the whole page while choosing.
 export function InstitutionSettings() {
   const t = useTranslations('Institution');

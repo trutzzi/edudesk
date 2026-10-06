@@ -6,7 +6,7 @@ export const USAGE = `Usage: npm run create-admin -- --code <CODE> [--institutio
   --code         The institution's code, 3–20 letters, digits or dashes. If no institution has it yet,
                  one is created, and --institution names it.
   --institution  The new institution's name.
-  --app-name     What the app is called for its people, in place of "Blue" (optional).
+  --app-name     What the app is called for its people, in place of "EduDesk" (optional).
   --color        Its main color, like #0ea5e9 (optional). The logo is uploaded later, under Instituție.
   Set ADMIN_PASSWORD to choose the password; otherwise a strong one is generated and shown once.`;
 
