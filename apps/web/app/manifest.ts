@@ -1,10 +1,10 @@
 import type { MetadataRoute } from 'next';
 
-// Lets phones add Blue to the home screen and open it full screen, like an app
+// Lets phones add EduDesk to the home screen and open it full screen, like an app
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Blue',
-    short_name: 'Blue',
+    name: 'EduDesk',
+    short_name: 'EduDesk',
     description: 'Management for therapy institutions: administrators, therapists and patients/clients.',
     start_url: '/dashboard',
     scope: '/',

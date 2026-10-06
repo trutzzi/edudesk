@@ -6,7 +6,7 @@ import { apiUrl } from '@/lib/api/client';
 import { useApi } from '@/lib/api/useApi';
 import { applyBrandColor } from '@/lib/theme';
 
-export const DEFAULT_APP_NAME = 'Blue';
+export const DEFAULT_APP_NAME = 'EduDesk';
 
 export interface Branding {
   appName: string | null;
@@ -26,7 +26,7 @@ const BrandingContext = createContext<BrandingValue>({ appName: DEFAULT_APP_NAME
 
 export const useBranding = () => useContext(BrandingContext);
 
-// Keeps "Page · Blue" in the browser tab saying the institution's name instead, whenever Next sets a title
+// Keeps "Page · EduDesk" in the browser tab saying the institution's name instead, whenever Next sets a title
 function useTabTitle(appName: string) {
   useEffect(() => {
     if (appName === DEFAULT_APP_NAME) return;

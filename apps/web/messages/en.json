@@ -362,7 +362,7 @@
   },
   "Invite": {
     "title": "Join {school}",
-    "intro": "You've been invited to join {school} on Blue as {role}.",
+    "intro": "You've been invited to join {school} on EduDesk as {role}.",
     "forEmail": "Invitation for {email}",
     "existingAccount": "You already have an account with this email. Enter its password to add {school} to it.",
     "newAccount": "Create your account to accept.",
@@ -544,7 +544,7 @@
     "subtitle": "How the app looks to the institution's people once they sign in: its name, color and logo.",
     "lookTitle": "Name and color",
     "appName": "App name",
-    "appNameHint": "Shown in the header, the browser tab and invitation emails. Empty means \"Blue\".",
+    "appNameHint": "Shown in the header, the browser tab and invitation emails. Empty means \"EduDesk\".",
     "color": "Main color",
     "customColor": "Another color",
     "colorHint": "It previews on the page while you choose and stays once you save.",

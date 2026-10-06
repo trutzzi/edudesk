@@ -7,6 +7,7 @@ import { buttonClass } from '@/components/ui/button';
 import { PeriodNav } from '@/components/ui/PeriodNav';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { useBranding } from '@/features/branding/BrandingProvider';
 import { ApiError, errorMessage } from '@/lib/api/client';
 import { useApi } from '@/lib/api/useApi';
 import { callHref, whatsappHref } from '@/lib/contact';
@@ -27,6 +28,7 @@ export function ClientCard({ clientId }: { clientId: string }) {
   const tErrors = useTranslations('Errors');
   const locale = useLocale();
   const { user } = useAuth();
+  const { appName } = useBranding();
   const isStaff = user?.role === 'school_admin' || user?.role === 'teacher';
   const thisMonth = nowIn(browserTimeZone()).day.slice(0, 7);
   const [month, setMonth] = useState(thisMonth);
@@ -87,7 +89,7 @@ export function ClientCard({ clientId }: { clientId: string }) {
             <a href={callHref(client.phone)} className={buttonClass()}>
               {t('call')}
             </a>
-            <a href={whatsappHref(client.phone)} target="_blank" rel="noopener noreferrer" className={buttonClass('secondary')}>
+            <a href={whatsappHref(client.phone, appName)} target="_blank" rel="noopener noreferrer" className={buttonClass('secondary')}>
               {t('whatsapp')}
             </a>
           </div>

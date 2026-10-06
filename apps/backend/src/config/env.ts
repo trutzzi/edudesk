@@ -26,7 +26,7 @@ export const env = {
     return process.env.SMTP_URL || undefined;
   },
   get mailFrom() {
-    return process.env.MAIL_FROM ?? 'Blue <no-reply@edudesk.local>';
+    return process.env.MAIL_FROM ?? 'EduDesk <no-reply@edudesk.local>';
   },
   // Number of proxy hops in front of the API, or Express's own trust proxy setting; unset means none
   get trustProxy(): number | string | undefined {

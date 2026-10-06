@@ -8,7 +8,7 @@ const sizes = {
   lg: { mark: 'h-9 w-9 rounded-xl text-xl', image: 'h-9 max-w-36', text: 'text-2xl' },
 };
 
-// The app's name with its mark: the institution's logo and name once signed in, otherwise Blue's
+// The app's name with its mark: the institution's logo and name once signed in, otherwise EduDesk's
 export function Logo({ size = 'md' }: { size?: keyof typeof sizes }) {
   const { mark, image, text } = sizes[size];
   const { appName, logoSrc } = useBranding();

@@ -362,7 +362,7 @@
   },
   "Invite": {
     "title": "Alătură-te instituției {school}",
-    "intro": "Ai fost invitat să te alături instituției {school} pe Blue ca {role}.",
+    "intro": "Ai fost invitat să te alături instituției {school} pe EduDesk ca {role}.",
     "forEmail": "Invitație pentru {email}",
     "existingAccount": "Ai deja un cont cu acest email. Introdu parola lui pentru a adăuga {school} la cont.",
     "newAccount": "Creează-ți contul pentru a accepta.",
@@ -544,7 +544,7 @@
     "subtitle": "Cum arată aplicația pentru oamenii instituției după ce se conectează: numele, culoarea și logo-ul.",
     "lookTitle": "Nume și culoare",
     "appName": "Numele aplicației",
-    "appNameHint": "Apare în antet, în titlul paginii și în emailurile de invitație. Gol înseamnă „Blue”.",
+    "appNameHint": "Apare în antet, în titlul paginii și în emailurile de invitație. Gol înseamnă „EduDesk”.",
     "color": "Culoarea principală",
     "customColor": "Altă culoare",
     "colorHint": "Se vede pe pagină cât timp alegi; se păstrează după ce salvezi.",

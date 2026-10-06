@@ -46,8 +46,8 @@ describe('branding', () => {
     vi.mocked(api).mockResolvedValue({ appName: null, color: null, logoUrl: null });
     render(<Logo />);
 
-    expect(await screen.findByText('Blue')).toBeInTheDocument();
-    expect(screen.getByText('B')).toBeInTheDocument();
+    expect(await screen.findByText('EduDesk')).toBeInTheDocument();
+    expect(screen.getByText('E')).toBeInTheDocument();
     expect(brandColor()).toBe('');
   });
 
