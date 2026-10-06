@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { api, ApiError } from '@/lib/api/client';
 import { renderWithIntl } from '@/test/renderWithIntl';
+import { signIn } from '@/test/signIn';
 import { StatsGrid } from './StatsGrid';
 
 vi.mock('@/lib/api/client', async (importOriginal) => ({
@@ -19,7 +20,7 @@ const renderGrid = (locale?: 'en' | 'ro') =>
   );
 
 beforeEach(() => {
-  localStorage.setItem('edudesk.session', JSON.stringify({ token: 'abc', user: { firstName: 'Ana' } }));
+  signIn({}, 'abc');
 });
 
 afterEach(() => {

@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl';
 import { useState, type FormEvent } from 'react';
 import { buttonClass } from '@/components/ui/button';
 import { Field, FormError, SelectField } from '@/components/ui/Field';
-import { useSend } from '@/lib/api/useSend';
 import type { Therapy } from '@/features/therapies/types';
 import { useApi } from '@/lib/api/useApi';
+import { useSend } from '@/lib/api/useSend';
 import type { Therapist } from './types';
 
 interface Props {

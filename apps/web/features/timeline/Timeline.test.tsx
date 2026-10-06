@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { api } from '@/lib/api/client';
 import { renderWithIntl } from '@/test/renderWithIntl';
+import { signIn } from '@/test/signIn';
 import { Timeline } from './Timeline';
 
 vi.mock('@/lib/api/client', async (importOriginal) => ({
@@ -24,12 +25,6 @@ const lessonOn = (date: string, courseName: string, className: string, teacher =
   class: { id: className, name: className },
   teacher,
 });
-
-const signIn = (role: string) =>
-  localStorage.setItem(
-    'edudesk.session',
-    JSON.stringify({ token: 'abc', user: { id: 'u1', firstName: 'Ana', lastName: 'Pop', role, schoolId: 's1' } }),
-  );
 
 const renderTimeline = () =>
   renderWithIntl(
@@ -61,7 +56,7 @@ afterEach(() => {
 
 describe('Timeline', () => {
   it('groups the week by class and marks what is in progress', async () => {
-    signIn('school_admin');
+    signIn({ role: 'school_admin' }, 'abc');
     renderTimeline();
 
     expect(await screen.findByRole('button', { name: 'Collapse 9A' })).toBeInTheDocument();
@@ -74,7 +69,7 @@ describe('Timeline', () => {
   });
 
   it('switches to grouping by teacher and filters by search', async () => {
-    signIn('school_admin');
+    signIn({ role: 'school_admin' }, 'abc');
     renderTimeline();
     const user = userEvent.setup();
     await screen.findByRole('button', { name: 'Collapse 9A' });
@@ -88,7 +83,7 @@ describe('Timeline', () => {
   });
 
   it('loads whole courses for the term view', async () => {
-    signIn('school_admin');
+    signIn({ role: 'school_admin' }, 'abc');
     renderTimeline();
 
     await userEvent.setup().selectOptions(screen.getByLabelText('Zoom'), 'term');
@@ -97,7 +92,7 @@ describe('Timeline', () => {
   });
 
   it('is only for school admins', () => {
-    signIn('teacher');
+    signIn({ role: 'teacher' }, 'abc');
     renderTimeline();
 
     expect(screen.getByText('Only institution admins can see the timeline.')).toBeInTheDocument();

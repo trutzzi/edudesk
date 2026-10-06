@@ -44,8 +44,8 @@ export IMAGE_TAG="$TAG"
 
 echo "Migrating the database"
 docker compose up -d --wait db
-docker compose run --rm --no-deps edudesk-api npx --no-install node-pg-migrate up
-docker compose run --rm --no-deps edudesk-api node dist/scripts/holidays.js
+docker compose run --rm --no-deps edudesk-api npm run migrate:up
+docker compose run --rm --no-deps edudesk-api npm run holidays
 
 echo "Starting $TAG"
 echo "IMAGE_TAG=$TAG" > .env

@@ -17,7 +17,7 @@ describe('reportClientError', () => {
   it('sends the error, its stack and the page, with the session when there is one', () => {
     reportClientError(new TypeError('x is undefined'), 'abc');
 
-    const [url, init] = fetchMock.mock.calls[0]!;
+    const [url, init] = fetchMock.mock.calls[0];
     expect(url).toBe('http://localhost:4000/api/monitoring/client-errors');
     expect(init.headers.Authorization).toBe('Bearer abc');
     expect(JSON.parse(init.body)).toMatchObject({ message: 'TypeError: x is undefined', url: window.location.href });

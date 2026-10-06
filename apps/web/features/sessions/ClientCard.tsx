@@ -61,12 +61,12 @@ export function ClientCard({ clientId }: { clientId: string }) {
         </div>
         <dl className="grid gap-3 text-sm sm:grid-cols-2">
           <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t('phone')}</dt>
+            <dt className="text-xs font-semibold tracking-wide text-slate-500 uppercase">{t('phone')}</dt>
             <dd className="mt-0.5 font-medium">{client.phone ?? t('noPhone')}</dd>
           </div>
           {isStaff && (
             <div>
-              <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t('paymentType')}</dt>
+              <dt className="text-xs font-semibold tracking-wide text-slate-500 uppercase">{t('paymentType')}</dt>
               <dd className="mt-0.5 font-medium">{client.paymentType ? tPayment(client.paymentType) : t('noPaymentType')}</dd>
             </div>
           )}
@@ -75,13 +75,13 @@ export function ClientCard({ clientId }: { clientId: string }) {
           <dl className="grid gap-3 text-sm sm:grid-cols-2">
             {client.details && (
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t('details')}</dt>
+                <dt className="text-xs font-semibold tracking-wide text-slate-500 uppercase">{t('details')}</dt>
                 <dd className="mt-0.5 whitespace-pre-line">{client.details}</dd>
               </div>
             )}
             {client.notes && (
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t('notes')}</dt>
+                <dt className="text-xs font-semibold tracking-wide text-slate-500 uppercase">{t('notes')}</dt>
                 <dd className="mt-0.5 whitespace-pre-line">{client.notes}</dd>
               </div>
             )}

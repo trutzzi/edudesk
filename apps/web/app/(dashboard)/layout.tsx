@@ -7,8 +7,8 @@ import { DashboardNav, hasTabBar } from '@/components/layout/DashboardNav';
 import { Spinner } from '@/components/ui/Spinner';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { BrandingProvider } from '@/features/branding/BrandingProvider';
-import { SavedLocale } from '@/features/profile/SavedLocale';
 import { NoSchool, SchoolSetup } from '@/features/onboarding/SchoolSetup';
+import { SavedLocale } from '@/features/profile/SavedLocale';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const { user, loading, logout } = useAuth();

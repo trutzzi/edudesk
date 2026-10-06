@@ -150,7 +150,7 @@ export function Profile() {
           <FormError message={language.error} />
           <SegmentedControl<Locale>
             label={t('language')}
-            value={(me.locale ?? currentLocale) as Locale}
+            value={me.locale ?? currentLocale}
             disabled={language.pending}
             onChange={chooseLanguage}
             segments={locales.map((locale) => ({ value: locale, label: tLocale(locale), lang: locale }))}

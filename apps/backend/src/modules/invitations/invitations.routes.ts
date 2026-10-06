@@ -2,7 +2,7 @@ import express, { type Request, type Response } from 'express';
 import { toEmailLocale } from '../../emails/layout.js';
 import { authenticateJWT, currentUser, requireRole, requireSchool, schoolIdOf, type AuthenticatedRequest } from '../../http/auth.js';
 import { HttpError } from '../../http/errors.js';
-import { readId, readBody } from '../../http/query.js';
+import { readBody, readId } from '../../http/query.js';
 import { isSchoolRole } from '../../lib/roles.js';
 import { toSession } from '../../lib/session.js';
 import { newLinkToken, sha256 } from '../../lib/tokens.js';

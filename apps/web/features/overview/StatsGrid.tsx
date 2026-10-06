@@ -2,6 +2,7 @@
 
 import { useFormatter, useTranslations } from 'next-intl';
 import { ErrorAlert } from '@/components/ui/Alert';
+import { cardClass } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useApi } from '@/lib/api/useApi';
 
@@ -45,7 +46,7 @@ export function StatsGrid() {
   return (
     <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
       {CARDS.map(({ key, tone, icon }) => (
-        <div key={key} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <div key={key} className={cardClass()}>
           <div className="flex items-start justify-between gap-2 sm:items-center">
             <span className="text-sm font-medium text-slate-500">{t(`stats.${key}`)}</span>
             <div className={`shrink-0 rounded-xl border p-2 sm:p-2.5 ${tone}`}>

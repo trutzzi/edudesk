@@ -95,7 +95,7 @@ export function PersonForm({ role, member, classes, onSaved, onCancel }: Props) 
               onChange={(event) => setPassword(event.target.value)}
               minLength={EASY_PASSWORD_LENGTH}
               required={!member}
-              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 font-mono text-sm tracking-wider text-slate-900 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 font-mono text-sm tracking-wider text-slate-900 focus:border-transparent focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
             <button type="button" onClick={() => setPassword(generatePassword())} className={buttonClass('secondary')}>
               {t('generate')}
@@ -137,7 +137,7 @@ export function PersonForm({ role, member, classes, onSaved, onCancel }: Props) 
               rows={3}
               maxLength={2000}
               defaultValue={member?.[field] ?? ''}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 focus:border-transparent focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
           </div>
         ))}

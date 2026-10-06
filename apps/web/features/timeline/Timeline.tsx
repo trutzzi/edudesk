@@ -12,7 +12,7 @@ import { hourWindow, toMinutes } from '@/lib/dates/time';
 import { isPhone } from '@/lib/media';
 import type { CoursesResponse, LessonsResponse, SchoolEvent } from '@/lib/types/school';
 import { browserTimeZone, useNow } from '@/lib/useNow';
-import { type GroupBy, groupItems, matchesSearch, type TimelineItem } from './grouping';
+import { groupItems, matchesSearch, type GroupBy, type TimelineItem } from './grouping';
 import { NowPanel } from './NowPanel';
 import { rangeFor, shiftAnchor, type Zoom } from './ranges';
 import { dateScale, timeScale } from './scales';

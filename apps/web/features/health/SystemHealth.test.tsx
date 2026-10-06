@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { api } from '@/lib/api/client';
 import { renderWithIntl } from '@/test/renderWithIntl';
+import { signIn } from '@/test/signIn';
 import { SystemHealth } from './SystemHealth';
 
 vi.mock('@/lib/api/client', async (importOriginal) => ({
@@ -38,7 +39,7 @@ const entry = {
 };
 
 beforeEach(() => {
-  localStorage.setItem('edudesk.session', JSON.stringify({ token: 'abc', user: { role: 'super_admin', schoolId: null } }));
+  signIn({ role: 'super_admin', schoolId: null }, 'abc');
   vi.mocked(api).mockImplementation(async (path: string) =>
     path.startsWith('/api/monitoring/summary') ? summary : { entries: [entry], hasMore: false },
   );

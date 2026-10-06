@@ -1,7 +1,7 @@
 import { withTransaction } from '../../db/transaction.js';
 import { hashPassword } from '../../lib/password.js';
-import { DEMO_CODE, emailName, passwordHint, samplePassword } from './data.js';
 import { createSchool } from '../../modules/schools/schools.repository.js';
+import { DEMO_CODE, emailName, passwordHint, samplePassword } from './data.js';
 import { fillSchool } from './fillSchool.js';
 import { insertUser } from './users.js';
 

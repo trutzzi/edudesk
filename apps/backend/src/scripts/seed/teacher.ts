@@ -1,6 +1,6 @@
 import { withTransaction } from '../../db/transaction.js';
 import { hashPassword } from '../../lib/password.js';
-import { emailName, EXTRA_COURSES, samplePassword, PERIODS, TEACHER_CLASS_STUDENTS, WEEKDAYS, YEAR } from './data.js';
+import { emailName, EXTRA_COURSES, PERIODS, samplePassword, TEACHER_CLASS_STUDENTS, WEEKDAYS, YEAR } from './data.js';
 import { freePeriods } from './timetable.js';
 import { addSpecialization, insertUser } from './users.js';
 

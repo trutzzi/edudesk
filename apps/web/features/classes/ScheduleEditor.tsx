@@ -3,8 +3,7 @@
 import { useFormatter, useTranslations } from 'next-intl';
 import { useId, useState } from 'react';
 import { buttonClass } from '@/components/ui/button';
-import { FormError } from '@/components/ui/Field';
-import { compactControlClass } from '@/components/ui/Field';
+import { compactControlClass, FormError } from '@/components/ui/Field';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { SuccessNote } from '@/components/ui/SuccessNote';
 import { useApi } from '@/lib/api/useApi';
@@ -95,7 +94,7 @@ function ScheduleRows({ courseId, initial, onSaved }: { courseId: string; initia
         <p className="text-sm text-slate-500">{t('empty')}</p>
       ) : (
         <table className="w-full text-left text-sm">
-          <thead className="text-xs uppercase tracking-wide text-slate-500">
+          <thead className="text-xs tracking-wide text-slate-500 uppercase">
             <tr>
               <th className="pb-1 font-semibold">{t('weekday')}</th>
               <th className="pb-1 font-semibold">{t('start')}</th>

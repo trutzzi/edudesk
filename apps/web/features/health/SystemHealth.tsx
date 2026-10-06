@@ -4,6 +4,8 @@ import { useFormatter, useTranslations } from 'next-intl';
 import { useEffect, useState, type ReactNode } from 'react';
 import { ErrorAlert } from '@/components/ui/Alert';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { compactControlClass } from '@/components/ui/Field';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useApi } from '@/lib/api/useApi';
@@ -16,7 +18,7 @@ const REFRESH_EVERY_MS = 60_000;
 
 function Tile({ label, children, icon }: { label: string; children: ReactNode; icon?: ReactNode }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div className={cardClass()}>
       <p className="flex items-center gap-1.5 text-sm font-medium text-slate-500">
         {icon}
         {label}
@@ -125,14 +127,14 @@ export function SystemHealth() {
           </div>
 
           <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className={cardClass()}>
               <ProblemsChart buckets={data.timeline} byDay={range === '7d'} />
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className={cardClass()}>
               <h3 className="mb-3 text-sm font-semibold text-slate-700">{t('top')}</h3>
               {data.topPaths.length === 0 ? (
-                <p className="py-6 text-center text-sm text-slate-500">{t('none')}</p>
+                <EmptyState>{t('none')}</EmptyState>
               ) : (
                 <table className="w-full text-left text-sm">
                   <thead className="text-xs text-slate-500">
@@ -145,7 +147,7 @@ export function SystemHealth() {
                   <tbody className="divide-y divide-slate-100">
                     {data.topPaths.map((row) => (
                       <tr key={`${row.method} ${row.path}`}>
-                        <td className="break-all py-2 pr-3 font-mono text-xs text-slate-700">
+                        <td className="py-2 pr-3 font-mono text-xs break-all text-slate-700">
                           {row.method} {row.path}
                         </td>
                         <td className="py-2 text-right font-mono text-xs text-slate-600">{row.commonStatus}</td>
@@ -160,7 +162,7 @@ export function SystemHealth() {
         </>
       )}
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className={cardClass()}>
         <LogList refreshKey={refreshKey} />
       </div>
     </section>

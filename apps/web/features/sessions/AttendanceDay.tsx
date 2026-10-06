@@ -12,11 +12,11 @@ import { useApi } from '@/lib/api/useApi';
 import { useSend } from '@/lib/api/useSend';
 import { nowIn } from '@/lib/dates/clock';
 import { addDays } from '@/lib/dates/days';
-import { browserTimeZone } from '@/lib/useNow';
 import { fullName } from '@/lib/people';
+import { browserTimeZone } from '@/lib/useNow';
 import { formatLongDay } from './format';
 import { STATUS_STYLES } from './StatusBadge';
-import { ATTENDANCE_STATUSES, type AttendanceDay as Day, type AttendanceStatus, type Neighbour, type Roster } from './types';
+import { ATTENDANCE_STATUSES, type AttendanceStatus, type AttendanceDay as Day, type Neighbour, type Roster } from './types';
 
 // A day of sessions, each with its clients: the therapist marks who came. Everyone counts as present until marked.
 export function AttendanceDay() {

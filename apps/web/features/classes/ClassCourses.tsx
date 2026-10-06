@@ -3,7 +3,10 @@
 import { useFormatter, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { FormError } from '@/components/ui/Field';
+import { SectionTitle } from '@/components/ui/SectionTitle';
 import { useSend } from '@/lib/api/useSend';
 import { colorFor } from '@/lib/colors';
 import { parseDay } from '@/lib/dates/days';
@@ -40,11 +43,9 @@ export function ClassCourses({ classId, courses, teachers, onChanged }: Props) {
     });
 
   return (
-    <section aria-labelledby="courses-title" className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <section aria-labelledby="courses-title" className={`space-y-4 ${cardClass()}`}>
       <div className="flex items-center justify-between">
-        <h2 id="courses-title" className="text-lg font-bold">
-          {t('coursesTitle')}
-        </h2>
+        <SectionTitle id="courses-title">{t('coursesTitle')}</SectionTitle>
         {!adding && (
           <button type="button" onClick={() => setAdding(true)} className={buttonClass('primary', 'sm')}>
             + {t('newCourse')}
@@ -68,7 +69,7 @@ export function ClassCourses({ classId, courses, teachers, onChanged }: Props) {
       )}
 
       {courses.length === 0 ? (
-        <p className="py-6 text-center text-sm text-slate-500">{t('noCourses')}</p>
+        <EmptyState>{t('noCourses')}</EmptyState>
       ) : (
         <ul className="divide-y divide-slate-100">
           {courses.map((course) => {

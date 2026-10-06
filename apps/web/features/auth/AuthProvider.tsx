@@ -28,7 +28,7 @@ interface AuthContextValue {
   logout: () => void;
 }
 
-const STORAGE_KEY = 'edudesk.session';
+export const STORAGE_KEY = 'edudesk.session';
 const listeners = new Set<() => void>();
 
 // `storage` covers other tabs, the local listeners cover this one

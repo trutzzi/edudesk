@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
+import { cardClass } from '@/components/ui/card';
 import type { SchoolEvent } from '@/lib/types/school';
 import type { TimelineGroup } from './grouping';
 import { LABEL_WIDTH, LABEL_WIDTH_CLASS, MIN_TRACK_WIDTH, pct } from './layout';
@@ -52,7 +53,7 @@ export function TimelineGrid({ zoom, scale, groups, events, now, liveCourseIds, 
   return (
     <div
       ref={scrollRef}
-      className={`relative overflow-x-auto overscroll-x-contain rounded-2xl border border-slate-200 bg-white shadow-sm transition-opacity ${LABEL_WIDTH_CLASS} ${
+      className={`relative overflow-x-auto overscroll-x-contain transition-opacity ${cardClass('none')} ${LABEL_WIDTH_CLASS} ${
         loading ? 'opacity-60' : ''
       }`}
       aria-busy={loading}

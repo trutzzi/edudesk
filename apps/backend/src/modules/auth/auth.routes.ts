@@ -1,12 +1,12 @@
 import express, { type Request, type Response } from 'express';
 import { toEmailLocale } from '../../emails/layout.js';
 import { HttpError } from '../../http/errors.js';
+import { readBody } from '../../http/query.js';
 import { comparePassword } from '../../lib/password.js';
+import { normalizePhone } from '../../lib/phone.js';
 import { toSession } from '../../lib/session.js';
 import { sha256 } from '../../lib/tokens.js';
 import { isNonEmptyString } from '../../lib/validation.js';
-import { readBody } from '../../http/query.js';
-import { normalizePhone } from '../../lib/phone.js';
 import { findUserByEmail, findUserByPhone } from '../users/users.repository.js';
 import { consumeVerificationToken, findUnverifiedUser } from './auth.repository.js';
 import { createVerificationToken, emailVerificationRequired, sendVerificationEmail } from './verification.js';

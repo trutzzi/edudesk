@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { ClientSession } from './sessions.repository.js';
 import { buildRosters, isMonth, monthlyTotals, monthRange } from './sessions.js';
+import type { ClientSession } from './sessions.repository.js';
 
 const elena = { id: 't1', firstName: 'Elena', lastName: 'Pop' };
 const dan = { id: 't2', firstName: 'Dan', lastName: 'Ene' };

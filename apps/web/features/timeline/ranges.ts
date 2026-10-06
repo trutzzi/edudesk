@@ -1,4 +1,4 @@
-import { addDays, startOfMonth, endOfMonth, startOfWeek } from '@/lib/dates/days';
+import { addDays, endOfMonth, startOfMonth, startOfWeek } from '@/lib/dates/days';
 
 export type Zoom = 'term' | 'month' | 'week' | 'day';
 

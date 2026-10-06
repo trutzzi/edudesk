@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { api } from '@/lib/api/client';
 import { renderWithIntl } from '@/test/renderWithIntl';
+import { signIn } from '@/test/signIn';
 import { SchoolSetup } from './SchoolSetup';
 
 vi.mock('@/lib/api/client', async (importOriginal) => ({
@@ -17,7 +18,7 @@ afterEach(() => {
 
 describe('SchoolSetup', () => {
   it('creates the school and swaps in the new session', async () => {
-    localStorage.setItem('edudesk.session', JSON.stringify({ token: 'old', user: { role: 'school_admin', schoolId: null } }));
+    signIn({ role: 'school_admin', schoolId: null }, 'old');
     vi.mocked(api).mockImplementation(async (path) =>
       path === '/api/invitations/mine' ? [] : { token: 'new', user: { role: 'school_admin', schoolId: 's1' } },
     );

@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormatter, useTranslations } from 'next-intl';
+import { cardClass } from '@/components/ui/card';
 import { EVENT_COLORS } from '@/lib/colors';
 import { parseDay } from '@/lib/dates/days';
 import { useEventTitle } from '@/lib/useEventTitle';
@@ -17,7 +18,7 @@ export function DayList({ days, view }: { days: string[]; view: TimetableView })
       {days.map((day) => {
         const lessons = view.lessonsOn(day);
         return (
-          <li key={day} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <li key={day} className={cardClass()}>
             <h3 className={`text-sm font-bold first-letter:uppercase ${day === view.now?.day ? 'text-indigo-600' : ''}`}>
               {format.dateTime(parseDay(day), { weekday: 'long', day: 'numeric', month: 'short', timeZone: 'UTC' })}
             </h3>
@@ -38,7 +39,7 @@ export function DayList({ days, view }: { days: string[]; view: TimetableView })
                   return (
                     <li key={lesson.id} className={`flex gap-3 rounded-lg p-2 ${live ? 'bg-indigo-50 ring-2 ring-indigo-500' : ''}`}>
                       <span className={`w-1 shrink-0 rounded-full ${view.colorOf(lesson).bar}`} />
-                      <span className="w-24 shrink-0 text-sm tabular-nums text-slate-500">
+                      <span className="w-24 shrink-0 text-sm text-slate-500 tabular-nums">
                         {lesson.startTime}–{lesson.endTime}
                       </span>
                       <span className="min-w-0 text-sm">

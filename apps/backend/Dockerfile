@@ -13,9 +13,10 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
 COPY --from=build /app/dist ./dist
-# Migrations and holiday data are run from this image by deploy/remote-deploy.sh
+# Migrations, holiday data and the script launcher: `npm run seed` and `npm run holidays` work in here too
 COPY migrations ./migrations
 COPY data ./data
+COPY scripts ./scripts
 USER node
 EXPOSE 4000
 CMD ["node", "dist/index.js"]

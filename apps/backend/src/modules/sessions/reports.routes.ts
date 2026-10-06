@@ -1,8 +1,8 @@
 import express from 'express';
 import { authenticateJWT, currentUser, requireRole, requireSchool, schoolIdOf, type AuthenticatedRequest } from '../../http/auth.js';
 import { HttpError } from '../../http/errors.js';
-import { schoolToday, sessionsBetween } from './sessions.repository.js';
 import { isMonth, monthlyTotals, monthRange } from './sessions.js';
+import { schoolToday, sessionsBetween } from './sessions.repository.js';
 
 const router = express.Router();
 router.use(authenticateJWT, requireRole('school_admin', 'teacher'), requireSchool);

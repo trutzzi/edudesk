@@ -1,4 +1,4 @@
-import type { User } from '@/features/auth/AuthProvider';
+import { STORAGE_KEY, type User } from '@/features/auth/AuthProvider';
 
 // Puts a session in storage, which is where AuthProvider reads it from
 export function signIn(overrides: Partial<User> = {}, token = 'token') {
@@ -11,6 +11,6 @@ export function signIn(overrides: Partial<User> = {}, token = 'token') {
     schoolId: 's1',
     ...overrides,
   };
-  localStorage.setItem('edudesk.session', JSON.stringify({ token, user }));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ token, user }));
   return user;
 }

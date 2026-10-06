@@ -1,4 +1,5 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+// Where the API runs; built into the browser code at build time
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
 
 // The API's address for a path, for things the browser loads itself, like an <img>
 export const apiUrl = (path: string) => `${API_URL}${path}`;

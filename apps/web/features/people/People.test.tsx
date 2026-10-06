@@ -182,7 +182,7 @@ describe('People', () => {
     await user.type(screen.getByLabelText('Last name'), 'Barbu');
     await user.type(screen.getByLabelText('Phone'), '0722 333 444');
     // An easy password is already there for the admin to read out
-    const password = (screen.getByLabelText('Password') as HTMLInputElement).value;
+    const password = screen.getByLabelText<HTMLInputElement>('Password').value;
     expect(password).toMatch(/^[a-z2-9]{6}$/);
     await user.selectOptions(screen.getByLabelText('Payment type'), 'sponsored');
     await user.click(screen.getByRole('button', { name: 'Save' }));
@@ -243,7 +243,7 @@ describe('People', () => {
     await user.click(screen.getByRole('button', { name: "Edit Maria Ene's details" }));
     expect(screen.getByLabelText('New password (optional)')).toHaveValue('');
     await user.click(screen.getByRole('button', { name: 'Generate' }));
-    const password = (screen.getByLabelText('New password (optional)') as HTMLInputElement).value;
+    const password = screen.getByLabelText<HTMLInputElement>('New password (optional)').value;
     await user.click(screen.getByRole('button', { name: 'Save' }));
 
     expect(await screen.findByText(new RegExp(`Changes saved. New password: ${password}`))).toBeInTheDocument();

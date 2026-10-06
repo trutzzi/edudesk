@@ -1,4 +1,5 @@
 import { pool } from '../../db/pool.js';
+import { COURSE_DATES } from '../../db/sql.js';
 
 export interface ClassBase {
   id: string;
@@ -101,7 +102,7 @@ export async function listClassStudents(classId: string) {
 export async function listClassCourses(classId: string) {
   const { rows } = await pool.query<ClassCourse>(
     `SELECT co.id, co.name, co.description,
-            co.start_date::text AS "startDate", co.end_date::text AS "endDate",
+            ${COURSE_DATES},
             t.id AS "teacherId", t.first_name AS "teacherFirstName", t.last_name AS "teacherLastName",
             (SELECT COUNT(*)::int FROM lessons l WHERE l.course_id = co.id) AS "lessonsCount"
      FROM courses co

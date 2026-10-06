@@ -31,7 +31,7 @@ calendar once, and everyone sees a timetable that stays up to date. The app is i
 
 ## Getting started
 
-You need Node 20+ and a running PostgreSQL.
+You need Node 22+ (`.nvmrc`; run `nvm use`) and a running PostgreSQL.
 
 ```bash
 npm install && npm run install:all
@@ -58,7 +58,7 @@ is generated and shown once; set `ADMIN_PASSWORD` to choose one instead. Run it 
 
 ```bash
 cd /var/www/edudesk
-docker compose run --rm edudesk-api node dist/scripts/createAdmin/index.js --code BLUE --institution "Centrul Blue" --first Ana --last Pop --phone 0722123456
+docker compose run --rm edudesk-api npm run create-admin -- --code BLUE --institution "Centrul Blue" --first Ana --last Pop --phone 0722123456
 ```
 
 ## Deploying
@@ -123,13 +123,13 @@ To roll back by hand, set `IMAGE_TAG` in `/var/www/edudesk/.env` to an older fol
 
 ## Code quality
 
-| Command                                   | What it does                                                            |
-| ----------------------------------------- | ----------------------------------------------------------------------- |
-| `npm run check`                           | Everything CI runs: format check, lint, type check, tests with coverage |
-| `npm run lint` / `npm run lint:fix`       | ESLint in both apps (type-aware in the backend)                         |
-| `npm run format` / `npm run format:check` | Prettier, configured in `.prettierrc.json`                              |
-| `npm run typecheck`                       | `tsc --noEmit` in both apps                                             |
-| `npm test`                                | The tests; `npm run test:coverage` adds a coverage report               |
+| Command                                   | What it does                                                                 |
+| ----------------------------------------- | ---------------------------------------------------------------------------- |
+| `npm run check`                           | Everything CI runs: format check, lint, type check, tests with coverage      |
+| `npm run lint` / `npm run lint:fix`       | ESLint in both apps (type-aware in the backend)                              |
+| `npm run format` / `npm run format:check` | Prettier (`.prettierrc.json`), which also sorts imports and Tailwind classes |
+| `npm run typecheck`                       | `tsc --noEmit` in both apps                                                  |
+| `npm test`                                | The tests; `npm run test:coverage` adds a coverage report                    |
 
 Both apps must keep **at least 80%** coverage of statements, branches, functions and lines; the run fails
 below that. Reports go to `apps/*/coverage/` (open `index.html`). Entry points, scripts and the route files
@@ -166,7 +166,7 @@ The workflow only runs as it is on `main`, so a pull request that changes it is 
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `src/modules/<feature>/` | One folder per feature: `*.routes.ts` (HTTP only: read the request, check access, choose the status), `*.repository.ts` (all SQL), and a `*.service.ts` where rules span several queries |
 | `src/http/`              | Sign-in and role middleware, `HttpError` and the error handler, rate limits, the request log, query helpers                                                                              |
-| `src/db/`                | The connection pool and `withTransaction`                                                                                                                                                |
+| `src/db/`                | The connection pool, `withTransaction`, and SQL pieces shared between queries (`sql.ts`)                                                                                                 |
 | `src/lib/`               | Framework-free helpers: passwords, session tokens, roles, validation                                                                                                                     |
 | `src/config/env.ts`      | Every environment setting, typed                                                                                                                                                         |
 | `src/emails/`            | Email templates and the mailer                                                                                                                                                           |
@@ -177,26 +177,34 @@ Routes throw `HttpError(status, message, code?)` for every failure; one handler 
 
 **`apps/web`** (Next.js)
 
-| Folder                | Holds                                                                                      |
-| --------------------- | ------------------------------------------------------------------------------------------ |
-| `app/`                | Routes only: each `page.tsx` or `layout.tsx` is a few lines that render a feature          |
-| `features/<feature>/` | A screen's components, hooks and helpers, side by side                                     |
-| `components/ui/`      | Shared building blocks: buttons, fields, alerts, `SegmentedControl`, `Avatar`, `Skeleton`… |
-| `components/layout/`  | The dashboard header and menu, logo, language switch, error reporter                       |
-| `lib/`                | Shared logic: `api/` (client, `useApi`, `useSend`), `dates/`, colors, roles, types         |
-| `i18n/`, `messages/`  | Languages: every text lives in `messages/en.json` and `messages/ro.json`                   |
+| Folder                | Holds                                                                                                                 |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `app/`                | Routes only: each `page.tsx` or `layout.tsx` is a few lines that render a feature                                     |
+| `features/<feature>/` | A screen's components, hooks and helpers, side by side                                                                |
+| `components/ui/`      | Shared building blocks: `buttonClass`, `cardClass`, fields, `SectionTitle`, `EmptyState`, `Icon`, `SegmentedControl`… |
+| `components/layout/`  | The dashboard header and menu, logo, language switch, error reporter                                                  |
+| `lib/`                | Shared logic: `api/` (client, `useApi`, `useSend`), `dates/`, colors, roles, types                                    |
+| `i18n/`, `messages/`  | Languages: every text lives in `messages/en.json` and `messages/ro.json`                                              |
 
 Imports use `@/…` paths; tests sit next to the file they test.
 
 ## Data
 
-Run these in `apps/backend`. Every sample account has the password `password123`, or `SEED_PASSWORD`
-when set. On the server it must be set (12+ characters), since the site is public:
+The same commands fill whichever environment they run in: on your machine they use `apps/backend/.env`,
+on the server they run inside the API's container against its database. Every sample account has the
+password `password123`, or `SEED_PASSWORD` when set; in production it must be set (12+ characters),
+since the site is public.
 
 ```bash
+# Your machine, from the repository root (or apps/backend)
+npm run seed
+
+# The server
 cd /var/www/edudesk && read -rsp "Sample password: " SP && echo
-docker compose run --rm -e SEED_PASSWORD="$SP" edudesk-api node dist/scripts/seed/index.js; unset SP
+docker compose run --rm -e SEED_PASSWORD="$SP" edudesk-api npm run seed; unset SP
 ```
+
+Add the options below after `npm run seed --` (or after `npm run seed` in the container).
 
 | Command                             | What it does                                                                           |
 | ----------------------------------- | -------------------------------------------------------------------------------------- |

@@ -3,8 +3,8 @@ import { authenticateJWT, currentUser, requireRole, requireSchool, schoolIdOf, t
 import { HttpError } from '../../http/errors.js';
 import { readBody } from '../../http/query.js';
 import { isDateString, isTimeString, isUuid } from '../../lib/validation.js';
-import { insertMark, isAttendanceStatus, schoolToday, sessionsBetween } from './sessions.repository.js';
 import { buildRosters } from './sessions.js';
+import { insertMark, isAttendanceStatus, schoolToday, sessionsBetween } from './sessions.repository.js';
 
 const router = express.Router();
 router.use(authenticateJWT, requireRole('school_admin', 'teacher'), requireSchool);

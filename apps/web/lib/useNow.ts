@@ -23,7 +23,7 @@ export function useNow(timeZone: string) {
   return useMemo(() => {
     if (!snapshot) return null;
     const [day, minutes] = snapshot.split('|');
-    return { day: day!, minutes: Number(minutes) };
+    return { day: day, minutes: Number(minutes) };
   }, [snapshot]);
 }
 

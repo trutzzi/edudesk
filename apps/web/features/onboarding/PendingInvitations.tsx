@@ -40,7 +40,7 @@ export function PendingInvitations({ empty }: Props) {
 
   return (
     <section aria-labelledby="my-invitations-title" className="space-y-3">
-      <h2 id="my-invitations-title" className="text-sm font-bold uppercase tracking-wide text-slate-500">
+      <h2 id="my-invitations-title" className="text-sm font-bold tracking-wide text-slate-500 uppercase">
         {t('title')}
       </h2>
       <FormError message={error} />

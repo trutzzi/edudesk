@@ -60,7 +60,7 @@ describe('TherapyList', () => {
 
     await user.click(screen.getByRole('button', { name: 'Rename Kineto' }));
     // The add field is the first "Therapy name", the one being renamed the second
-    const input = screen.getAllByLabelText('Therapy name')[1]!;
+    const input = screen.getAllByLabelText('Therapy name')[1];
     await user.clear(input);
     await user.type(input, 'Kinetoterapie');
     await user.click(screen.getByRole('button', { name: 'Save' }));

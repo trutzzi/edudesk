@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState, type FormEvent } from 'react';
 import { buttonClass } from '@/components/ui/button';
+import { cardClass } from '@/components/ui/card';
 import { Field, FormError, SelectField } from '@/components/ui/Field';
 import { useAuth } from '@/features/auth/AuthProvider';
 import { api, errorMessage } from '@/lib/api/client';
@@ -39,11 +40,7 @@ export function EventForm({ classes, defaultDate, onSaved, onCancel }: Props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      aria-label={t('addEvent')}
-      className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-    >
+    <form onSubmit={handleSubmit} aria-label={t('addEvent')} className={`space-y-4 ${cardClass()}`}>
       <FormError message={error} />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <div className="sm:col-span-2">

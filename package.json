@@ -11,7 +11,9 @@
     "build": "npm run build --prefix apps/backend && npm run build --prefix apps/web",
     "migrate:up": "npm run migrate:up --prefix apps/backend",
     "migrate:down": "npm run migrate:down --prefix apps/backend",
+    "seed": "npm run seed --prefix apps/backend --",
     "create-admin": "npm run create-admin --prefix apps/backend --",
+    "holidays": "npm run holidays --prefix apps/backend --",
     "test": "npm test --prefix apps/backend && npm test --prefix apps/web",
     "start:local": "npm run migrate:up && npm run dev",
     "typecheck": "npm run typecheck --prefix apps/backend && npm run typecheck --prefix apps/web",
@@ -24,9 +26,14 @@
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:coverage"
   },
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "concurrently": "^10.0.5",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
-    "prettier": "^3.9.9"
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.8.1"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

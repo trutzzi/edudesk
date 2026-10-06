@@ -21,7 +21,7 @@ describe('groupItems', () => {
   it('groups by class with natural sorting', () => {
     const groups = groupItems(items, 'class');
     expect(groups.map((g) => g.label)).toEqual(['9A', '10B']);
-    expect(groups[0]!.rows.map((r) => [r.label, r.sublabel])).toEqual([
+    expect(groups[0].rows.map((r) => [r.label, r.sublabel])).toEqual([
       ['English', 'Sarah Miller'],
       ['Matematică', 'Elena Popescu'],
     ]);
@@ -30,7 +30,7 @@ describe('groupItems', () => {
   it('groups by teacher', () => {
     const groups = groupItems(items, 'teacher');
     expect(groups.map((g) => g.label)).toEqual(['Elena Popescu', 'Sarah Miller']);
-    expect(groups[0]!.rows.map((r) => r.sublabel)).toEqual(['9A', '10B']);
+    expect(groups[0].rows.map((r) => r.sublabel)).toEqual(['9A', '10B']);
   });
 });
 

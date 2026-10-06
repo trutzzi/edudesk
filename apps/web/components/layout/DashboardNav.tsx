@@ -38,7 +38,7 @@ export function DashboardNav({ role }: { role: Role }) {
   return (
     <nav
       aria-label={t('sections')}
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md sm:static sm:block sm:border-b sm:border-t-0 sm:bg-white sm:px-6 sm:pb-0 sm:backdrop-blur-none lg:px-8 ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md sm:static sm:block sm:border-t-0 sm:border-b sm:bg-white sm:px-6 sm:pb-0 sm:backdrop-blur-none lg:px-8 ${
         hasTabBar(role) ? '' : 'hidden'
       }`}
     >
@@ -51,7 +51,7 @@ export function DashboardNav({ role }: { role: Role }) {
               <Link
                 href={href}
                 aria-current={active ? 'page' : undefined}
-                className={`flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 text-[11px] font-semibold transition sm:min-h-0 sm:flex-row sm:gap-1.5 sm:whitespace-nowrap sm:border-b-2 sm:px-0 sm:py-3 sm:text-sm ${
+                className={`flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 text-[11px] font-semibold transition sm:min-h-0 sm:flex-row sm:gap-1.5 sm:border-b-2 sm:px-0 sm:py-3 sm:text-sm sm:whitespace-nowrap ${
                   active ? 'text-indigo-600 sm:border-indigo-600' : 'text-slate-500 hover:text-slate-900 sm:border-transparent'
                 }`}
               >
