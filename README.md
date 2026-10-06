@@ -42,6 +42,25 @@ npm run start:local
 
 The app runs on http://localhost:3000 and the API on http://localhost:4000.
 
+### The first administrator
+
+There is no public sign-up. Create the institution and its first administrator with a script; after that,
+the administrator adds therapists and clients from **Membri** (with an easy generated password they can read
+out) and manages the list of therapies under **Terapii**.
+
+```bash
+npm run create-admin -- --code BLUE --institution "Centrul Blue" --first Ana --last Pop --email ana@blue.ro
+```
+
+`--phone` works instead of (or as well as) `--email`, and is what they then sign in with. A strong password
+is generated and shown once; set `ADMIN_PASSWORD` to choose one instead. Run it again with an existing
+`--code` (and no `--institution`) to add another administrator to that institution. On the server:
+
+```bash
+cd /var/www/edudesk
+docker compose run --rm edudesk-api node dist/scripts/createAdmin/index.js --code BLUE --institution "Centrul Blue" --first Ana --last Pop --phone 0722123456
+```
+
 ## Deploying
 
 Every push to `main` that passes the checks is deployed by the `deploy` job in
@@ -135,7 +154,7 @@ machine another process occasionally answers on the same random port. A real fai
 | `src/lib/`               | Framework-free helpers: passwords, session tokens, roles, validation                                                                                                                     |
 | `src/config/env.ts`      | Every environment setting, typed                                                                                                                                                         |
 | `src/emails/`            | Email templates and the mailer                                                                                                                                                           |
-| `src/scripts/`           | `seed` and `holidays`                                                                                                                                                                    |
+| `src/scripts/`           | `seed`, `holidays` and `createAdmin`                                                                                                                                                     |
 | `migrations/`            | Database migrations (node-pg-migrate)                                                                                                                                                    |
 
 Routes throw `HttpError(status, message, code?)` for every failure; one handler turns it into `{ message, code }`.
@@ -165,10 +184,10 @@ docker compose run --rm -e SEED_PASSWORD="$SP" edudesk-api node dist/scripts/see
 
 | Command                             | What it does                                                                           |
 | ----------------------------------- | -------------------------------------------------------------------------------------- |
-| `npm run seed`                      | Creates the demo school (code `DEMO`); sign in as `admin@demo.edu`                     |
+| `npm run seed`                      | Creates the demo institution (code `DEMO`); sign in as `admin@demo.edu`                |
 | `npm run seed -- --reset`           | Deletes the demo school and creates it again                                           |
 | `npm run seed -- --school <CODE>`   | Adds sample classes, teachers, students and a timetable to an existing school          |
-| `npm run seed -- --teacher <EMAIL>` | Fills in around an existing teacher: students, two more courses, parents' meetings     |
+| `npm run seed -- --teacher <EMAIL>` | Fills in around an existing therapist: clients, another therapy, a meeting             |
 | `npm run holidays`                  | Copies the public holidays in `data/holidays/*.json` into the database                 |
 | `npm run holidays -- --fetch 2027`  | Refreshes a year of `RO.json` from [Nager.Date](https://date.nager.at), then copies it |
 

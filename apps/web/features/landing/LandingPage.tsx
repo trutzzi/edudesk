@@ -16,7 +16,7 @@ const FEATURES = [
   { key: 'health', icon: 'M3 12h4l3-8 4 16 3-8h4' },
 ] as const;
 
-const ROLES = ['admin', 'teacher', 'student', 'parent'] as const;
+const ROLES = ['admin', 'teacher', 'student'] as const;
 
 export async function LandingPage() {
   const t = await getTranslations('Landing');
@@ -102,7 +102,7 @@ export async function LandingPage() {
       </main>
 
       <footer className="border-t border-slate-200 bg-white py-8 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} EduDesk
+        © {new Date().getFullYear()} Blue
       </footer>
     </>
   );

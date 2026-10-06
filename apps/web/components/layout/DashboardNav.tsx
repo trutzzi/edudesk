@@ -3,15 +3,21 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { NavIcon } from '@/components/ui/NavIcon';
 import type { Role } from '@/features/auth/AuthProvider';
 
 const LINKS = [
   { href: '/dashboard', key: 'overview', roles: ['school_admin', 'super_admin'] },
   { href: '/dashboard/timetable', key: 'timetable', roles: ['teacher', 'student', 'parent'] },
+  { href: '/dashboard/attendance', key: 'attendance', roles: ['teacher', 'school_admin'] },
   { href: '/dashboard/students', key: 'students', roles: ['teacher'] },
+  { href: '/dashboard/history', key: 'history', roles: ['student'] },
+  { href: '/dashboard/reports', key: 'reports', roles: ['teacher', 'school_admin'] },
   { href: '/dashboard/timeline', key: 'timeline', roles: ['school_admin'] },
   { href: '/dashboard/classes', key: 'classes', roles: ['school_admin'] },
   { href: '/dashboard/people', key: 'people', roles: ['school_admin'] },
+  { href: '/dashboard/therapies', key: 'therapies', roles: ['school_admin'] },
+  { href: '/dashboard/institution', key: 'institution', roles: ['school_admin'] },
   // A school's calendar: not for super admins, who don't belong to one school
   { href: '/dashboard/calendar', key: 'calendar', roles: ['school_admin', 'teacher', 'student', 'parent'] },
 ] as const;
@@ -31,10 +37,11 @@ export function DashboardNav({ role }: { role: Role }) {
               <Link
                 href={href}
                 aria-current={active ? 'page' : undefined}
-                className={`inline-block border-b-2 py-3 text-sm font-semibold transition ${
+                className={`inline-flex items-center gap-1.5 whitespace-nowrap border-b-2 py-3 text-sm font-semibold transition ${
                   active ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-slate-900'
                 }`}
               >
+                <NavIcon name={key} />
                 {t(key)}
               </Link>
             </li>

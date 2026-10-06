@@ -9,7 +9,6 @@ import { homeFor } from '@/lib/roles';
 
 export function NavActions() {
   const t = useTranslations('Common');
-  const tLanding = useTranslations('Landing');
   const { user, loading, logout } = useAuth();
 
   if (loading) {
@@ -19,11 +18,8 @@ export function NavActions() {
   if (!user) {
     return (
       <>
-        <Link href="/login" className={buttonClass('ghost')}>
+        <Link href="/login" className={buttonClass()}>
           {t('signIn')}
-        </Link>
-        <Link href="/register" className={buttonClass()}>
-          {tLanding('getStarted')}
         </Link>
       </>
     );
@@ -62,13 +58,9 @@ export function HeroActions() {
   }
 
   return (
-    <>
-      <Link href="/register" className={buttonClass('primary', 'lg')}>
-        {t('createAccount')}
-      </Link>
-      <Link href="/login" className={buttonClass('secondary', 'lg')}>
-        {t('signIn')}
-      </Link>
-    </>
+    // Accounts come from the institution's administrator, so visitors can only sign in
+    <Link href="/login" className={buttonClass('primary', 'lg')}>
+      {t('signIn')}
+    </Link>
   );
 }

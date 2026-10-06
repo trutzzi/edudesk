@@ -11,6 +11,7 @@
     "build": "npm run build --prefix apps/backend && npm run build --prefix apps/web",
     "migrate:up": "npm run migrate:up --prefix apps/backend",
     "migrate:down": "npm run migrate:down --prefix apps/backend",
+    "create-admin": "npm run create-admin --prefix apps/backend --",
     "test": "npm test --prefix apps/backend && npm test --prefix apps/web",
     "start:local": "npm run migrate:up && npm run dev",
     "typecheck": "npm run typecheck --prefix apps/backend && npm run typecheck --prefix apps/web",

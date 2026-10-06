@@ -105,7 +105,6 @@ export function TimeGrid({ days, view }: { days: string[]; view: TimetableView }
                       <p className="truncate font-bold">{lesson.courseName}</p>
                       <p className="truncate opacity-80">
                         {lesson.startTime}–{lesson.endTime}
-                        {lesson.room && ` · ${lesson.room}`}
                       </p>
                       <p className="truncate opacity-80">{view.detailOf(lesson)}</p>
                       {live && (

@@ -38,7 +38,7 @@ describe('NoSchool', () => {
     );
     renderScreen();
 
-    expect(await screen.findByText('Astra Pitesti invited you to join as a teacher.')).toBeInTheDocument();
+    expect(await screen.findByText('Astra Pitesti invited you to join as a therapist.')).toBeInTheDocument();
     expect(screen.getByText('Invited by Ana Pop')).toBeInTheDocument();
     await userEvent.setup().click(screen.getByRole('button', { name: 'Join Astra Pitesti' }));
 
@@ -50,7 +50,7 @@ describe('NoSchool', () => {
     vi.mocked(api).mockResolvedValue([]);
     renderScreen();
 
-    expect(await screen.findByText(/Ask your school's admin to invite alina@school.ro/)).toBeInTheDocument();
+    expect(await screen.findByText(/Ask your institution's admin to invite alina@school.ro/)).toBeInTheDocument();
     await userEvent.setup().click(screen.getByRole('button', { name: 'Check again' }));
 
     await waitFor(() => expect(api).toHaveBeenCalledTimes(2));

@@ -43,10 +43,7 @@ export function DayList({ days, view }: { days: string[]; view: TimetableView })
                       </span>
                       <span className="min-w-0 text-sm">
                         <span className="block font-semibold">{lesson.courseName}</span>
-                        <span className="block text-xs text-slate-500">
-                          {view.detailOf(lesson)}
-                          {lesson.room && ` · ${lesson.room}`}
-                        </span>
+                        <span className="block text-xs text-slate-500">{view.detailOf(lesson)}</span>
                         {live && <span className="text-xs font-semibold text-indigo-600">{t('inProgress')}</span>}
                       </span>
                     </li>

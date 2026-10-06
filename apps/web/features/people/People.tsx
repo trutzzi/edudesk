@@ -14,23 +14,28 @@ import { useSend } from '@/lib/api/useSend';
 import { containsText } from '@/lib/text';
 import { InvitationList } from './InvitationList';
 import { InviteForm } from './InviteForm';
+import { PersonForm } from './PersonForm';
 import { INVITABLE_ROLES, type Invitation, type Member } from './types';
+
+// What the form slot above the lists shows
+type Panel = { kind: 'create'; role: 'teacher' | 'student' } | { kind: 'edit'; member: Member } | { kind: 'invite' } | null;
 
 export function People() {
   const t = useTranslations('People');
+  const tPayment = useTranslations('PaymentTypes');
   const members = useApi<Member[]>('/api/users');
   const invitations = useApi<Invitation[]>('/api/invitations');
   const classes = useApi<{ id: string; name: string }[]>('/api/classes');
   const { user } = useAuth();
   const { send, pending, error: removeError } = useSend();
 
-  const [inviting, setInviting] = useState(false);
-  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [panel, setPanel] = useState<Panel>(null);
+  const [note, setNote] = useState<string | null>(null);
   const [search, setSearch] = useState('');
 
   const groups = useMemo(() => {
     const matching = (members.data ?? []).filter((member) =>
-      containsText(`${member.firstName} ${member.lastName} ${member.email}`, search),
+      containsText(`${member.firstName} ${member.lastName} ${member.email ?? ''} ${member.phone ?? ''}`, search),
     );
     return INVITABLE_ROLES.map((role) => ({ role, people: matching.filter((member) => member.role === role) })).filter(
       ({ people }) => people.length > 0,
@@ -43,34 +48,58 @@ export function People() {
     if ((await send(`/api/users/${member.id}`, { method: 'DELETE' })).ok) members.reload();
   }
 
+  function open(next: Panel) {
+    setNote(null);
+    setPanel(next);
+  }
+
+  function saved(message: string) {
+    setPanel(null);
+    setNote(message);
+    members.reload();
+  }
+
   if (members.error !== undefined) return <ErrorAlert>{t('loadError')}</ErrorAlert>;
 
   return (
     <div className="space-y-6">
-      {inviting ? (
+      {panel?.kind === 'invite' ? (
         <InviteForm
           classes={classes.data ?? []}
-          students={(members.data ?? []).filter((member) => member.role === 'student')}
-          onCancel={() => setInviting(false)}
+          onCancel={() => setPanel(null)}
           onSent={(email) => {
-            setInviting(false);
-            setSentTo(email);
+            setPanel(null);
+            setNote(t('sent', { email }));
             invitations.reload();
           }}
         />
+      ) : panel?.kind === 'create' ? (
+        <PersonForm
+          role={panel.role}
+          classes={classes.data ?? []}
+          onCancel={() => setPanel(null)}
+          onSaved={(password) => saved(t('created', { password: password ?? '' }))}
+        />
+      ) : panel?.kind === 'edit' ? (
+        <PersonForm
+          role={panel.member.role === 'teacher' ? 'teacher' : 'student'}
+          member={panel.member}
+          classes={classes.data ?? []}
+          onCancel={() => setPanel(null)}
+          onSaved={(password) => saved(password ? t('updatedPassword', { password }) : t('updated'))}
+        />
       ) : (
-        <div className="flex flex-wrap items-center gap-4">
-          <button
-            type="button"
-            onClick={() => {
-              setSentTo(null);
-              setInviting(true);
-            }}
-            className={buttonClass()}
-          >
-            + {t('invite')}
+        <div className="flex flex-wrap items-center gap-3">
+          <button type="button" onClick={() => open({ kind: 'create', role: 'student' })} className={buttonClass()}>
+            + {t('addClient')}
           </button>
-          {sentTo && <SuccessNote>{t('sent', { email: sentTo })}</SuccessNote>}
+          <button type="button" onClick={() => open({ kind: 'create', role: 'teacher' })} className={buttonClass()}>
+            + {t('addTherapist')}
+          </button>
+          <button type="button" onClick={() => open({ kind: 'invite' })} className={buttonClass('secondary')}>
+            {t('invite')}
+          </button>
+          {note && <SuccessNote>{note}</SuccessNote>}
         </div>
       )}
 
@@ -104,6 +133,31 @@ export function People() {
                 <PersonList
                   people={people}
                   columns={2}
+                  href={(member) => (member.role === 'student' ? `/dashboard/clients/${member.id}` : null)}
+                  details={(member) =>
+                    member.role === 'school_admin' ? null : (
+                      <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs">
+                        {member.role === 'student' && member.paymentType && (
+                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 font-medium text-emerald-700">
+                            {tPayment(member.paymentType)}
+                          </span>
+                        )}
+                        {member.specializations.map((therapy) => (
+                          <span key={therapy.id} className="rounded-full bg-indigo-50 px-2 py-0.5 font-medium text-indigo-700">
+                            {therapy.name}
+                          </span>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => open({ kind: 'edit', member })}
+                          aria-label={t('editLabel', { name: `${member.firstName} ${member.lastName}` })}
+                          className="font-semibold text-indigo-600 hover:underline"
+                        >
+                          {t('edit')}
+                        </button>
+                      </div>
+                    )
+                  }
                   action={(member) =>
                     member.id === user?.id
                       ? null

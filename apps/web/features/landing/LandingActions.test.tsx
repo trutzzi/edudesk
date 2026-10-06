@@ -15,12 +15,11 @@ const renderBoth = () =>
   );
 
 describe('landing actions', () => {
-  it('offers sign-in and sign-up to visitors', () => {
+  it('offers visitors only signing in: accounts come from the administrator', () => {
     renderBoth();
 
     expect(screen.getAllByRole('link', { name: 'Sign in' })).toHaveLength(2);
-    expect(screen.getByRole('link', { name: 'Get started' })).toHaveAttribute('href', '/register');
-    expect(screen.getByRole('link', { name: 'Create an account' })).toHaveAttribute('href', '/register');
+    expect(screen.queryByRole('link', { name: /account|started/i })).not.toBeInTheDocument();
   });
 
   it('sends a signed-in admin to the overview, and lets them log out', async () => {
@@ -33,7 +32,7 @@ describe('landing actions', () => {
 
     await userEvent.setup().click(screen.getByRole('button', { name: 'Log out' }));
 
-    expect(await screen.findByRole('link', { name: 'Get started' })).toBeInTheDocument();
+    expect(await screen.findAllByRole('link', { name: 'Sign in' })).toHaveLength(2);
     expect(localStorage.getItem('edudesk.session')).toBeNull();
   });
 

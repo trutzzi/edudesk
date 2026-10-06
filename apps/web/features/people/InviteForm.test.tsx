@@ -12,12 +12,11 @@ vi.mock('@/lib/api/client', async (importOriginal) => ({
 }));
 
 const onSent = vi.fn();
-const ioana = { id: 's1', firstName: 'Ioana', lastName: 'Stan', email: 'ioana@demo.edu', role: 'student' as const };
 
 const renderForm = () =>
   renderWithIntl(
     <AuthProvider>
-      <InviteForm classes={[{ id: 'c9a', name: '9A' }]} students={[ioana]} onSent={onSent} onCancel={() => {}} />
+      <InviteForm classes={[{ id: 'c9a', name: '9A' }]} onSent={onSent} onCancel={() => {}} />
     </AuthProvider>,
   );
 
@@ -46,46 +45,29 @@ describe('InviteForm', () => {
     expect(onSent).toHaveBeenCalledWith('elena@school.ro');
   });
 
-  it('offers a class only for students and a child only for parents', async () => {
+  it('offers a room only for clients, and no parent role', async () => {
     renderForm();
     const user = userEvent.setup();
-    expect(screen.queryByLabelText('Class (optional)')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Room (optional)')).not.toBeInTheDocument();
+    expect(screen.queryByRole('option', { name: 'Parent' })).not.toBeInTheDocument();
 
     await user.selectOptions(screen.getByLabelText('Role'), 'student');
-    expect(screen.getByLabelText('Class (optional)')).toBeInTheDocument();
-
-    await user.selectOptions(screen.getByLabelText('Role'), 'parent');
-    expect(screen.queryByLabelText('Class (optional)')).not.toBeInTheDocument();
-    await user.type(screen.getByLabelText('Email'), 'mama@school.ro');
-    await user.selectOptions(screen.getByLabelText('Their child (optional)'), 's1');
-    await user.click(screen.getByRole('button', { name: 'Send invitation' }));
-
-    expect(api).toHaveBeenCalledWith('/api/invitations', {
-      token: 'abc',
-      body: { email: 'mama@school.ro', role: 'parent', locale: 'en', studentId: 's1' },
-    });
+    expect(screen.getByLabelText('Room (optional)')).toBeInTheDocument();
   });
 
   it('lets a teacher invite only students, into one of their classes', async () => {
     renderWithIntl(
       <AuthProvider>
-        <InviteForm
-          classes={[{ id: 'c9a', name: '9A' }]}
-          students={[]}
-          roles={['student']}
-          requireClass
-          onSent={onSent}
-          onCancel={() => {}}
-        />
+        <InviteForm classes={[{ id: 'c9a', name: '9A' }]} roles={['student']} requireClass onSent={onSent} onCancel={() => {}} />
       </AuthProvider>,
     );
     const user = userEvent.setup();
 
     expect(screen.queryByLabelText('Role')).not.toBeInTheDocument();
-    expect(screen.getByLabelText('Class')).toBeRequired();
+    expect(screen.getByLabelText('Room')).toBeRequired();
 
     await user.type(screen.getByLabelText('Email'), 'radu@school.ro');
-    await user.selectOptions(screen.getByLabelText('Class'), 'c9a');
+    await user.selectOptions(screen.getByLabelText('Room'), 'c9a');
     await user.click(screen.getByRole('button', { name: 'Send invitation' }));
 
     expect(api).toHaveBeenCalledWith('/api/invitations', {

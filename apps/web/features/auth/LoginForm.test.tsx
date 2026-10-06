@@ -23,7 +23,7 @@ async function submit(email: string, password: string) {
       <LoginForm />
     </AuthProvider>,
   );
-  await user.type(screen.getByLabelText('Email'), email);
+  await user.type(screen.getByLabelText('Email or phone'), email);
   await user.type(screen.getByLabelText('Password'), password);
   await user.click(screen.getByRole('button', { name: 'Sign in' }));
 }

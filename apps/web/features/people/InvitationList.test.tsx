@@ -47,7 +47,7 @@ describe('InvitationList', () => {
     renderList([invitation]);
 
     expect(screen.getByText('new@school.ro')).toBeInTheDocument();
-    expect(screen.getByText('Student')).toBeInTheDocument();
+    expect(screen.getByText('Patient/Client')).toBeInTheDocument();
     expect(screen.getByText(/into 9A/)).toBeInTheDocument();
     expect(screen.getByText(/Expires/)).toBeInTheDocument();
   });

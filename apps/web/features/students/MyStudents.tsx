@@ -44,7 +44,6 @@ export function MyStudents() {
       {inviting ? (
         <InviteForm
           classes={classes.data}
-          students={[]}
           roles={['student']}
           requireClass
           onCancel={() => setInviting(false)}
@@ -94,7 +93,7 @@ export function MyStudents() {
                 <p className="mt-3 text-sm text-slate-500">{t('noStudents')}</p>
               ) : (
                 <div className="mt-3">
-                  <PersonList people={schoolClass.students} columns={2} />
+                  <PersonList people={schoolClass.students} columns={2} href={(student) => `/dashboard/clients/${student.id}`} />
                 </div>
               )}
             </article>

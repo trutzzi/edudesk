@@ -24,7 +24,7 @@ const TEACHER_ID = '6e98e320-6cf3-4417-98bb-fe1a29bea773';
 
 const auth = (role: string) => `Bearer ${generateToken({ id: 'u1', email: 'ana@school.edu', role, school_id: 's1' })}`;
 
-const validCourse = { name: 'Matematică', classId: CLASS_ID, teacherId: TEACHER_ID };
+const validCourse = { name: 'Logopedie', classId: CLASS_ID, teacherId: TEACHER_ID };
 
 beforeEach(() => {
   query.mockReset();
@@ -53,18 +53,39 @@ describe('GET /api/courses', () => {
   });
 });
 
+// The institution has the therapy (or not), the therapist has it (or not); every other query gets `answer`
+const specialized = (answer: () => Promise<unknown>, allowed = true, known = true) =>
+  query.mockImplementation(async (sql: string) => {
+    if (sql.includes('therapist_specializations')) return { rows: [{ allowed }] };
+    if (sql.includes('FROM therapies WHERE')) return { rows: [], rowCount: known ? 1 : 0 };
+    return answer();
+  });
+const callWith = (text: string) => query.mock.calls.find(([sql]) => String(sql).includes(text))?.[1] as unknown[] | undefined;
+
 describe('POST /api/courses', () => {
   it('creates the course', async () => {
-    query.mockResolvedValue({ rows: [{ id: 'c1', ...validCourse, description: null }] });
+    specialized(async () => ({ rows: [{ id: 'c1', ...validCourse, description: null }] }));
 
     const res = await request(app).post('/api/courses').set('Authorization', auth('school_admin')).send(validCourse);
 
     expect(res.status).toBe(201);
-    expect(query.mock.calls[0]?.[1]).toEqual([CLASS_ID, TEACHER_ID, 'Matematică', null, 's1', null, null]);
+    expect(callWith('FROM therapies WHERE')).toEqual(['s1', 'Logopedie']);
+    expect(callWith('therapist_specializations')).toEqual([null, TEACHER_ID, 'Logopedie']);
+    expect(callWith('INSERT INTO courses')).toEqual([CLASS_ID, TEACHER_ID, 'Logopedie', null, 's1', null, null]);
+  });
+
+  it("returns 409 when the therapist doesn't have the therapy", async () => {
+    specialized(async () => ({ rows: [] }), false);
+
+    const res = await request(app).post('/api/courses').set('Authorization', auth('school_admin')).send(validCourse);
+
+    expect(res.status).toBe(409);
+    expect(res.body.code).toBe('NOT_SPECIALIZED');
+    expect(callWith('INSERT INTO courses')).toBeUndefined();
   });
 
   it('returns 404 when the class or teacher is not in the school', async () => {
-    query.mockResolvedValue({ rows: [] });
+    specialized(async () => ({ rows: [] }));
 
     const res = await request(app).post('/api/courses').set('Authorization', auth('school_admin')).send(validCourse);
 
@@ -72,7 +93,9 @@ describe('POST /api/courses', () => {
   });
 
   it('returns 409 when the class already has that course', async () => {
-    query.mockRejectedValue(pgError('23505'));
+    specialized(async () => {
+      throw pgError('23505');
+    });
 
     const res = await request(app).post('/api/courses').set('Authorization', auth('school_admin')).send(validCourse);
 
@@ -86,6 +109,19 @@ describe('POST /api/courses', () => {
       .send({ ...validCourse, teacherId: undefined });
 
     expect(res.status).toBe(400);
+  });
+
+  it("rejects a name that isn't one of the institution's therapies", async () => {
+    specialized(async () => ({ rows: [] }), true, false);
+
+    const res = await request(app)
+      .post('/api/courses')
+      .set('Authorization', auth('school_admin'))
+      .send({ ...validCourse, name: 'Matematică' });
+
+    expect(res.status).toBe(400);
+    expect(res.body.code).toBe('NOT_A_THERAPY');
+    expect(callWith('INSERT INTO courses')).toBeUndefined();
   });
 
   it('returns 403 for teachers', async () => {
@@ -109,6 +145,13 @@ describe('PATCH /api/courses/:id', () => {
     expect(query.mock.calls[0]?.[1]).toEqual([COURSE_ID, null, false, null, null, null, '2027-06-12', 's1']);
   });
 
+  it("rejects a name that isn't one of the institution's therapies", async () => {
+    specialized(async () => ({ rows: [] }), true, false);
+
+    expect((await patch({ name: 'Algebră' })).status).toBe(400);
+    expect(callWith('UPDATE courses')).toBeUndefined();
+  });
+
   it('rejects an invalid date', async () => {
     expect((await patch({ startDate: '2027-02-30' })).status).toBe(400);
     expect(query).not.toHaveBeenCalled();
@@ -127,9 +170,18 @@ describe('PATCH /api/courses/:id', () => {
   });
 
   it('returns 404 when the course is not in the school', async () => {
-    query.mockResolvedValue({ rows: [] });
+    query.mockImplementation(async (sql: string) => (sql.includes('FROM therapies WHERE') ? { rows: [], rowCount: 1 } : { rows: [] }));
 
-    expect((await patch({ name: 'Algebră' })).status).toBe(404);
+    expect((await patch({ name: 'ABA' })).status).toBe(404);
+  });
+
+  it("returns 409 when the new therapist doesn't have the therapy", async () => {
+    specialized(async () => ({ rows: [] }), false);
+
+    const res = await patch({ teacherId: TEACHER_ID });
+
+    expect(res.status).toBe(409);
+    expect(query.mock.calls[0]?.[1]).toEqual([COURSE_ID, TEACHER_ID, null]);
   });
 });
 

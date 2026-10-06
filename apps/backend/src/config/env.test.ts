@@ -15,10 +15,8 @@ describe('env', () => {
 
   it('falls back to sensible defaults', () => {
     vi.stubEnv('PORT', '');
-    vi.stubEnv('MAX_ACCOUNTS_PER_IP_PER_DAY', '');
 
     expect(env.port).toBe(4000);
-    expect(env.maxAccountsPerIpPerDay).toBe(5);
     expect(env.requireEmailVerification).toBe(false);
   });
 

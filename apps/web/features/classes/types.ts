@@ -11,7 +11,12 @@ export interface Person {
   id: string;
   firstName: string;
   lastName: string;
-  email: string;
+  email: string | null;
+}
+
+// A therapist as /api/users?role=teacher lists them
+export interface Therapist extends Person {
+  specializations: { id: string; name: string }[];
 }
 
 export interface ClassCourse {

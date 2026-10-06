@@ -43,7 +43,7 @@ describe('StatsGrid', () => {
     renderGrid('ro');
 
     expect(await screen.findByText('1.200')).toBeInTheDocument();
-    expect(screen.getByText('Elevi')).toBeInTheDocument();
+    expect(screen.getByText('Pacienți/Clienți')).toBeInTheDocument();
   });
 
   it('shows an error when loading fails', async () => {

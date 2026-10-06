@@ -26,11 +26,7 @@ export const env = {
     return process.env.SMTP_URL || undefined;
   },
   get mailFrom() {
-    return process.env.MAIL_FROM ?? 'EduDesk <no-reply@edudesk.local>';
-  },
-  // Schools often share one public IP, so this stays generous
-  get maxAccountsPerIpPerDay() {
-    return Number(process.env.MAX_ACCOUNTS_PER_IP_PER_DAY) || 5;
+    return process.env.MAIL_FROM ?? 'Blue <no-reply@edudesk.local>';
   },
   // Number of proxy hops in front of the API, or Express's own trust proxy setting; unset means none
   get trustProxy(): number | string | undefined {

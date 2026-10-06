@@ -5,18 +5,21 @@ import type { Role } from './roles.js';
 // What a session token carries
 export interface UserPayload {
   id: string;
-  email: string;
+  // null for someone who signs in with their phone
+  email: string | null;
   role: Role;
   schoolId: string | null;
 }
 
 interface UserRecord {
   id: string;
-  email: string;
+  email: string | null;
   first_name: string;
   last_name: string;
   role: string;
   school_id: string | null;
+  // Saved from their profile; absent on rows read before it existed
+  locale?: string | null;
 }
 
 export const generateToken = (user: Pick<UserRecord, 'id' | 'email' | 'role' | 'school_id'>): string => {
@@ -37,5 +40,6 @@ export const toSession = (user: UserRecord) => ({
     lastName: user.last_name,
     role: user.role,
     schoolId: user.school_id,
+    locale: user.locale ?? null,
   },
 });

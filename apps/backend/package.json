@@ -13,6 +13,7 @@
     "migrate:down": "node-pg-migrate down",
     "test": "vitest run",
     "seed": "tsx src/scripts/seed/index.ts",
+    "create-admin": "tsx src/scripts/createAdmin/index.ts",
     "holidays": "tsx src/scripts/holidays.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",

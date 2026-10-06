@@ -11,7 +11,7 @@ vi.mock('@/lib/api/client', async (importOriginal) => ({
   api: vi.fn(),
 }));
 
-const monday = { weekday: 1, startTime: '08:00', endTime: '08:50', room: 'Sala 101' };
+const monday = { weekday: 1, startTime: '08:00', endTime: '08:50', room: null };
 const onSaved = vi.fn();
 
 const renderEditor = () =>
@@ -38,7 +38,7 @@ describe('ScheduleEditor', () => {
 
     expect(await screen.findByLabelText('Day 1')).toHaveValue('1');
     await user.click(screen.getByRole('button', { name: '+ Add lesson' }));
-    // A new lesson goes on the next day, at the same time and room
+    // A new lesson goes on the next day, at the same time
     expect(screen.getByLabelText('Day 2')).toHaveValue('2');
 
     await user.click(screen.getByRole('button', { name: 'Save schedule' }));
@@ -74,7 +74,7 @@ describe('ScheduleEditor', () => {
 
     await userEvent.setup().click(await screen.findByRole('button', { name: 'Save schedule' }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('overlaps another lesson of the same teacher or class');
+    expect(await screen.findByRole('alert')).toHaveTextContent('overlaps another session of the same therapist or room');
     expect(onSaved).not.toHaveBeenCalled();
   });
 });

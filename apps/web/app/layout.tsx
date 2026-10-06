@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Metadata');
   return {
     title: {
-      default: 'EduDesk',
-      template: '%s · EduDesk',
+      default: 'Blue',
+      template: '%s · Blue',
     },
     description: t('description'),
   };

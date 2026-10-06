@@ -17,7 +17,6 @@ const limiter = (windowMs: number, limit: number) =>
 export const apiLimiter = limiter(MINUTE, 300);
 // Slows down password guessing
 export const loginLimiter = limiter(15 * MINUTE, 10);
-export const registerLimiter = limiter(60 * MINUTE, 5);
 // Each request sends an email, so keep it tight
 export const emailLimiter = limiter(60 * MINUTE, 3);
 // Browsers report their crashes; one broken page must not flood the log

@@ -129,8 +129,8 @@ export async function deleteInvitation(invitationId: string, schoolId: string, s
 
 // Who is inviting, and to which school, for the email
 export async function findInviter(userId: string) {
-  const { rows } = await pool.query<{ inviter: string; school: string }>(
-    `SELECT u.first_name || ' ' || u.last_name AS inviter, s.name AS school
+  const { rows } = await pool.query<{ inviter: string; school: string; appName: string | null }>(
+    `SELECT u.first_name || ' ' || u.last_name AS inviter, s.name AS school, s.app_name AS "appName"
      FROM users u JOIN schools s ON s.id = u.school_id
      WHERE u.id = $1`,
     [userId],

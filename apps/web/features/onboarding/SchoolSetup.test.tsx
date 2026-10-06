@@ -28,9 +28,9 @@ describe('SchoolSetup', () => {
     );
     const user = userEvent.setup();
 
-    await user.type(screen.getByLabelText('School name'), 'Liceul Teoretic');
-    await user.type(screen.getByLabelText('School code'), 'LT-CLUJ');
-    await user.click(screen.getByRole('button', { name: 'Create school' }));
+    await user.type(screen.getByLabelText('Institution name'), 'Liceul Teoretic');
+    await user.type(screen.getByLabelText('Institution code'), 'LT-CLUJ');
+    await user.click(screen.getByRole('button', { name: 'Create institution' }));
 
     expect(api).toHaveBeenCalledWith('/api/schools', {
       token: 'old',

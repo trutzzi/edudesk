@@ -37,8 +37,8 @@ describe('ClassList', () => {
     vi.mocked(api).mockResolvedValue(classes);
     renderScreen();
 
-    expect(await screen.findByText('24 students')).toBeInTheDocument();
-    expect(screen.getByText('1 student')).toBeInTheDocument();
+    expect(await screen.findByText('24 patients/clients')).toBeInTheDocument();
+    expect(screen.getByText('1 patient/client')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /9A/ })).toHaveAttribute('href', '/dashboard/classes/c1');
   });
 
@@ -46,25 +46,25 @@ describe('ClassList', () => {
     vi.mocked(api).mockResolvedValue([]);
     renderScreen();
 
-    expect(await screen.findByText('No classes yet. Create the first one.')).toBeInTheDocument();
+    expect(await screen.findByText('No rooms yet. Create the first one.')).toBeInTheDocument();
   });
 
   it('shows an error when the classes cannot be loaded', async () => {
     vi.mocked(api).mockRejectedValue(new ApiError('boom', 500));
     renderScreen();
 
-    expect(await screen.findByText(/Couldn't load the classes/)).toBeInTheDocument();
+    expect(await screen.findByText(/Couldn't load the rooms/)).toBeInTheDocument();
   });
 
   it('creates a class from the form and reloads the list', async () => {
     vi.mocked(api).mockImplementation(async (_path, options) => (options?.method === 'POST' ? { id: 'c3' } : classes));
     renderScreen();
     const user = userEvent.setup();
-    await screen.findByText('24 students');
+    await screen.findByText('24 patients/clients');
 
-    await user.click(screen.getByRole('button', { name: '+ New class' }));
+    await user.click(screen.getByRole('button', { name: '+ New room' }));
     await user.type(screen.getByLabelText('Name'), '11C');
-    await user.click(screen.getByRole('button', { name: 'Create class' }));
+    await user.click(screen.getByRole('button', { name: 'Create room' }));
 
     await waitFor(() =>
       expect(api).toHaveBeenCalledWith('/api/classes', {
@@ -73,7 +73,7 @@ describe('ClassList', () => {
         token: 'token',
       }),
     );
-    await waitFor(() => expect(screen.queryByRole('form', { name: 'New class' })).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByRole('form', { name: 'New room' })).not.toBeInTheDocument());
     expect(vi.mocked(api).mock.calls.filter(([path]) => path === '/api/classes').length).toBeGreaterThan(2);
   });
 
@@ -84,25 +84,25 @@ describe('ClassList', () => {
     });
     renderScreen();
     const user = userEvent.setup();
-    await screen.findByText('24 students');
+    await screen.findByText('24 patients/clients');
 
-    await user.click(screen.getByRole('button', { name: '+ New class' }));
+    await user.click(screen.getByRole('button', { name: '+ New room' }));
     await user.type(screen.getByLabelText('Name'), '11C');
-    await user.click(screen.getByRole('button', { name: 'Create class' }));
+    await user.click(screen.getByRole('button', { name: 'Create room' }));
 
     expect(await screen.findByText(/Too many attempts/)).toBeInTheDocument();
-    expect(screen.getByRole('form', { name: 'New class' })).toBeInTheDocument();
+    expect(screen.getByRole('form', { name: 'New room' })).toBeInTheDocument();
   });
 
   it('can cancel the form', async () => {
     vi.mocked(api).mockResolvedValue(classes);
     renderScreen();
     const user = userEvent.setup();
-    await screen.findByText('24 students');
+    await screen.findByText('24 patients/clients');
 
-    await user.click(screen.getByRole('button', { name: '+ New class' }));
+    await user.click(screen.getByRole('button', { name: '+ New room' }));
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
-    expect(screen.getByRole('button', { name: '+ New class' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '+ New room' })).toBeInTheDocument();
   });
 });

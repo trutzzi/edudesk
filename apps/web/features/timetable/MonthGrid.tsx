@@ -81,7 +81,7 @@ export function MonthGrid({ month, weeks, view, onOpenWeek }: Props) {
                       return (
                         <p
                           key={lesson.id}
-                          title={`${lesson.startTime}–${lesson.endTime} ${lesson.courseName} · ${view.detailOf(lesson)}${lesson.room ? ` · ${lesson.room}` : ''}`}
+                          title={`${lesson.startTime}–${lesson.endTime} ${lesson.courseName} · ${view.detailOf(lesson)}`}
                           className={`flex items-center gap-1 truncate rounded px-1 text-[11px] ${live ? 'bg-indigo-100 font-semibold text-indigo-800' : 'text-slate-700'}`}
                         >
                           <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${view.colorOf(lesson).dot}`} />

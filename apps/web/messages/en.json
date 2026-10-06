@@ -1,15 +1,15 @@
 {
   "Metadata": {
-    "description": "School management for administrators, teachers, students and parents."
+    "description": "Management for therapy institutions: administrators, therapists, patients/clients and parents."
   },
   "Common": {
     "signIn": "Sign in",
     "logOut": "Log out",
     "dashboard": "Dashboard",
-    "createAccount": "Create an account",
     "today": "Today",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "profile": "Profile"
   },
   "LocaleSwitcher": {
     "label": "Language",
@@ -17,57 +17,52 @@
     "ro": "Română"
   },
   "Landing": {
-    "badge": "One platform for your whole school",
-    "titleLine1": "School management,",
+    "badge": "One platform for your whole institution",
+    "titleLine1": "Institution management,",
     "titleLine2": "simplified & connected",
-    "description": "Classes, courses, timetables and the school calendar in one place, kept up to date for administrators, teachers, students and parents.",
-    "getStarted": "Get started",
+    "description": "Rooms, therapies, timetables and the institution calendar in one place, kept up to date for administrators, therapists, patients/clients and parents.",
     "goToDashboard": "Go to your dashboard →",
-    "featuresTitle": "Everything a school runs on",
-    "featuresSubtitle": "Set up your school once, and everyone sees a schedule that stays current.",
+    "featuresTitle": "Everything an institution runs on",
+    "featuresSubtitle": "Set up your institution once, and everyone sees a schedule that stays current.",
     "features": {
       "classes": {
-        "title": "Classes and courses",
-        "text": "Create classes, enrol students and give each course a teacher, a weekly schedule and the dates it runs."
+        "title": "Rooms and therapies",
+        "text": "Create rooms, enrol patients/clients and give each therapy a therapist, a weekly schedule and the dates it runs."
       },
       "timetable": {
         "title": "Personal timetables",
-        "text": "Teachers, students and parents see their own lessons by day, week or month, with a marker for right now."
+        "text": "Therapists, patients/clients and parents see their own sessions by day, week or month, with a marker for right now."
       },
       "timeline": {
-        "title": "School-wide timeline",
-        "text": "Admins see every course and lesson across the year, grouped by class or teacher, and can zoom from a term down to a day."
+        "title": "Institution-wide timeline",
+        "text": "Admins see every therapy and session across the year, grouped by room or therapist, and can zoom from a term down to a day."
       },
       "calendar": {
-        "title": "School calendar",
-        "text": "Exams, trips and parents' meetings for the school or one class. Public holidays are added for you and cancel that day's lessons."
+        "title": "Institution calendar",
+        "text": "Assessments, trips and parents' meetings for the institution or one room. Public holidays are added for you and cancel that day's sessions."
       },
       "people": {
         "title": "Invitations and roles",
-        "text": "Invite teachers, students and parents by email. Each person sees only what their role allows."
+        "text": "Invite therapists, patients/clients and parents by email. Each person sees only what their role allows."
       },
       "health": {
         "title": "Overview and monitoring",
-        "text": "Live numbers for your school, and a log of errors and slow requests so problems get noticed."
+        "text": "Live numbers for your institution, and a log of errors and slow requests so problems get noticed."
       }
     },
-    "rolesTitle": "Made for everyone at school",
+    "rolesTitle": "Made for everyone at the institution",
     "roles": {
       "admin": {
-        "title": "School admins",
-        "text": "Set up classes, courses and schedules, manage people and plan the calendar."
+        "title": "Institution admins",
+        "text": "Set up rooms, therapies and schedules, manage people and plan the calendar."
       },
       "teacher": {
-        "title": "Teachers",
-        "text": "See your timetable and your classes, and invite your students."
+        "title": "Therapists",
+        "text": "See your timetable and your rooms, and invite your patients/clients."
       },
       "student": {
-        "title": "Students",
+        "title": "Patients/Clients",
         "text": "Know what's next today, this week and this month."
-      },
-      "parent": {
-        "title": "Parents",
-        "text": "Follow your child's timetable and the school's events."
       }
     }
   },
@@ -75,18 +70,7 @@
     "title": "Welcome back",
     "subtitle": "Sign in to access your dashboard",
     "submitting": "Signing in…",
-    "noAccount": "Don't have an account?",
-    "createOne": "Create one"
-  },
-  "Register": {
-    "title": "Create an account",
-    "subtitle": "Get started with EduDesk today",
-    "submit": "Create account",
-    "submitting": "Creating account…",
-    "haveAccount": "Already have an account?",
-    "checkEmailTitle": "Check your inbox",
-    "checkEmailBody": "We sent a confirmation link to {email}. Open it to activate your account. The link expires in 24 hours.",
-    "noEmail": "Didn't get it? Check your spam folder or send a new link."
+    "noAccount": "No account? Your institution's administrator gives you one."
   },
   "Form": {
     "firstName": "First name",
@@ -94,42 +78,51 @@
     "email": "Email",
     "password": "Password",
     "role": "Role",
-    "passwordHint": "At least 8 characters"
+    "passwordHint": "At least 8 characters",
+    "emailOrPhone": "Email or phone"
   },
   "Roles": {
     "super_admin": "Super admin",
-    "school_admin": "School admin",
-    "teacher": "Teacher",
+    "school_admin": "Institution admin",
+    "teacher": "Therapist",
     "parent": "Parent",
-    "student": "Student"
+    "student": "Patient/Client"
   },
   "Dashboard": {
     "title": "Overview",
-    "subtitle": "Here's what is happening across your school today.",
+    "subtitle": "Here's what is happening across your institution today.",
     "loadError": "Couldn't load statistics. Refresh the page to try again.",
     "stats": {
-      "studentsCount": "Students",
-      "teachersCount": "Teachers",
-      "adminsCount": "School admins",
-      "classesCount": "Active classes"
+      "studentsCount": "Patients/Clients",
+      "teachersCount": "Therapists",
+      "adminsCount": "Institution admins",
+      "classesCount": "Active rooms"
     }
   },
   "Errors": {
     "generic": "Something went wrong. Please try again.",
     "network": "Unable to reach the server. Check your connection and try again.",
     "RATE_LIMITED": "Too many attempts. Wait a few minutes and try again.",
-    "TOO_MANY_ACCOUNTS": "Too many accounts were created from this network today. Try again tomorrow or ask your school admin.",
     "EMAIL_NOT_VERIFIED": "Confirm your email before signing in. Check your inbox for the link we sent.",
     "INVALID_TOKEN": "This confirmation link is invalid, already used or expired.",
-    "LESSON_CLASH": "This overlaps another lesson of the same teacher or class. Pick a different time.",
-    "SCHOOL_CODE_TAKEN": "Another school already uses this code. Pick a different one.",
-    "ALREADY_MEMBER": "This person is already in your school.",
-    "IN_OTHER_SCHOOL": "This person's account belongs to another school.",
+    "LESSON_CLASH": "This overlaps another session of the same therapist or room. Pick a different time.",
+    "SCHOOL_CODE_TAKEN": "Another institution already uses this code. Pick a different one.",
+    "ALREADY_MEMBER": "This person is already in your institution.",
+    "IN_OTHER_SCHOOL": "This person's account belongs to another institution.",
     "INVITATION_PENDING": "This person already has a pending invitation. Use Resend instead.",
-    "INVALID_INVITATION": "This invitation is invalid, already used or expired. Ask your school admin for a new one.",
+    "INVALID_INVITATION": "This invitation is invalid, already used or expired. Ask your institution admin for a new one.",
     "WRONG_PASSWORD": "That's not the password for this account.",
-    "TEACHER_HAS_COURSES": "This teacher still teaches courses. Delete them or give them to another teacher first.",
-    "CANNOT_REMOVE_SELF": "You can't remove yourself from the school."
+    "TEACHER_HAS_COURSES": "This therapist still has therapies. Delete them or give them to another therapist first.",
+    "CANNOT_REMOVE_SELF": "You can't remove yourself from the institution.",
+    "NOT_A_THERAPY": "Pick one of the institution's therapies.",
+    "CONTACT_TAKEN": "Someone already has this phone number or email.",
+    "INVALID_PHONE": "That doesn't look like a phone number.",
+    "NOT_SPECIALIZED": "The therapist doesn't have this therapy among their specializations.",
+    "FUTURE_SESSION": "A session that hasn't happened yet can't be marked.",
+    "THERAPY_EXISTS": "The institution already has a therapy with this name.",
+    "THERAPY_IN_USE": "Rooms still run this therapy. Remove it from them first.",
+    "INVALID_LOGO": "The logo must be a PNG, JPEG or WebP image.",
+    "TOO_LARGE": "The file is too large."
   },
   "Verify": {
     "title": "Confirm your email",
@@ -148,13 +141,18 @@
     "calendar": "Calendar",
     "sections": "Dashboard sections",
     "timetable": "My timetable",
-    "classes": "Classes",
+    "classes": "Rooms",
     "people": "People",
-    "students": "My students"
+    "students": "My patients/clients",
+    "attendance": "Attendance",
+    "history": "My history",
+    "reports": "Reports",
+    "therapies": "Therapies",
+    "institution": "Institution"
   },
   "Timeline": {
     "title": "Timeline",
-    "subtitle": "Every course and lesson in your school, with a marker for right now.",
+    "subtitle": "Every therapy and session in your institution, with a marker for right now.",
     "zoom": "Zoom",
     "zooms": {
       "term": "Term",
@@ -163,21 +161,21 @@
       "day": "Day"
     },
     "groupBy": "Group by",
-    "byClass": "Class",
-    "byTeacher": "Teacher",
-    "search": "Search courses, classes, teachers…",
+    "byClass": "Room",
+    "byTeacher": "Therapist",
+    "search": "Search therapies, rooms, therapists…",
     "expand": "Expand {name}",
     "collapse": "Collapse {name}",
-    "courses": "{count, plural, one {# course} other {# courses}}",
-    "emptyCourses": "No courses in this period.",
+    "courses": "{count, plural, one {# therapy} other {# therapies}}",
+    "emptyCourses": "No therapies in this period.",
     "emptyLessons": "No lessons in this period.",
     "noMatches": "Nothing matches your search.",
     "loadError": "Couldn't load the timeline. Refresh the page to try again.",
-    "onlyAdmins": "Only school admins can see the timeline.",
+    "onlyAdmins": "Only institution admins can see the timeline.",
     "inProgress": "In progress",
     "now": "Now",
     "holiday": "Holiday",
-    "courseColumn": "Course",
+    "courseColumn": "Therapy",
     "runsUntil": "{start} – {end}"
   },
   "NowPanel": {
@@ -189,15 +187,15 @@
     "noLessons": "No lessons today."
   },
   "Calendar": {
-    "title": "School calendar",
+    "title": "Institution calendar",
     "subtitle": "Holidays, exams, trips and meetings. Holidays also clear lessons from the timeline.",
     "addEvent": "Add event",
     "eventTitle": "Title",
     "kind": "Type",
     "start": "Start",
     "end": "End",
-    "class": "Class",
-    "wholeSchool": "Whole school",
+    "class": "Room",
+    "wholeSchool": "Whole institution",
     "save": "Save event",
     "saving": "Saving…",
     "cancel": "Cancel",
@@ -214,42 +212,42 @@
     "empty": "No events this month.",
     "more": "+{count} more",
     "loadError": "Couldn't load the calendar. Refresh the page to try again.",
-    "noSchool": "Your account is not linked to a school yet.",
+    "noSchool": "Your account is not linked to an institution yet.",
     "national": "National public holiday"
   },
   "Classes": {
-    "title": "Classes",
-    "subtitle": "Create classes, add students and courses, and set each course's weekly schedule.",
-    "newClass": "New class",
+    "title": "Rooms",
+    "subtitle": "Create rooms, add patients/clients and therapies, and set each therapy's weekly schedule.",
+    "newClass": "New room",
     "name": "Name",
-    "namePlaceholder": "e.g. 9A",
+    "namePlaceholder": "e.g. Blue room",
     "schoolYear": "School year",
-    "create": "Create class",
+    "create": "Create room",
     "creating": "Creating…",
-    "students": "{count, plural, one {# student} other {# students}}",
+    "students": "{count, plural, one {# patient/client} other {# patients/clients}}",
     "open": "Open",
-    "empty": "No classes yet. Create the first one.",
-    "loadError": "Couldn't load the classes. Refresh the page to try again.",
-    "back": "All classes",
-    "studentsTitle": "Students",
-    "addStudent": "Add student",
-    "chooseStudent": "Choose a student…",
+    "empty": "No rooms yet. Create the first one.",
+    "loadError": "Couldn't load the rooms. Refresh the page to try again.",
+    "back": "All rooms",
+    "studentsTitle": "Patients/Clients",
+    "addStudent": "Add patient/client",
+    "chooseStudent": "Choose a patient/client…",
     "add": "Add",
     "remove": "Remove",
-    "removeStudent": "Remove {name} from the class",
-    "noStudents": "No students in this class yet.",
-    "allAdded": "Every student in the school is already in this class.",
-    "coursesTitle": "Courses",
-    "newCourse": "New course",
-    "courseName": "Course name",
-    "teacher": "Teacher",
-    "chooseTeacher": "Choose a teacher…",
+    "removeStudent": "Remove {name} from the room",
+    "noStudents": "No patients/clients in this room yet.",
+    "allAdded": "Every patient/client in the institution is already in this room.",
+    "coursesTitle": "Therapies",
+    "newCourse": "New therapy",
+    "courseName": "Therapy",
+    "teacher": "Therapist",
+    "chooseTeacher": "Choose a therapist…",
     "startDate": "Start date",
     "endDate": "End date",
     "datesHint": "Leave the dates empty for the whole school year.",
     "description": "Description (optional)",
-    "createCourse": "Create course",
-    "noCourses": "No courses yet.",
+    "createCourse": "Create therapy",
+    "noCourses": "No therapies yet.",
     "schedule": "Schedule",
     "hideSchedule": "Hide schedule",
     "delete": "Delete",
@@ -257,17 +255,17 @@
     "confirmDelete": "Delete {name} and its weekly lessons?",
     "lessonsPerWeek": "{count, plural, =0 {No schedule yet} one {# lesson a week} other {# lessons a week}}",
     "cancel": "Cancel",
-    "notFound": "This class doesn't exist or belongs to another school.",
-    "deleteClass": "Delete class",
-    "confirmDeleteClass": "Delete {name}? Its courses, weekly lessons and class events are deleted too. The students stay in the school."
+    "notFound": "This room doesn't exist or belongs to another institution.",
+    "deleteClass": "Delete room",
+    "confirmDeleteClass": "Delete {name}? Its therapies, weekly sessions and room events are deleted too. The patients/clients stay in the institution.",
+    "chooseTherapy": "Choose a therapy…",
+    "noQualifiedTeacher": "No therapist has this specialization"
   },
   "Schedule": {
     "title": "Weekly schedule",
     "weekday": "Day",
     "start": "Start",
     "end": "End",
-    "room": "Room",
-    "roomPlaceholder": "e.g. Sala 101",
     "addLesson": "Add lesson",
     "removeLesson": "Remove this lesson",
     "save": "Save schedule",
@@ -280,7 +278,7 @@
     "title": "My timetable",
     "subtitle": "Your lessons by day, week or month, with what's happening right now.",
     "thisWeek": "This week",
-    "onlyMembers": "Timetables are for teachers, students and parents. As an admin, use the Timeline.",
+    "onlyMembers": "Timetables are for therapists, patients/clients and parents. As an admin, use the Timeline.",
     "empty": "No lessons this week.",
     "loadError": "Couldn't load your timetable. Refresh the page to try again.",
     "inProgress": "In progress",
@@ -299,30 +297,28 @@
     "emptyDay": "No lessons this day."
   },
   "SchoolSetup": {
-    "title": "Set up your school",
-    "intro": "Your admin account isn't linked to a school yet. Create your school to start adding classes, courses and schedules.",
-    "name": "School name",
-    "namePlaceholder": "e.g. Colegiul Național Mihai Eminescu",
-    "code": "School code",
-    "codeHint": "3–20 letters, digits or dashes. Used to identify your school.",
+    "title": "Set up your institution",
+    "intro": "Your admin account isn't linked to an institution yet. Create your institution to start adding rooms, therapies and schedules.",
+    "name": "Institution name",
+    "namePlaceholder": "e.g. Centrul de Terapie Speranța",
+    "code": "Institution code",
+    "codeHint": "3–20 letters, digits or dashes. Used to identify your institution.",
     "timezone": "Time zone",
-    "create": "Create school",
+    "create": "Create institution",
     "creating": "Creating…",
-    "noSchoolTitle": "You're not part of a school yet",
-    "noSchoolBody": "Ask your school's admin to invite {email}. The invitation will appear right here, and you can join with one click.",
-    "orCreate": "Or set up a new school"
+    "noSchoolTitle": "You're not part of an institution yet",
+    "noSchoolBody": "Ask your institution's admin to invite {email}. The invitation will appear right here, and you can join with one click.",
+    "orCreate": "Or set up a new institution"
   },
   "People": {
     "title": "People",
-    "subtitle": "Everyone in your school, and the people you've invited.",
-    "invite": "Invite someone",
-    "inviteTitle": "Invite someone to your school",
+    "subtitle": "Everyone in your institution, and the people you've invited.",
+    "invite": "Invite by email",
+    "inviteTitle": "Invite someone to your institution",
     "email": "Email",
     "role": "Role",
-    "class": "Class (optional)",
-    "noClass": "No class for now",
-    "child": "Their child (optional)",
-    "noChild": "Link a child later",
+    "class": "Room (optional)",
+    "noClass": "No room for now",
     "send": "Send invitation",
     "sending": "Sending…",
     "sent": "Invitation sent to {email}.",
@@ -332,9 +328,8 @@
     "noMatches": "No one matches your search.",
     "groups": {
       "school_admin": "Admins",
-      "teacher": "Teachers",
-      "student": "Students",
-      "parent": "Parents"
+      "teacher": "Therapists",
+      "student": "Patients/Clients"
     },
     "pending": "Pending invitations",
     "noPending": "No pending invitations.",
@@ -347,16 +342,23 @@
     "revoke": "Revoke",
     "revokeLabel": "Revoke the invitation for {email}",
     "confirmRevoke": "Revoke the invitation for {email}? The link will stop working.",
-    "loadError": "Couldn't load the people in your school. Refresh the page to try again.",
-    "classRequired": "Class",
-    "chooseClass": "Choose a class…",
+    "loadError": "Couldn't load the people in your institution. Refresh the page to try again.",
+    "classRequired": "Room",
+    "chooseClass": "Choose a room…",
     "remove": "Remove",
-    "removeLabel": "Remove {name} from the school",
-    "confirmRemove": "Remove {name} from the school? They keep their account and can be invited again."
+    "removeLabel": "Remove {name} from the institution",
+    "confirmRemove": "Remove {name} from the institution? They keep their account and can be invited again.",
+    "addClient": "Patient/Client",
+    "addTherapist": "Therapist",
+    "created": "The account was created. Password: {password} — tell the person; they sign in with their phone and this password.",
+    "updated": "Changes saved.",
+    "edit": "Edit",
+    "editLabel": "Edit {name}'s details",
+    "updatedPassword": "Changes saved. New password: {password}"
   },
   "Invite": {
     "title": "Join {school}",
-    "intro": "You've been invited to join {school} on EduDesk as {role}.",
+    "intro": "You've been invited to join {school} on Blue as {role}.",
     "forEmail": "Invitation for {email}",
     "existingAccount": "You already have an account with this email. Enter its password to add {school} to it.",
     "newAccount": "Create your account to accept.",
@@ -366,9 +368,9 @@
     "invalidTitle": "This invitation can't be used",
     "toSignIn": "Go to sign in",
     "asRole": {
-      "school_admin": "a school admin",
-      "teacher": "a teacher",
-      "student": "a student",
+      "school_admin": "an institution admin",
+      "teacher": "a therapist",
+      "student": "a patient/client",
       "parent": "a parent"
     }
   },
@@ -382,13 +384,13 @@
     "checkAgain": "Check again"
   },
   "MyStudents": {
-    "title": "My students",
-    "subtitle": "The classes you teach, and students you've invited to them.",
-    "invite": "Invite a student",
-    "classes": "Your classes",
-    "noClasses": "You don't teach any class yet. Your school admin assigns the courses.",
-    "noStudents": "No students in this class yet.",
-    "loadError": "Couldn't load your classes. Refresh the page to try again."
+    "title": "My patients/clients",
+    "subtitle": "The rooms you work in, and patients/clients you've invited to them.",
+    "invite": "Invite a patient/client",
+    "classes": "Your rooms",
+    "noClasses": "You don't work in any room yet. Your institution admin assigns the therapies.",
+    "noStudents": "No patients/clients in this room yet.",
+    "loadError": "Couldn't load your rooms. Refresh the page to try again."
   },
   "Health": {
     "title": "System health",
@@ -438,5 +440,146 @@
     "title": "Something went wrong",
     "body": "This page hit an error. It has been reported. Try again, or go back to the previous page.",
     "retry": "Try again"
+  },
+  "PaymentTypes": {
+    "cas": "Covered by CAS",
+    "sponsored": "Sponsored"
+  },
+  "PersonForm": {
+    "newClient": "New patient/client",
+    "newTherapist": "New therapist",
+    "editTitle": "Edit: {name}",
+    "phone": "Phone",
+    "email": "Email (optional)",
+    "newPassword": "New password (optional)",
+    "passwordHint": "They sign in with their phone (or email) and this password. We don't send an invitation.",
+    "passwordKeep": "Leave the password empty to keep the current one, or press Generate if they forgot it.",
+    "paymentType": "Payment type",
+    "noPaymentType": "Not set",
+    "room": "Room (optional)",
+    "noRoom": "No room for now",
+    "specializations": "Specializations",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving…",
+    "generate": "Generate",
+    "details": "Details",
+    "notes": "Notes"
+  },
+  "Attendance": {
+    "title": "Attendance",
+    "subtitle": "The day's sessions. Everyone is present until you mark otherwise; only the latest choice counts.",
+    "loadError": "Couldn't load the sessions. Refresh the page to try again.",
+    "noSessions": "No sessions this day.",
+    "noClients": "No patients/clients in this room.",
+    "future": "Today's and past sessions can be marked. This one is still ahead.",
+    "before": "Before",
+    "after": "After",
+    "statusFor": "Attendance for {name}",
+    "statuses": {
+      "present": "Present",
+      "absent_notice": "Absent, with notice",
+      "absent_late": "Absent, short notice",
+      "cancelled": "Cancelled"
+    }
+  },
+  "ClientCard": {
+    "title": "Patient/client's card",
+    "notFound": "This patient/client doesn't exist or you don't work with them.",
+    "phone": "Phone",
+    "noPhone": "No phone",
+    "paymentType": "Payment type",
+    "noPaymentType": "Not set",
+    "call": "Call",
+    "whatsapp": "WhatsApp message",
+    "history": "History",
+    "thisMonth": "This month",
+    "loadError": "Couldn't load the history. Refresh the page to try again.",
+    "noSessions": "No sessions this month.",
+    "sessions": "Sessions",
+    "hours": "Hours (present)",
+    "details": "Details",
+    "notes": "Notes"
+  },
+  "Reports": {
+    "title": "Reports",
+    "subtitle": "Therapies, hours and attendance per month, for every patient/client and therapist.",
+    "thisMonth": "This month",
+    "loadError": "Couldn't load the report. Refresh the page to try again.",
+    "empty": "No sessions this month.",
+    "therapists": "Therapists",
+    "therapist": "Therapist",
+    "sessionsHeld": "Sessions held",
+    "hoursWorked": "Hours worked",
+    "hoursNote": "Only sessions where at least one patient/client was present count.",
+    "clients": "Patients/Clients",
+    "client": "Patient/Client",
+    "therapies": "Therapies",
+    "sessions": "Sessions",
+    "hours": "Hours"
+  },
+  "Therapies": {
+    "title": "Therapies",
+    "subtitle": "The specializations the institution offers. Therapists get them on their profile, and rooms use them in the schedule.",
+    "add": "Add therapy",
+    "name": "Therapy name",
+    "namePlaceholder": "e.g. Music therapy",
+    "save": "Save",
+    "cancel": "Cancel",
+    "rename": "Rename",
+    "renameLabel": "Rename {name}",
+    "delete": "Delete",
+    "deleteLabel": "Delete {name}",
+    "confirmDelete": "Delete {name}? Therapists won't have it among their specializations anymore.",
+    "inUse": "Rooms still run it; remove it from them first.",
+    "usage": "{courses, plural, =0 {in no room} one {in one room} other {in # rooms}} · {therapists, plural, =0 {no therapist} one {one therapist} other {# therapists}}",
+    "loadError": "Couldn't load the therapies. Refresh the page to try again."
+  },
+  "Institution": {
+    "title": "Institution",
+    "subtitle": "How the app looks to the institution's people once they sign in: its name, color and logo.",
+    "lookTitle": "Name and color",
+    "appName": "App name",
+    "appNameHint": "Shown in the header, the browser tab and invitation emails. Empty means \"Blue\".",
+    "color": "Main color",
+    "customColor": "Another color",
+    "colorHint": "It previews on the page while you choose and stays once you save.",
+    "defaultColor": "Default color",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved.",
+    "logo": "Logo",
+    "currentLogo": "The current logo",
+    "noLogo": "No logo. The name's initial is used.",
+    "logoHint": "PNG, JPEG or WebP, up to 512 KB. Looks best on a transparent background, wider than tall.",
+    "chooseLogo": "Upload logo",
+    "replaceLogo": "Change logo",
+    "removeLogo": "Remove logo",
+    "logoType": "The logo must be a PNG, JPEG or WebP image.",
+    "logoSize": "The logo can be at most 512 KB."
+  },
+  "Profile": {
+    "title": "Profile",
+    "subtitle": "Your details, the app language and your password.",
+    "loadError": "Couldn't load your profile. Refresh the page to try again.",
+    "detailsTitle": "Personal details",
+    "phone": "Phone",
+    "email": "Email (optional)",
+    "details": "Details",
+    "detailsPlaceholder": "A few words about you: experience, hours, what colleagues should know.",
+    "notes": "Notes",
+    "notesHint": "You and the institution's team see them.",
+    "skills": "Specializations",
+    "skillsHint": "The therapies you can run. Only these can be assigned to you in rooms.",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved.",
+    "language": "App language",
+    "languageHint": "Kept with your account and applied every time you sign in, on any device.",
+    "passwordTitle": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password (at least 6 characters)",
+    "changePassword": "Change password",
+    "passwordChanged": "Your password was changed."
   }
 }

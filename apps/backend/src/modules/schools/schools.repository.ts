@@ -1,13 +1,17 @@
 import type { PoolClient } from 'pg';
+import { insertDefaultTherapies } from '../../lib/therapies.js';
 import type { UserRow } from '../users/users.repository.js';
 
+// A new institution, with the default list of therapies to start from
 export async function createSchool(client: PoolClient, name: string, code: string, timezone: string) {
   const { rows } = await client.query<{ id: string }>('INSERT INTO schools (name, code, timezone) VALUES ($1, $2, $3) RETURNING id', [
     name,
     code,
     timezone,
   ]);
-  return rows[0]!.id;
+  const schoolId = rows[0]!.id;
+  await insertDefaultTherapies(client, schoolId);
+  return schoolId;
 }
 
 // Links the user to the school unless they already have one. Checked in the database rather than
