@@ -6,11 +6,10 @@ import { buttonClass } from '@/components/ui/button';
 import { Field, FormError, SelectField } from '@/components/ui/Field';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { useSend } from '@/lib/api/useSend';
-import { INVITABLE_ROLES, type InvitableRole, type Member } from './types';
+import { INVITABLE_ROLES, type InvitableRole } from './types';
 
 interface Props {
   classes: { id: string; name: string }[];
-  students: Member[];
   // The roles this person may invite; a teacher may only invite students
   roles?: InvitableRole[];
   // Teachers must place the student in one of their classes
@@ -19,7 +18,7 @@ interface Props {
   onCancel: () => void;
 }
 
-export function InviteForm({ classes, students, roles = INVITABLE_ROLES, requireClass = false, onSent, onCancel }: Props) {
+export function InviteForm({ classes, roles = INVITABLE_ROLES, requireClass = false, onSent, onCancel }: Props) {
   const t = useTranslations('People');
   const tRoles = useTranslations('Roles');
   const locale = useLocale();
@@ -28,7 +27,7 @@ export function InviteForm({ classes, students, roles = INVITABLE_ROLES, require
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const { email, classId, studentId } = Object.fromEntries(new FormData(event.currentTarget));
+    const { email, classId } = Object.fromEntries(new FormData(event.currentTarget));
     const result = await send('/api/invitations', {
       body: {
         email,
@@ -36,7 +35,6 @@ export function InviteForm({ classes, students, roles = INVITABLE_ROLES, require
         // The invitation email is written in the admin's language
         locale,
         ...(role === 'student' && classId && { classId }),
-        ...(role === 'parent' && studentId && { studentId }),
       },
     });
     if (result.ok) onSent(String(email));
@@ -71,16 +69,6 @@ export function InviteForm({ classes, students, roles = INVITABLE_ROLES, require
             {classes.map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
-              </option>
-            ))}
-          </SelectField>
-        )}
-        {role === 'parent' && (
-          <SelectField label={t('child')} name="studentId" defaultValue="">
-            <option value="">{t('noChild')}</option>
-            {students.map((student) => (
-              <option key={student.id} value={student.id}>
-                {student.lastName} {student.firstName}
               </option>
             ))}
           </SelectField>

@@ -11,6 +11,8 @@ export interface User {
   lastName: string;
   role: Role;
   schoolId: string | null;
+  // The language saved in their profile; null (or missing, in older sessions) follows the browser
+  locale?: 'ro' | 'en' | null;
 }
 
 export interface Session {

@@ -12,14 +12,14 @@ import { useSend } from '@/lib/api/useSend';
 import { colorFor } from '@/lib/colors';
 import { ClassCourses } from './ClassCourses';
 import { ClassStudents } from './ClassStudents';
-import type { ClassDetails, Person } from './types';
+import type { ClassDetails, Person, Therapist } from './types';
 
 export function ClassDetail({ classId }: { classId: string }) {
   const t = useTranslations('Classes');
   const router = useRouter();
   const details = useApi<ClassDetails>(`/api/classes/${classId}`);
   const students = useApi<Person[]>('/api/users?role=student');
-  const teachers = useApi<Person[]>('/api/users?role=teacher');
+  const teachers = useApi<Therapist[]>('/api/users?role=teacher');
   const { send, pending, error } = useSend();
 
   const backLink = (

@@ -1,5 +1,4 @@
 import express from 'express';
-import { DatabaseError } from 'pg';
 import request from 'supertest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { pool } from '../../db/pool.js';
@@ -14,7 +13,6 @@ vi.mock('../../emails/mailer.js', () => ({ sendMail: vi.fn() }));
 
 const query = vi.mocked(pool.query) as unknown as ReturnType<typeof vi.fn>;
 
-// The connection the sign-up transaction runs on
 const client = { query: vi.fn(), release: vi.fn() };
 vi.mocked(pool.connect).mockImplementation(async () => client as never);
 
@@ -31,27 +29,9 @@ const userRow = {
   email_verified_at: new Date(),
 };
 
-const validSignup = {
-  email: 'ana@school.edu',
-  password: 'password123',
-  firstName: 'Ana',
-  lastName: 'Pop',
-  role: 'teacher',
-};
-
-// Fewer accounts from this IP than the limit, then the transaction succeeds
-function allowSignup(accountsFromIp = 0) {
-  query.mockResolvedValue({ rows: [{ count: accountsFromIp }] });
-  client.query.mockImplementation(async (sql: string) =>
-    sql.includes('INSERT INTO users') ? { rows: [{ ...userRow, email_verified_at: null }] } : { rows: [] },
-  );
-}
-
 afterEach(() => {
   vi.unstubAllEnvs();
 });
-
-const emailedLink = () => vi.mocked(sendMail).mock.calls[0]?.[0].text.match(/token=(\S+)/)?.[1];
 
 beforeEach(() => {
   vi.stubEnv('REQUIRE_EMAIL_VERIFICATION', 'true');
@@ -61,123 +41,11 @@ beforeEach(() => {
   vi.mocked(sendMail).mockReset();
 });
 
-describe('POST /api/auth/register without email verification (the default)', () => {
-  beforeEach(() => {
-    vi.stubEnv('REQUIRE_EMAIL_VERIFICATION', '');
-  });
+describe('POST /api/auth/register', () => {
+  it('no longer exists: accounts come from the create-admin script and from admins', async () => {
+    const res = await request(app).post('/api/auth/register').send({ email: 'ana@school.edu', password: 'password123' });
 
-  it('creates a verified user and signs them in straight away', async () => {
-    query.mockResolvedValue({ rows: [{ count: 0 }] });
-    client.query.mockImplementation(async (sql: string) => (sql.includes('INSERT INTO users') ? { rows: [userRow] } : { rows: [] }));
-
-    const res = await request(app).post('/api/auth/register').send(validSignup);
-
-    expect(res.status).toBe(201);
-    expect(res.body.token).toEqual(expect.any(String));
-    expect(res.body.user.email).toBe('ana@school.edu');
-    const insert = client.query.mock.calls.find(([sql]) => sql.includes('INSERT INTO users'));
-    expect(insert?.[1].at(-1)).toBe(false); // not waiting for verification
-    expect(client.query.mock.calls.some(([sql]) => sql.includes('email_verification_tokens'))).toBe(false);
-    expect(sendMail).not.toHaveBeenCalled();
-  });
-
-  it('lets unverified accounts sign in', async () => {
-    query.mockResolvedValue({
-      rows: [{ ...userRow, email_verified_at: null, password_hash: await hashPassword('password123') }],
-    });
-
-    const res = await request(app).post('/api/auth/login').send({ email: 'ana@school.edu', password: 'password123' });
-
-    expect(res.status).toBe(200);
-  });
-});
-
-describe('POST /api/auth/register with email verification', () => {
-  it('creates an unverified user and emails a confirmation link', async () => {
-    allowSignup();
-
-    const res = await request(app).post('/api/auth/register').send(validSignup);
-
-    expect(res.status).toBe(201);
-    expect(res.body.token).toBeUndefined();
-    expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: 'ana@school.edu' }));
-    // The database only gets the hash of the emailed token
-    const storedHash = client.query.mock.calls.find(([sql]) => sql.includes('email_verification_tokens ('))?.[1][0];
-    expect(storedHash).toBe(sha256(decodeURIComponent(emailedLink()!)));
-    expect(client.release).toHaveBeenCalled();
-  });
-
-  it('writes the email in the chosen language', async () => {
-    allowSignup();
-
-    await request(app)
-      .post('/api/auth/register')
-      .send({ ...validSignup, locale: 'ro' });
-
-    expect(vi.mocked(sendMail).mock.calls[0]?.[0].subject).toBe('Confirmă-ți contul EduDesk');
-  });
-
-  it('pretends to succeed when the honeypot is filled, without creating anything', async () => {
-    const res = await request(app)
-      .post('/api/auth/register')
-      .send({ ...validSignup, website: 'http://spam.example' });
-
-    expect(res.status).toBe(201);
-    expect(query).not.toHaveBeenCalled();
-    expect(client.query).not.toHaveBeenCalled();
-    expect(sendMail).not.toHaveBeenCalled();
-  });
-
-  it('returns 429 when this IP created too many accounts today', async () => {
-    allowSignup(5);
-
-    const res = await request(app).post('/api/auth/register').send(validSignup);
-
-    expect(res.status).toBe(429);
-    expect(res.body.code).toBe('TOO_MANY_ACCOUNTS');
-    expect(client.query).not.toHaveBeenCalled();
-  });
-
-  it('returns 400 when a field is missing', async () => {
-    const res = await request(app)
-      .post('/api/auth/register')
-      .send({ ...validSignup, firstName: '' });
-
-    expect(res.status).toBe(400);
-    expect(query).not.toHaveBeenCalled();
-  });
-
-  it('returns 400 when the password is too short', async () => {
-    const res = await request(app)
-      .post('/api/auth/register')
-      .send({ ...validSignup, password: 'short' });
-
-    expect(res.status).toBe(400);
-  });
-
-  it('does not allow signing up as super admin', async () => {
-    const res = await request(app)
-      .post('/api/auth/register')
-      .send({ ...validSignup, role: 'super_admin' });
-
-    expect(res.status).toBe(400);
-    expect(res.body.message).toBe('Invalid role');
-  });
-
-  it('rolls back and returns 409 when the email is taken', async () => {
-    query.mockResolvedValue({ rows: [{ count: 0 }] });
-    const duplicate = new DatabaseError('duplicate key', 0, 'error');
-    duplicate.code = '23505';
-    client.query.mockImplementation(async (sql: string) => {
-      if (sql.includes('INSERT INTO users')) throw duplicate;
-      return { rows: [] };
-    });
-
-    const res = await request(app).post('/api/auth/register').send(validSignup);
-
-    expect(res.status).toBe(409);
-    expect(client.query).toHaveBeenLastCalledWith('ROLLBACK');
-    expect(sendMail).not.toHaveBeenCalled();
+    expect(res.status).toBe(404);
   });
 });
 
@@ -231,6 +99,18 @@ describe('POST /api/auth/login', () => {
     expect(res.status).toBe(200);
     expect(res.body.user.email).toBe('ana@school.edu');
     expect(query.mock.calls[0]?.[1]).toEqual(['ana@school.edu']);
+  });
+
+  it('signs in with the phone number the admin saved, however it is typed', async () => {
+    query.mockResolvedValue({
+      rows: [{ ...userRow, email: null, phone: '+40722111222', password_hash: await hashPassword('password123') }],
+    });
+
+    const res = await request(app).post('/api/auth/login').send({ email: '0722 111 222', password: 'password123' });
+
+    expect(res.status).toBe(200);
+    expect(query.mock.calls[0]?.[0]).toContain('WHERE phone = $1');
+    expect(query.mock.calls[0]?.[1]).toEqual(['+40722111222']);
   });
 
   it('returns 403 until the email is verified', async () => {

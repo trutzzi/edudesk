@@ -13,14 +13,14 @@ describe('DashboardHeader', () => {
     renderWithIntl(<DashboardHeader user={user} onLogout={vi.fn()} />);
 
     expect(screen.getByText('Ana Pop')).toBeInTheDocument();
-    expect(screen.getByText('Teacher')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /EduDesk/ })).toHaveAttribute('href', '/');
+    expect(screen.getByText('Therapist')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Blue/ })).toHaveAttribute('href', '/');
   });
 
   it('shows the role in the chosen language', () => {
     renderWithIntl(<DashboardHeader user={user} onLogout={vi.fn()} />, 'ro');
 
-    expect(screen.getByText('Profesor')).toBeInTheDocument();
+    expect(screen.getByText('Terapeut')).toBeInTheDocument();
   });
 
   it('logs out', async () => {

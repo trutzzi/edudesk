@@ -30,7 +30,7 @@ export function TimelineGroupRows({ group, open, onToggle, zoom, scale, now, liv
 
   const describe = (item: TimelineItem) => {
     const who = `${item.courseName} · ${item.class.name} · ${fullName(item.teacher)}`;
-    if (item.startTime) return `${who}\n${item.startTime}–${item.endTime}${item.room ? ` · ${item.room}` : ''}`;
+    if (item.startTime) return `${who}\n${item.startTime}–${item.endTime}`;
     const dates = format.dateTimeRange(parseDay(item.startDay), parseDay(item.endDay), {
       day: 'numeric',
       month: 'short',
@@ -42,7 +42,7 @@ export function TimelineGroupRows({ group, open, onToggle, zoom, scale, now, liv
 
   const barLabel = (item: TimelineItem) => {
     if (!timeZoom) return item.courseName;
-    return zoom === 'day' ? `${item.startTime} · ${item.room ?? ''}` : '';
+    return zoom === 'day' ? (item.startTime ?? '') : '';
   };
 
   return (

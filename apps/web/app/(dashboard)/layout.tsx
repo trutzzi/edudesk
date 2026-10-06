@@ -6,7 +6,9 @@ import { DashboardHeader } from '@/components/layout/DashboardHeader';
 import { DashboardNav, hasTabBar } from '@/components/layout/DashboardNav';
 import { Spinner } from '@/components/ui/Spinner';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { BrandingProvider } from '@/features/branding/BrandingProvider';
 import { NoSchool, SchoolSetup } from '@/features/onboarding/SchoolSetup';
+import { SavedLocale } from '@/features/profile/SavedLocale';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const { user, loading, logout } = useAuth();
@@ -28,7 +30,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const inSchool = Boolean(user.schoolId) || user.role === 'super_admin';
 
   return (
-    <>
+    <BrandingProvider>
+      <SavedLocale />
       <DashboardHeader user={user} onLogout={logout} />
       {inSchool ? (
         <>
@@ -45,6 +48,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       ) : (
         <main className="flex-1 p-4 sm:p-6 lg:p-8">{user.role === 'school_admin' ? <SchoolSetup /> : <NoSchool />}</main>
       )}
-    </>
+    </BrandingProvider>
   );
 }

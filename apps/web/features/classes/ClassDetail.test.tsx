@@ -65,7 +65,7 @@ describe('ClassDetail', () => {
 
     expect(await screen.findByRole('heading', { name: '9A' })).toBeInTheDocument();
     expect(screen.getByText('4 lessons a week')).toBeInTheDocument();
-    const picker = await screen.findByLabelText('Add student');
+    const picker = await screen.findByLabelText('Add patient/client');
     expect(picker).toHaveTextContent('Marin Radu');
     expect(picker).not.toHaveTextContent('Stan Ioana');
   });
@@ -74,7 +74,7 @@ describe('ClassDetail', () => {
     renderDetail();
     const user = userEvent.setup();
 
-    await user.selectOptions(await screen.findByLabelText('Add student'), 's2');
+    await user.selectOptions(await screen.findByLabelText('Add patient/client'), 's2');
     await user.click(screen.getByRole('button', { name: 'Add' }));
 
     expect(api).toHaveBeenCalledWith('/api/classes/c9a/students', { token: 'abc', body: { studentId: 's2' } });
@@ -98,7 +98,7 @@ describe('ClassDetail', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true);
     renderDetail();
 
-    await userEvent.setup().click(await screen.findByRole('button', { name: 'Delete class' }));
+    await userEvent.setup().click(await screen.findByRole('button', { name: 'Delete room' }));
 
     expect(api).toHaveBeenCalledWith('/api/classes/c9a', { token: 'abc', method: 'DELETE' });
     await waitFor(() => expect(push).toHaveBeenCalledWith('/dashboard/classes'));

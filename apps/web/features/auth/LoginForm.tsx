@@ -44,7 +44,14 @@ export function LoginForm() {
         </div>
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Field label={tForm('email')} name="email" type="email" autoComplete="email" placeholder="name@school.edu" required />
+        <Field
+          label={tForm('emailOrPhone')}
+          name="email"
+          type="text"
+          autoComplete="username"
+          placeholder="nume@exemplu.ro / 0722 123 456"
+          required
+        />
         <Field label={tForm('password')} name="password" type="password" autoComplete="current-password" placeholder="••••••••" required />
         <button type="submit" disabled={pending} className={buttonClass('primary', 'block')}>
           {pending ? t('submitting') : tCommon('signIn')}

@@ -77,7 +77,7 @@ describe('Timeline', () => {
     await user.selectOptions(screen.getByLabelText('Group by'), 'teacher');
     expect(screen.getByRole('button', { name: 'Collapse Elena Popescu' })).toBeInTheDocument();
 
-    await user.type(screen.getByLabelText('Search courses, classes, teachers…'), 'romana');
+    await user.type(screen.getByLabelText('Search therapies, rooms, therapists…'), 'romana');
     expect(screen.queryByRole('button', { name: 'Collapse Elena Popescu' })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Collapse Mihai Ionescu' })).toBeInTheDocument();
   });
@@ -95,7 +95,7 @@ describe('Timeline', () => {
     signIn({ role: 'teacher' }, 'abc');
     renderTimeline();
 
-    expect(screen.getByText('Only school admins can see the timeline.')).toBeInTheDocument();
+    expect(screen.getByText('Only institution admins can see the timeline.')).toBeInTheDocument();
     expect(api).not.toHaveBeenCalled();
   });
 });

@@ -56,7 +56,7 @@ describe('ClassCourses', () => {
   it('says when there are no courses', () => {
     renderCourses([]);
 
-    expect(screen.getByText('No courses yet.')).toBeInTheDocument();
+    expect(screen.getByText('No therapies yet.')).toBeInTheDocument();
   });
 
   it('opens and hides the weekly schedule', async () => {
@@ -104,14 +104,14 @@ describe('ClassCourses', () => {
   });
 
   it('shows the new-course form and closes it after saving', async () => {
-    vi.mocked(api).mockResolvedValue({});
+    vi.mocked(api).mockImplementation(async (path) => (path === '/api/therapies' ? [] : {}));
     renderCourses([course]);
     const user = userEvent.setup();
 
-    await user.click(screen.getByRole('button', { name: '+ New course' }));
-    expect(screen.getByRole('form', { name: 'New course' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '+ New therapy' }));
+    expect(screen.getByRole('form', { name: 'New therapy' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(screen.queryByRole('form', { name: 'New course' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('form', { name: 'New therapy' })).not.toBeInTheDocument();
   });
 });

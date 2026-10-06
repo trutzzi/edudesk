@@ -42,7 +42,6 @@ export function NowPanel({ lessons, now, current, loading }: Props) {
               <span className="font-semibold">{lesson.courseName}</span>
               <span className="text-slate-500">
                 {lesson.class.name} · {fullName(lesson.teacher)}
-                {lesson.room && ` · ${lesson.room}`}
               </span>
               <span className="text-xs font-medium text-indigo-600">{t('until', { time: lesson.endTime })}</span>
             </li>

@@ -64,7 +64,7 @@ describe('POST /api/invitations', () => {
     expect(insert[1][5]).toBe(sha256(decodeURIComponent(emailedToken()!)));
     expect(vi.mocked(sendMail).mock.calls[0]?.[0]).toMatchObject({
       to: 'elena@school.edu',
-      subject: 'Ai fost invitat la Liceul Demo pe EduDesk',
+      subject: 'Ai fost invitat la Liceul Demo pe Blue',
     });
   });
 

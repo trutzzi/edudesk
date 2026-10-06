@@ -6,7 +6,7 @@ import { HeroActions, NavActions } from './LandingActions';
 
 const FEATURES = ['classes', 'timetable', 'timeline', 'calendar', 'people', 'health'] as const;
 
-const ROLES = ['admin', 'teacher', 'student', 'parent'] as const;
+const ROLES = ['admin', 'teacher', 'student'] as const;
 
 export async function LandingPage() {
   const t = await getTranslations('Landing');
@@ -81,7 +81,7 @@ export async function LandingPage() {
       </main>
 
       <footer className="border-t border-slate-200 bg-white py-8 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} EduDesk
+        © {new Date().getFullYear()} Blue
       </footer>
     </>
   );

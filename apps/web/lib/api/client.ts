@@ -1,6 +1,9 @@
 // Where the API runs; built into the browser code at build time
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
 
+// The API's address for a path, for things the browser loads itself, like an <img>
+export const apiUrl = (path: string) => `${API_URL}${path}`;
+
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -20,15 +23,17 @@ interface RequestOptions extends Omit<RequestInit, 'body' | 'headers'> {
 }
 
 export async function api<T>(path: string, { body, headers, token, ...init }: RequestOptions = {}): Promise<T> {
-  const response = await fetch(`${API_URL}${path}`, {
+  // A file (like a logo) goes as itself, with its own type; anything else as JSON
+  const file = typeof Blob !== 'undefined' && body instanceof Blob ? body : null;
+  const response = await fetch(apiUrl(path), {
     ...init,
     method: init.method ?? (body === undefined ? 'GET' : 'POST'),
     headers: {
-      ...(body !== undefined && { 'Content-Type': 'application/json' }),
+      ...(body !== undefined && { 'Content-Type': file ? file.type : 'application/json' }),
       ...(token && { Authorization: `Bearer ${token}` }),
       ...headers,
     },
-    body: body === undefined ? undefined : JSON.stringify(body),
+    body: body === undefined ? undefined : (file ?? JSON.stringify(body)),
   });
 
   const data = await response.json().catch(() => null);
@@ -43,7 +48,6 @@ export async function api<T>(path: string, { body, headers, token, ...init }: Re
 // Error codes the app has its own translated message for
 const TRANSLATED_CODES = [
   'RATE_LIMITED',
-  'TOO_MANY_ACCOUNTS',
   'EMAIL_NOT_VERIFIED',
   'INVALID_TOKEN',
   'LESSON_CLASH',
@@ -55,6 +59,17 @@ const TRANSLATED_CODES = [
   'WRONG_PASSWORD',
   'TEACHER_HAS_COURSES',
   'CANNOT_REMOVE_SELF',
+  'NO_SCHOOL',
+  'TEACHERS_INVITE_STUDENTS',
+  'CONTACT_TAKEN',
+  'INVALID_PHONE',
+  'NOT_A_THERAPY',
+  'NOT_SPECIALIZED',
+  'FUTURE_SESSION',
+  'THERAPY_EXISTS',
+  'THERAPY_IN_USE',
+  'INVALID_LOGO',
+  'TOO_LARGE',
 ] as const;
 type ErrorCode = (typeof TRANSLATED_CODES)[number];
 const isTranslatedCode = (code: unknown): code is ErrorCode => TRANSLATED_CODES.includes(code as ErrorCode);

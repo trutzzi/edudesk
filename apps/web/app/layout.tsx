@@ -15,12 +15,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Metadata');
   return {
     title: {
-      default: 'EduDesk',
-      template: '%s · EduDesk',
+      default: 'Blue',
+      template: '%s · Blue',
     },
     description: t('description'),
     // Opened from the home screen, iOS shows it full screen with its own name
-    appleWebApp: { capable: true, title: 'EduDesk', statusBarStyle: 'default' },
+    appleWebApp: { capable: true, title: 'Blue', statusBarStyle: 'default' },
   };
 }
 

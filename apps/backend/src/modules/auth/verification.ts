@@ -28,6 +28,8 @@ export async function createVerificationToken(userId: string, db: Pool | PoolCli
 
 // Sending can fail (SMTP down, a mistyped address). The account still exists and its owner can ask for a new link.
 export async function sendVerificationEmail(user: UserRow, token: string, locale: EmailLocale) {
+  // Accounts without an email are made by an admin, already confirmed
+  if (!user.email) return;
   try {
     await sendMail(verificationEmail(user.email, user.first_name, appLink('/verify-email', token), locale));
   } catch (err) {

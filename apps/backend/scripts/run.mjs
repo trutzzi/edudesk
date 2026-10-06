@@ -1,4 +1,4 @@
-// Runs one of src/scripts the same way everywhere: `npm run seed`, `npm run holidays`.
+// Runs one of src/scripts the same way everywhere: `npm run seed`, `npm run create-admin`, `npm run holidays`.
 // In a checkout it runs the TypeScript source through tsx; in the Docker image, which only has the
 // compiled code, it runs the copy in dist. Arguments after the name are passed on.
 //
@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const SCRIPTS = new Map([
   ['seed', 'seed/index'],
+  ['create-admin', 'createAdmin/index'],
   ['holidays', 'holidays'],
 ]);
 

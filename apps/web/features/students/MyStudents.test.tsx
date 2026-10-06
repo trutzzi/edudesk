@@ -39,7 +39,7 @@ describe('MyStudents', () => {
 
     expect(await screen.findByRole('heading', { name: '9A' })).toBeInTheDocument();
     expect(screen.getByText('Ioana Stan')).toBeInTheDocument();
-    expect(screen.getByText('No students in this class yet.')).toBeInTheDocument();
+    expect(screen.getByText('No patients/clients in this room yet.')).toBeInTheDocument();
   });
 
   it('opens the student invitation form and closes it again', async () => {
@@ -48,11 +48,11 @@ describe('MyStudents', () => {
     renderScreen();
     const user = userEvent.setup();
 
-    await user.click(await screen.findByRole('button', { name: '+ Invite a student' }));
-    expect(screen.getByText('Invite someone to your school')).toBeInTheDocument();
+    await user.click(await screen.findByRole('button', { name: '+ Invite a patient/client' }));
+    expect(screen.getByText('Invite someone to your institution')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(screen.getByRole('button', { name: '+ Invite a student' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '+ Invite a patient/client' })).toBeInTheDocument();
   });
 
   it('explains when the teacher has no classes yet', async () => {
@@ -60,14 +60,14 @@ describe('MyStudents', () => {
     serve([]);
     renderScreen();
 
-    expect(await screen.findByText(/You don't teach any class yet/)).toBeInTheDocument();
+    expect(await screen.findByText(/You don't work in any room yet/)).toBeInTheDocument();
   });
 
   it('is only for teachers', () => {
     signIn({ role: 'student' });
     renderScreen();
 
-    expect(screen.getByText(/You don't teach any class yet/)).toBeInTheDocument();
+    expect(screen.getByText(/You don't work in any room yet/)).toBeInTheDocument();
     expect(api).not.toHaveBeenCalled();
   });
 
@@ -76,6 +76,6 @@ describe('MyStudents', () => {
     vi.mocked(api).mockRejectedValue(new ApiError('boom', 500));
     renderScreen();
 
-    expect(await screen.findByText(/Couldn't load your classes/)).toBeInTheDocument();
+    expect(await screen.findByText(/Couldn't load your rooms/)).toBeInTheDocument();
   });
 });

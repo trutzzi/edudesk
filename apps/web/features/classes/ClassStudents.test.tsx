@@ -38,7 +38,7 @@ describe('ClassStudents', () => {
     renderStudents([ioana], [ioana, radu]);
 
     const options = screen.getAllByRole('option').map((option) => option.textContent);
-    expect(options).toEqual(['Choose a student…', 'Marin Radu']);
+    expect(options).toEqual(['Choose a patient/client…', 'Marin Radu']);
   });
 
   it('adds the chosen student', async () => {
@@ -47,18 +47,18 @@ describe('ClassStudents', () => {
     const user = userEvent.setup();
 
     expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled();
-    await user.selectOptions(screen.getByLabelText('Add student'), 's2');
+    await user.selectOptions(screen.getByLabelText('Add patient/client'), 's2');
     await user.click(screen.getByRole('button', { name: 'Add' }));
 
     await waitFor(() => expect(api).toHaveBeenCalledWith('/api/classes/c1/students', { body: { studentId: 's2' }, token: 'token' }));
     expect(onChanged).toHaveBeenCalled();
   });
 
-  it('removes a student from the class', async () => {
+  it('removes a student from the room', async () => {
     vi.mocked(api).mockResolvedValue(undefined);
     renderStudents([ioana], [ioana]);
 
-    await userEvent.setup().click(screen.getByRole('button', { name: 'Remove Ioana Stan from the class' }));
+    await userEvent.setup().click(screen.getByRole('button', { name: 'Remove Ioana Stan from the room' }));
 
     await waitFor(() => expect(api).toHaveBeenCalledWith('/api/classes/c1/students/s1', { method: 'DELETE', token: 'token' }));
     expect(onChanged).toHaveBeenCalled();
@@ -67,14 +67,14 @@ describe('ClassStudents', () => {
   it('says when everyone is already in the class', () => {
     renderStudents([ioana], [ioana]);
 
-    expect(screen.getByText('Every student in the school is already in this class.')).toBeInTheDocument();
+    expect(screen.getByText('Every patient/client in the institution is already in this room.')).toBeInTheDocument();
   });
 
   it('says nothing about the picker while the school students load', () => {
     renderStudents([], undefined);
 
-    expect(screen.getByText('No students in this class yet.')).toBeInTheDocument();
-    expect(screen.queryByText('Every student in the school is already in this class.')).not.toBeInTheDocument();
+    expect(screen.getByText('No patients/clients in this room yet.')).toBeInTheDocument();
+    expect(screen.queryByText('Every patient/client in the institution is already in this room.')).not.toBeInTheDocument();
   });
 
   it('shows the error when adding fails', async () => {
@@ -82,7 +82,7 @@ describe('ClassStudents', () => {
     renderStudents([], [radu]);
     const user = userEvent.setup();
 
-    await user.selectOptions(screen.getByLabelText('Add student'), 's2');
+    await user.selectOptions(screen.getByLabelText('Add patient/client'), 's2');
     await user.click(screen.getByRole('button', { name: 'Add' }));
 
     expect(await screen.findByRole('alert')).toBeInTheDocument();

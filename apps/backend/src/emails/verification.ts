@@ -2,16 +2,16 @@ import { actionEmail, type EmailLocale } from './layout.js';
 
 const COPY = {
   en: {
-    subject: 'Confirm your EduDesk account',
+    subject: 'Confirm your Blue account',
     greeting: (name: string) => `Hi ${name},`,
-    body: 'Confirm your email address to finish creating your EduDesk account.',
+    body: 'Confirm your email address to finish creating your Blue account.',
     button: 'Confirm email',
     footer: 'The link works once and expires in 24 hours. If you did not create this account, ignore this email.',
   },
   ro: {
-    subject: 'Confirmă-ți contul EduDesk',
+    subject: 'Confirmă-ți contul Blue',
     greeting: (name: string) => `Bună, ${name},`,
-    body: 'Confirmă-ți adresa de email pentru a finaliza crearea contului EduDesk.',
+    body: 'Confirmă-ți adresa de email pentru a finaliza crearea contului Blue.',
     button: 'Confirmă emailul',
     footer: 'Linkul funcționează o singură dată și expiră în 24 de ore. Dacă nu tu ai creat acest cont, ignoră acest email.',
   },

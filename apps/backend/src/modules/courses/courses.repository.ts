@@ -144,6 +144,22 @@ export async function updateCourse(courseId: string, schoolId: string, changes: 
   return rows[0];
 }
 
+// Whether a course's therapist has its therapy among their specializations. For a change, a missing teacher
+// or name means the course keeps its current one. Undefined when the course doesn't exist.
+export async function therapistHasTherapy(courseId: string | null, teacherId: string | null, name: string | null) {
+  const { rows } = await pool.query<{ allowed: boolean }>(
+    `SELECT EXISTS (
+       SELECT 1 FROM therapist_specializations s JOIN therapies th ON th.id = s.therapy_id
+       WHERE s.teacher_id = COALESCE($2::uuid, co.teacher_id) AND th.name = COALESCE($3, co.name)
+     ) AS allowed
+     FROM (SELECT NULL) AS nothing
+     LEFT JOIN courses co ON co.id = $1::uuid
+     WHERE $1::uuid IS NULL OR co.id IS NOT NULL`,
+    [courseId, teacherId, name],
+  );
+  return rows[0]?.allowed;
+}
+
 export async function deleteCourse(courseId: string, schoolId: string) {
   const { rowCount } = await pool.query(
     `DELETE FROM courses co USING classes cl

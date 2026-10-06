@@ -15,7 +15,7 @@ export function LogoMark({ size, rounded = true }: { size: number; rounded?: boo
         borderRadius: rounded ? size * 0.22 : 0,
       }}
     >
-      E
+      B
     </div>
   );
 }

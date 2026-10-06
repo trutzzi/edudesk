@@ -1,15 +1,15 @@
 {
   "Metadata": {
-    "description": "Managementul școlii pentru administratori, profesori, elevi și părinți."
+    "description": "Managementul instituției pentru administratori, terapeuți, pacienți/clienți și părinți."
   },
   "Common": {
     "signIn": "Autentificare",
     "logOut": "Deconectare",
     "dashboard": "Panou de control",
-    "createAccount": "Creează un cont",
     "today": "Azi",
     "previous": "Înapoi",
-    "next": "Înainte"
+    "next": "Înainte",
+    "profile": "Profil"
   },
   "LocaleSwitcher": {
     "label": "Limbă",
@@ -17,57 +17,52 @@
     "ro": "Română"
   },
   "Landing": {
-    "badge": "O singură platformă pentru toată școala",
-    "titleLine1": "Managementul școlii,",
+    "badge": "O singură platformă pentru toată instituția",
+    "titleLine1": "Managementul instituției,",
     "titleLine2": "simplu și conectat",
-    "description": "Clase, cursuri, orare și calendarul școlii într-un singur loc, mereu actualizate pentru administratori, profesori, elevi și părinți.",
-    "getStarted": "Începe acum",
+    "description": "Săli, terapii, programe și calendarul instituției într-un singur loc, mereu actualizate pentru administratori, terapeuți, pacienți/clienți și părinți.",
     "goToDashboard": "Mergi la panoul tău →",
-    "featuresTitle": "Tot ce are nevoie o școală",
-    "featuresSubtitle": "Configurezi școala o singură dată, iar fiecare vede un orar mereu la zi.",
+    "featuresTitle": "Tot ce are nevoie o instituție",
+    "featuresSubtitle": "Configurezi instituția o singură dată, iar fiecare vede un program mereu la zi.",
     "features": {
       "classes": {
-        "title": "Clase și cursuri",
-        "text": "Creezi clase, înscrii elevi și dai fiecărui curs un profesor, un orar săptămânal și perioada în care se ține."
+        "title": "Săli și terapii",
+        "text": "Creezi săli, înscrii pacienți/clienți și dai fiecărei terapii un terapeut, un program săptămânal și perioada în care se ține."
       },
       "timetable": {
-        "title": "Orare personale",
-        "text": "Profesorii, elevii și părinții își văd orele pe zi, săptămână sau lună, cu un marcaj pentru momentul de acum."
+        "title": "Programe personale",
+        "text": "Terapeuții, pacienții/clienții și părinții își văd orele pe zi, săptămână sau lună, cu un marcaj pentru momentul de acum."
       },
       "timeline": {
-        "title": "Cronologia școlii",
-        "text": "Administratorii văd toate cursurile și orele din an, grupate pe clase sau profesori, de la un semestru până la o zi."
+        "title": "Cronologia instituției",
+        "text": "Administratorii văd toate terapiile și orele din an, grupate pe săli sau terapeuți, de la un semestru până la o zi."
       },
       "calendar": {
-        "title": "Calendarul școlii",
-        "text": "Examene, excursii și ședințe cu părinții pentru toată școala sau pentru o clasă. Sărbătorile legale apar automat și anulează orele din acea zi."
+        "title": "Calendarul instituției",
+        "text": "Evaluări, excursii și ședințe cu părinții pentru toată instituția sau pentru o sală. Sărbătorile legale apar automat și anulează orele din acea zi."
       },
       "people": {
         "title": "Invitații și roluri",
-        "text": "Inviți profesori, elevi și părinți prin email. Fiecare vede doar ce îi permite rolul."
+        "text": "Inviți terapeuți, pacienți/clienți și părinți prin email. Fiecare vede doar ce îi permite rolul."
       },
       "health": {
         "title": "Privire de ansamblu și monitorizare",
-        "text": "Cifre la zi despre școală și un jurnal al erorilor și cererilor lente, ca problemele să fie observate."
+        "text": "Cifre la zi despre instituție și un jurnal al erorilor și cererilor lente, ca problemele să fie observate."
       }
     },
-    "rolesTitle": "Pentru toată lumea din școală",
+    "rolesTitle": "Pentru toată lumea din instituție",
     "roles": {
       "admin": {
         "title": "Administratori",
-        "text": "Configurează clase, cursuri și orare, gestionează persoanele și planifică calendarul."
+        "text": "Configurează săli, terapii și programe, gestionează persoanele și planifică calendarul."
       },
       "teacher": {
-        "title": "Profesori",
-        "text": "Își văd orarul și clasele și își invită elevii."
+        "title": "Terapeuți",
+        "text": "Își văd programul și sălile și își invită pacienții/clienții."
       },
       "student": {
-        "title": "Elevi",
+        "title": "Pacienți/Clienți",
         "text": "Știu ce urmează azi, săptămâna aceasta și luna aceasta."
-      },
-      "parent": {
-        "title": "Părinți",
-        "text": "Urmăresc orarul copilului și evenimentele școlii."
       }
     }
   },
@@ -75,18 +70,7 @@
     "title": "Bine ai revenit",
     "subtitle": "Autentifică-te pentru a accesa panoul de control",
     "submitting": "Se autentifică…",
-    "noAccount": "Nu ai un cont?",
-    "createOne": "Creează unul"
-  },
-  "Register": {
-    "title": "Creează un cont",
-    "subtitle": "Începe să folosești EduDesk chiar azi",
-    "submit": "Creează contul",
-    "submitting": "Se creează contul…",
-    "haveAccount": "Ai deja un cont?",
-    "checkEmailTitle": "Verifică-ți emailul",
-    "checkEmailBody": "Am trimis un link de confirmare la {email}. Deschide-l pentru a-ți activa contul. Linkul expiră în 24 de ore.",
-    "noEmail": "Nu l-ai primit? Verifică folderul spam sau cere un link nou."
+    "noAccount": "Nu ai cont? Îl primești de la administratorul instituției."
   },
   "Form": {
     "firstName": "Prenume",
@@ -94,42 +78,53 @@
     "email": "Email",
     "password": "Parolă",
     "role": "Rol",
-    "passwordHint": "Cel puțin 8 caractere"
+    "passwordHint": "Cel puțin 8 caractere",
+    "emailOrPhone": "Email sau telefon"
   },
   "Roles": {
     "super_admin": "Super administrator",
-    "school_admin": "Administrator școală",
-    "teacher": "Profesor",
+    "school_admin": "Administrator instituție",
+    "teacher": "Terapeut",
     "parent": "Părinte",
-    "student": "Elev"
+    "student": "Pacient/Client"
   },
   "Dashboard": {
     "title": "Prezentare generală",
-    "subtitle": "Iată ce se întâmplă astăzi în școala ta.",
+    "subtitle": "Iată ce se întâmplă astăzi în instituția ta.",
     "loadError": "Statisticile nu au putut fi încărcate. Reîncarcă pagina pentru a încerca din nou.",
     "stats": {
-      "studentsCount": "Elevi",
-      "teachersCount": "Profesori",
-      "adminsCount": "Administratori școală",
-      "classesCount": "Clase active"
+      "studentsCount": "Pacienți/Clienți",
+      "teachersCount": "Terapeuți",
+      "adminsCount": "Administratori instituție",
+      "classesCount": "Săli active"
     }
   },
   "Errors": {
     "generic": "Ceva nu a mers bine. Te rugăm să încerci din nou.",
     "network": "Serverul nu poate fi contactat. Verifică-ți conexiunea și încearcă din nou.",
     "RATE_LIMITED": "Prea multe încercări. Așteaptă câteva minute și încearcă din nou.",
-    "TOO_MANY_ACCOUNTS": "Din această rețea s-au creat prea multe conturi astăzi. Încearcă mâine sau cere ajutorul administratorului școlii.",
     "EMAIL_NOT_VERIFIED": "Confirmă-ți emailul înainte de autentificare. Caută în inbox linkul pe care ți l-am trimis.",
     "INVALID_TOKEN": "Acest link de confirmare este invalid, a fost deja folosit sau a expirat.",
-    "LESSON_CLASH": "Se suprapune cu o altă oră a aceluiași profesor sau a aceleiași clase. Alege altă oră.",
-    "SCHOOL_CODE_TAKEN": "Acest cod este folosit deja de altă școală. Alege alt cod.",
-    "ALREADY_MEMBER": "Această persoană face deja parte din școala ta.",
-    "IN_OTHER_SCHOOL": "Contul acestei persoane aparține altei școli.",
+    "LESSON_CLASH": "Se suprapune cu o altă oră a aceluiași terapeut sau a aceleiași săli. Alege altă oră.",
+    "SCHOOL_CODE_TAKEN": "Acest cod este folosit deja de altă instituție. Alege alt cod.",
+    "ALREADY_MEMBER": "Această persoană face deja parte din instituția ta.",
+    "IN_OTHER_SCHOOL": "Contul acestei persoane aparține altei instituții.",
     "INVITATION_PENDING": "Această persoană are deja o invitație în așteptare. Folosește Retrimite.",
-    "INVALID_INVITATION": "Această invitație este invalidă, a fost deja folosită sau a expirat. Cere administratorului școlii una nouă.",
+    "INVALID_INVITATION": "Această invitație este invalidă, a fost deja folosită sau a expirat. Cere administratorului instituției una nouă.",
     "WRONG_PASSWORD": "Aceasta nu este parola contului.",
-    "TEACHER_HAS_COURSES": "Acest profesor încă predă cursuri. Șterge-le sau dă-le altui profesor mai întâi.",
-    "CANNOT_REMOVE_SELF": "Nu te poți elimina singur din școală."
+    "TEACHER_HAS_COURSES": "Acest terapeut încă are terapii. Șterge-le sau dă-le altui terapeut mai întâi.",
+    "CANNOT_REMOVE_SELF": "Nu te poți elimina singur din instituție.",
+    "NO_SCHOOL": "Contul tău nu este încă asociat unei instituții.",
+    "TEACHERS_INVITE_STUDENTS": "Terapeuții pot invita clienți doar în sălile în care lucrează.",
+    "NOT_A_THERAPY": "Alege o terapie din lista instituției.",
+    "CONTACT_TAKEN": "Cineva are deja acest telefon sau email.",
+    "INVALID_PHONE": "Acesta nu pare un număr de telefon.",
+    "NOT_SPECIALIZED": "Terapeutul nu are această terapie printre specializări.",
+    "FUTURE_SESSION": "O ședință care nu a avut loc încă nu poate fi marcată.",
+    "THERAPY_EXISTS": "Instituția are deja o terapie cu acest nume.",
+    "THERAPY_IN_USE": "Terapia se folosește încă în săli. Șterge-o mai întâi de acolo.",
+    "INVALID_LOGO": "Logo-ul trebuie să fie PNG, JPEG sau WebP.",
+    "TOO_LARGE": "Fișierul este prea mare."
   },
   "Verify": {
     "title": "Confirmă-ți emailul",
@@ -147,14 +142,19 @@
     "timeline": "Cronologie",
     "calendar": "Calendar",
     "sections": "Secțiuni panou",
-    "timetable": "Orarul meu",
-    "classes": "Clase",
+    "timetable": "Programul meu",
+    "classes": "Săli",
     "people": "Membri",
-    "students": "Elevii mei"
+    "students": "Pacienții/Clienții mei",
+    "attendance": "Prezență",
+    "history": "Istoricul meu",
+    "reports": "Rapoarte",
+    "therapies": "Terapii",
+    "institution": "Instituție"
   },
   "Timeline": {
     "title": "Cronologie",
-    "subtitle": "Toate cursurile și orele din școală, cu un marcaj pentru momentul de acum.",
+    "subtitle": "Toate terapiile și orele din instituție, cu un marcaj pentru momentul de acum.",
     "zoom": "Zoom",
     "zooms": {
       "term": "Semestru",
@@ -163,21 +163,21 @@
       "day": "Zi"
     },
     "groupBy": "Grupează după",
-    "byClass": "Clasă",
-    "byTeacher": "Profesor",
-    "search": "Caută cursuri, clase, profesori…",
+    "byClass": "Sală",
+    "byTeacher": "Terapeut",
+    "search": "Caută terapii, săli, terapeuți…",
     "expand": "Extinde {name}",
     "collapse": "Restrânge {name}",
-    "courses": "{count, plural, one {# curs} few {# cursuri} other {# de cursuri}}",
-    "emptyCourses": "Niciun curs în această perioadă.",
+    "courses": "{count, plural, one {# terapie} few {# terapii} other {# de terapii}}",
+    "emptyCourses": "Nicio terapie în această perioadă.",
     "emptyLessons": "Nicio oră în această perioadă.",
     "noMatches": "Nimic nu se potrivește căutării.",
     "loadError": "Cronologia nu a putut fi încărcată. Reîncarcă pagina pentru a încerca din nou.",
-    "onlyAdmins": "Doar administratorii școlii pot vedea cronologia.",
+    "onlyAdmins": "Doar administratorii instituției pot vedea cronologia.",
     "inProgress": "În desfășurare",
     "now": "Acum",
     "holiday": "Vacanță",
-    "courseColumn": "Curs",
+    "courseColumn": "Terapie",
     "runsUntil": "{start} – {end}"
   },
   "NowPanel": {
@@ -189,15 +189,15 @@
     "noLessons": "Nicio oră astăzi."
   },
   "Calendar": {
-    "title": "Calendarul școlii",
+    "title": "Calendarul instituției",
     "subtitle": "Vacanțe, teze, excursii și ședințe. Vacanțele elimină și orele din cronologie.",
     "addEvent": "Adaugă eveniment",
     "eventTitle": "Titlu",
     "kind": "Tip",
     "start": "Început",
     "end": "Sfârșit",
-    "class": "Clasă",
-    "wholeSchool": "Toată școala",
+    "class": "Sală",
+    "wholeSchool": "Toată instituția",
     "save": "Salvează evenimentul",
     "saving": "Se salvează…",
     "cancel": "Anulează",
@@ -214,77 +214,77 @@
     "empty": "Niciun eveniment luna aceasta.",
     "more": "+încă {count}",
     "loadError": "Calendarul nu a putut fi încărcat. Reîncarcă pagina pentru a încerca din nou.",
-    "noSchool": "Contul tău nu este încă asociat unei școli.",
+    "noSchool": "Contul tău nu este încă asociat unei instituții.",
     "national": "Sărbătoare legală",
     "agenda": "Evenimentele lunii",
     "monthGrid": "Grila lunii"
   },
   "Classes": {
-    "title": "Clase",
-    "subtitle": "Creează clase, adaugă elevi și cursuri și stabilește orarul săptămânal al fiecărui curs.",
-    "newClass": "Clasă nouă",
+    "title": "Săli",
+    "subtitle": "Creează săli, adaugă pacienți/clienți și terapii și stabilește programul săptămânal al fiecărei terapii.",
+    "newClass": "Sală nouă",
     "name": "Nume",
-    "namePlaceholder": "ex. 9A",
+    "namePlaceholder": "ex. Sala Albastră",
     "schoolYear": "An școlar",
-    "create": "Creează clasa",
+    "create": "Creează sala",
     "creating": "Se creează…",
-    "students": "{count, plural, one {# elev} few {# elevi} other {# de elevi}}",
+    "students": "{count, plural, one {# pacient/client} few {# pacienți/clienți} other {# de pacienți/clienți}}",
     "open": "Deschide",
-    "empty": "Nicio clasă încă. Creează prima clasă.",
-    "loadError": "Clasele nu au putut fi încărcate. Reîncarcă pagina pentru a încerca din nou.",
-    "back": "Toate clasele",
-    "studentsTitle": "Elevi",
-    "addStudent": "Adaugă elev",
-    "chooseStudent": "Alege un elev…",
+    "empty": "Nicio sală încă. Creează prima sală.",
+    "loadError": "Sălile nu au putut fi încărcate. Reîncarcă pagina pentru a încerca din nou.",
+    "back": "Toate sălile",
+    "studentsTitle": "Pacienți/Clienți",
+    "addStudent": "Adaugă pacient/client",
+    "chooseStudent": "Alege un pacient/client…",
     "add": "Adaugă",
     "remove": "Elimină",
-    "removeStudent": "Elimină pe {name} din clasă",
-    "noStudents": "Niciun elev în această clasă încă.",
-    "allAdded": "Toți elevii școlii sunt deja în această clasă.",
-    "coursesTitle": "Cursuri",
-    "newCourse": "Curs nou",
-    "courseName": "Numele cursului",
-    "teacher": "Profesor",
-    "chooseTeacher": "Alege un profesor…",
+    "removeStudent": "Elimină pe {name} din sală",
+    "noStudents": "Niciun pacient/client în această sală încă.",
+    "allAdded": "Toți pacienții/clienții instituției sunt deja în această sală.",
+    "coursesTitle": "Terapii",
+    "newCourse": "Terapie nouă",
+    "courseName": "Terapie",
+    "teacher": "Terapeut",
+    "chooseTeacher": "Alege un terapeut…",
     "startDate": "Data de început",
     "endDate": "Data de sfârșit",
     "datesHint": "Lasă datele goale pentru tot anul școlar.",
     "description": "Descriere (opțional)",
-    "createCourse": "Creează cursul",
-    "noCourses": "Niciun curs încă.",
-    "schedule": "Orar",
-    "hideSchedule": "Ascunde orarul",
+    "createCourse": "Creează terapia",
+    "noCourses": "Nicio terapie încă.",
+    "schedule": "Program",
+    "hideSchedule": "Ascunde programul",
     "delete": "Șterge",
     "deleteCourse": "Șterge {name}",
-    "confirmDelete": "Ștergi {name} și orele lui săptămânale?",
-    "lessonsPerWeek": "{count, plural, =0 {Fără orar încă} one {# oră pe săptămână} few {# ore pe săptămână} other {# de ore pe săptămână}}",
+    "confirmDelete": "Ștergi {name} și orele ei săptămânale?",
+    "lessonsPerWeek": "{count, plural, =0 {Fără program încă} one {# oră pe săptămână} few {# ore pe săptămână} other {# de ore pe săptămână}}",
     "cancel": "Anulează",
-    "notFound": "Această clasă nu există sau aparține altei școli.",
-    "deleteClass": "Șterge clasa",
-    "confirmDeleteClass": "Ștergi {name}? Se șterg și cursurile, orele săptămânale și evenimentele clasei. Elevii rămân în școală."
+    "notFound": "Această sală nu există sau aparține altei instituții.",
+    "deleteClass": "Șterge sala",
+    "confirmDeleteClass": "Ștergi {name}? Se șterg și terapiile, orele săptămânale și evenimentele sălii. Pacienții/Clienții rămân în instituție.",
+    "chooseTherapy": "Alege o terapie…",
+    "noQualifiedTeacher": "Niciun terapeut nu are această specializare"
   },
   "Schedule": {
-    "title": "Orar săptămânal",
+    "title": "Program săptămânal",
     "weekday": "Zi",
     "start": "Început",
     "end": "Sfârșit",
-    "room": "Sală",
-    "roomPlaceholder": "ex. Sala 101",
     "addLesson": "Adaugă oră",
     "removeLesson": "Elimină această oră",
-    "save": "Salvează orarul",
+    "save": "Salvează programul",
     "saving": "Se salvează…",
-    "saved": "Orarul a fost salvat.",
+    "saved": "Programul a fost salvat.",
     "empty": "Nicio oră încă. Adaugă prima oră.",
     "invalid": "Fiecare oră trebuie să se termine după ce începe."
   },
   "MyTimetable": {
-    "title": "Orarul meu",
+    "title": "Programul meu",
     "subtitle": "Orele tale pe zi, săptămână sau lună, cu ce se întâmplă chiar acum.",
     "thisWeek": "Săptămâna aceasta",
-    "onlyMembers": "Orarul este pentru profesori, elevi și părinți. Ca administrator, folosește Cronologia.",
+    "onlyMembers": "Programul este pentru terapeuți, pacienți/clienți și părinți. Ca administrator, folosește Cronologia.",
     "empty": "Nicio oră săptămâna aceasta.",
-    "loadError": "Orarul nu a putut fi încărcat. Reîncarcă pagina pentru a încerca din nou.",
+    "loadError": "Programul nu a putut fi încărcat. Reîncarcă pagina pentru a încerca din nou.",
     "inProgress": "În desfășurare",
     "now": "Acum",
     "noLessonsDay": "Fără ore",
@@ -301,30 +301,28 @@
     "emptyDay": "Nicio oră în această zi."
   },
   "SchoolSetup": {
-    "title": "Configurează școala",
-    "intro": "Contul tău de administrator nu este încă asociat unei școli. Creează școala pentru a adăuga clase, cursuri și orare.",
-    "name": "Numele școlii",
-    "namePlaceholder": "ex. Colegiul Național Mihai Eminescu",
-    "code": "Codul școlii",
-    "codeHint": "3–20 litere, cifre sau cratime. Identifică școala ta.",
+    "title": "Configurează instituția",
+    "intro": "Contul tău de administrator nu este încă asociat unei instituții. Creează instituția pentru a adăuga săli, terapii și programe.",
+    "name": "Numele instituției",
+    "namePlaceholder": "ex. Centrul de Terapie Speranța",
+    "code": "Codul instituției",
+    "codeHint": "3–20 litere, cifre sau cratime. Identifică instituția ta.",
     "timezone": "Fus orar",
-    "create": "Creează școala",
+    "create": "Creează instituția",
     "creating": "Se creează…",
-    "noSchoolTitle": "Nu faci încă parte dintr-o școală",
-    "noSchoolBody": "Cere administratorului școlii să invite adresa {email}. Invitația va apărea chiar aici și te poți alătura cu un clic.",
-    "orCreate": "Sau configurează o școală nouă"
+    "noSchoolTitle": "Nu faci încă parte dintr-o instituție",
+    "noSchoolBody": "Cere administratorului instituției să invite adresa {email}. Invitația va apărea chiar aici și te poți alătura cu un clic.",
+    "orCreate": "Sau configurează o instituție nouă"
   },
   "People": {
     "title": "Membri",
-    "subtitle": "Toată lumea din școala ta și persoanele pe care le-ai invitat.",
-    "invite": "Invită pe cineva",
-    "inviteTitle": "Invită pe cineva în școala ta",
+    "subtitle": "Toată lumea din instituția ta și persoanele pe care le-ai invitat.",
+    "invite": "Invită prin email",
+    "inviteTitle": "Invită pe cineva în instituția ta",
     "email": "Email",
     "role": "Rol",
-    "class": "Clasă (opțional)",
-    "noClass": "Fără clasă deocamdată",
-    "child": "Copilul (opțional)",
-    "noChild": "Asociază un copil mai târziu",
+    "class": "Sală (opțional)",
+    "noClass": "Fără sală deocamdată",
     "send": "Trimite invitația",
     "sending": "Se trimite…",
     "sent": "Invitația a fost trimisă la {email}.",
@@ -334,9 +332,8 @@
     "noMatches": "Nimeni nu se potrivește căutării.",
     "groups": {
       "school_admin": "Administratori",
-      "teacher": "Profesori",
-      "student": "Elevi",
-      "parent": "Părinți"
+      "teacher": "Terapeuți",
+      "student": "Pacienți/Clienți"
     },
     "pending": "Invitații în așteptare",
     "noPending": "Nicio invitație în așteptare.",
@@ -349,16 +346,23 @@
     "revoke": "Anulează",
     "revokeLabel": "Anulează invitația pentru {email}",
     "confirmRevoke": "Anulezi invitația pentru {email}? Linkul nu va mai funcționa.",
-    "loadError": "Membrii școlii nu au putut fi încărcați. Reîncarcă pagina pentru a încerca din nou.",
-    "classRequired": "Clasă",
-    "chooseClass": "Alege o clasă…",
+    "loadError": "Membrii instituției nu au putut fi încărcați. Reîncarcă pagina pentru a încerca din nou.",
+    "classRequired": "Sală",
+    "chooseClass": "Alege o sală…",
     "remove": "Elimină",
-    "removeLabel": "Elimină pe {name} din școală",
-    "confirmRemove": "Elimini pe {name} din școală? Își păstrează contul și poate fi invitat din nou."
+    "removeLabel": "Elimină pe {name} din instituție",
+    "confirmRemove": "Elimini pe {name} din instituție? Își păstrează contul și poate fi invitat din nou.",
+    "addClient": "Pacient/Client",
+    "addTherapist": "Terapeut",
+    "created": "Contul a fost creat. Parola: {password} — spune-i-o persoanei; se conectează cu telefonul și această parolă.",
+    "updated": "Modificările au fost salvate.",
+    "edit": "Editează",
+    "editLabel": "Editează datele lui {name}",
+    "updatedPassword": "Modificările au fost salvate. Parola nouă: {password}"
   },
   "Invite": {
-    "title": "Alătură-te școlii {school}",
-    "intro": "Ai fost invitat să te alături școlii {school} pe EduDesk ca {role}.",
+    "title": "Alătură-te instituției {school}",
+    "intro": "Ai fost invitat să te alături instituției {school} pe Blue ca {role}.",
     "forEmail": "Invitație pentru {email}",
     "existingAccount": "Ai deja un cont cu acest email. Introdu parola lui pentru a adăuga {school} la cont.",
     "newAccount": "Creează-ți contul pentru a accepta.",
@@ -369,8 +373,8 @@
     "toSignIn": "Mergi la autentificare",
     "asRole": {
       "school_admin": "administrator",
-      "teacher": "profesor",
-      "student": "elev",
+      "teacher": "terapeut",
+      "student": "pacient/client",
       "parent": "părinte"
     }
   },
@@ -378,19 +382,19 @@
     "title": "Invitații pentru tine",
     "invitedAs": "{school} te-a invitat să te alături ca {role}.",
     "invitedBy": "Invitat de {name}",
-    "inClass": "Vei fi adăugat în clasa {className}.",
-    "join": "Alătură-te școlii {school}",
+    "inClass": "Vei fi adăugat în sala {className}.",
+    "join": "Alătură-te instituției {school}",
     "joining": "Te alături…",
     "checkAgain": "Verifică din nou"
   },
   "MyStudents": {
-    "title": "Elevii mei",
-    "subtitle": "Clasele la care predai și elevii pe care i-ai invitat în ele.",
-    "invite": "Invită un elev",
-    "classes": "Clasele tale",
-    "noClasses": "Nu predai încă la nicio clasă. Administratorul școlii stabilește cursurile.",
-    "noStudents": "Niciun elev în această clasă încă.",
-    "loadError": "Clasele nu au putut fi încărcate. Reîncarcă pagina pentru a încerca din nou."
+    "title": "Pacienții/Clienții mei",
+    "subtitle": "Sălile în care lucrezi și pacienții/clienții pe care i-ai invitat în ele.",
+    "invite": "Invită un pacient/client",
+    "classes": "Sălile tale",
+    "noClasses": "Nu lucrezi încă în nicio sală. Administratorul instituției stabilește terapiile.",
+    "noStudents": "Niciun pacient/client în această sală încă.",
+    "loadError": "Sălile nu au putut fi încărcate. Reîncarcă pagina pentru a încerca din nou."
   },
   "Health": {
     "title": "Starea sistemului",
@@ -440,5 +444,146 @@
     "title": "Ceva nu a mers bine",
     "body": "Această pagină a întâmpinat o eroare. A fost raportată. Încearcă din nou sau revino la pagina anterioară.",
     "retry": "Încearcă din nou"
+  },
+  "PaymentTypes": {
+    "cas": "Decontată CAS",
+    "sponsored": "Sponsorizată"
+  },
+  "PersonForm": {
+    "newClient": "Pacient/Client nou",
+    "newTherapist": "Terapeut nou",
+    "editTitle": "Editează: {name}",
+    "phone": "Telefon",
+    "email": "Email (opțional)",
+    "newPassword": "Parolă nouă (opțional)",
+    "passwordHint": "Persoana se conectează cu telefonul (sau emailul) și această parolă. Nu trimitem nicio invitație.",
+    "passwordKeep": "Lasă parola goală ca să rămână cea de acum, sau apasă Generează dacă a uitat-o.",
+    "paymentType": "Tip de plată",
+    "noPaymentType": "Nespecificat",
+    "room": "Sală (opțional)",
+    "noRoom": "Fără sală deocamdată",
+    "specializations": "Specializări",
+    "cancel": "Anulează",
+    "save": "Salvează",
+    "saving": "Se salvează…",
+    "generate": "Generează",
+    "details": "Detalii",
+    "notes": "Note"
+  },
+  "Attendance": {
+    "title": "Prezență",
+    "subtitle": "Ședințele zilei. Fiecare pacient/client e prezent până marchezi altceva; se păstrează doar ultima alegere.",
+    "loadError": "Ședințele nu au putut fi încărcate. Reîncarcă pagina pentru a încerca din nou.",
+    "noSessions": "Nicio ședință în această zi.",
+    "noClients": "Niciun pacient/client în această sală.",
+    "future": "Ședințele de azi și din trecut se pot marca. Aceasta este încă în viitor.",
+    "before": "Înainte",
+    "after": "După",
+    "statusFor": "Prezența pentru {name}",
+    "statuses": {
+      "present": "Prezent",
+      "absent_notice": "Absent din timp",
+      "absent_late": "Absent din scurt",
+      "cancelled": "Anulat"
+    }
+  },
+  "ClientCard": {
+    "title": "Fișa pacientului/clientului",
+    "notFound": "Acest pacient/client nu există sau nu lucrezi cu el.",
+    "phone": "Telefon",
+    "noPhone": "Fără telefon",
+    "paymentType": "Tip de plată",
+    "noPaymentType": "Nespecificat",
+    "call": "Sună",
+    "whatsapp": "Mesaj WhatsApp",
+    "history": "Istoric",
+    "thisMonth": "Luna aceasta",
+    "loadError": "Istoricul nu a putut fi încărcat. Reîncarcă pagina pentru a încerca din nou.",
+    "noSessions": "Nicio ședință în această lună.",
+    "sessions": "Ședințe",
+    "hours": "Ore (prezent)",
+    "details": "Detalii",
+    "notes": "Note"
+  },
+  "Reports": {
+    "title": "Rapoarte",
+    "subtitle": "Terapii, ore și prezență pe lună, pentru fiecare pacient/client și fiecare terapeut.",
+    "thisMonth": "Luna aceasta",
+    "loadError": "Raportul nu a putut fi încărcat. Reîncarcă pagina pentru a încerca din nou.",
+    "empty": "Nicio ședință în această lună.",
+    "therapists": "Terapeuți",
+    "therapist": "Terapeut",
+    "sessionsHeld": "Ședințe ținute",
+    "hoursWorked": "Ore lucrate",
+    "hoursNote": "Se numără doar ședințele la care cel puțin un pacient/client a fost prezent.",
+    "clients": "Pacienți/Clienți",
+    "client": "Pacient/Client",
+    "therapies": "Terapii",
+    "sessions": "Ședințe",
+    "hours": "Ore"
+  },
+  "Therapies": {
+    "title": "Terapii",
+    "subtitle": "Specializările pe care le oferă instituția. Terapeuții le primesc în fișa lor, iar sălile le folosesc în program.",
+    "add": "Adaugă terapie",
+    "name": "Numele terapiei",
+    "namePlaceholder": "ex. Meloterapie",
+    "save": "Salvează",
+    "cancel": "Anulează",
+    "rename": "Redenumește",
+    "renameLabel": "Redenumește {name}",
+    "delete": "Șterge",
+    "deleteLabel": "Șterge {name}",
+    "confirmDelete": "Ștergi {name}? Terapeuții nu o vor mai avea printre specializări.",
+    "inUse": "Se folosește în săli; șterge-o mai întâi de acolo.",
+    "usage": "{courses, plural, =0 {în nicio sală} one {într-o sală} few {în # săli} other {în # de săli}} · {therapists, plural, =0 {niciun terapeut} one {un terapeut} few {# terapeuți} other {# de terapeuți}}",
+    "loadError": "Terapiile nu au putut fi încărcate. Reîncarcă pagina pentru a încerca din nou."
+  },
+  "Institution": {
+    "title": "Instituție",
+    "subtitle": "Cum arată aplicația pentru oamenii instituției după ce se conectează: numele, culoarea și logo-ul.",
+    "lookTitle": "Nume și culoare",
+    "appName": "Numele aplicației",
+    "appNameHint": "Apare în antet, în titlul paginii și în emailurile de invitație. Gol înseamnă „Blue”.",
+    "color": "Culoarea principală",
+    "customColor": "Altă culoare",
+    "colorHint": "Se vede pe pagină cât timp alegi; se păstrează după ce salvezi.",
+    "defaultColor": "Culoarea implicită",
+    "save": "Salvează",
+    "saving": "Se salvează…",
+    "saved": "Salvat.",
+    "logo": "Logo",
+    "currentLogo": "Logo-ul actual",
+    "noLogo": "Niciun logo. Se folosește inițiala numelui.",
+    "logoHint": "PNG, JPEG sau WebP, cel mult 512 KB. Arată cel mai bine pe fundal transparent, mai lat decât înalt.",
+    "chooseLogo": "Încarcă logo",
+    "replaceLogo": "Schimbă logo-ul",
+    "removeLogo": "Șterge logo-ul",
+    "logoType": "Logo-ul trebuie să fie PNG, JPEG sau WebP.",
+    "logoSize": "Logo-ul poate avea cel mult 512 KB."
+  },
+  "Profile": {
+    "title": "Profil",
+    "subtitle": "Datele tale, limba aplicației și parola.",
+    "loadError": "Profilul nu a putut fi încărcat. Reîncarcă pagina pentru a încerca din nou.",
+    "detailsTitle": "Date personale",
+    "phone": "Telefon",
+    "email": "Email (opțional)",
+    "details": "Detalii",
+    "detailsPlaceholder": "Câteva cuvinte despre tine: experiență, program, ce ar trebui să știe colegii.",
+    "notes": "Note",
+    "notesHint": "Le vezi tu și echipa instituției.",
+    "skills": "Specializări",
+    "skillsHint": "Terapiile pe care le poți ține. Doar ele ți se pot atribui în săli.",
+    "save": "Salvează",
+    "saving": "Se salvează…",
+    "saved": "Salvat.",
+    "language": "Limba aplicației",
+    "languageHint": "Se păstrează în contul tău și se aplică la fiecare conectare, pe orice dispozitiv.",
+    "passwordTitle": "Schimbă parola",
+    "currentPassword": "Parola actuală",
+    "newPassword": "Parola nouă (cel puțin 6 caractere)",
+    "changePassword": "Schimbă parola",
+    "passwordChanged": "Parola a fost schimbată."
   }
 }

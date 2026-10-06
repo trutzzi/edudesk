@@ -1,17 +1,8 @@
 import { withTransaction } from '../../db/transaction.js';
 import { hashPassword } from '../../lib/password.js';
-import {
-  emailName,
-  EXTRA_COURSES,
-  PERIODS,
-  samplePassword,
-  TEACHER_CLASS_PARENTS,
-  TEACHER_CLASS_STUDENTS,
-  WEEKDAYS,
-  YEAR,
-} from './data.js';
+import { emailName, EXTRA_COURSES, PERIODS, samplePassword, TEACHER_CLASS_STUDENTS, WEEKDAYS, YEAR } from './data.js';
 import { freePeriods } from './timetable.js';
-import { insertUser } from './users.js';
+import { addSpecialization, insertUser } from './users.js';
 
 export async function seedTeacher(email: string) {
   await withTransaction(async (client) => {
@@ -41,27 +32,20 @@ export async function seedTeacher(email: string) {
     ).rows;
     for (const [classIndex, schoolClass] of emptyClasses.entries()) {
       const names = TEACHER_CLASS_STUDENTS[classIndex % TEACHER_CLASS_STUDENTS.length]!;
-      for (const [studentIndex, fullName] of names.entries()) {
+      for (const fullName of names) {
         const [firstName, lastName] = fullName.split(' ') as [string, string];
         const studentId = await insertUser(client, teacher.school_id, passwordHash, {
           firstName,
           lastName,
           email: `${emailName(firstName, lastName, schoolClass.name)}@${emailDomain}`,
           role: 'student',
+          paymentType: 'cas',
         });
-        await client.query('INSERT INTO class_students (class_id, student_id) VALUES ($1, $2)', [schoolClass.id, studentId]);
-
-        // Parent emails have no class in them, so only the first lists get parents
-        const parentFirstName = TEACHER_CLASS_PARENTS[classIndex];
-        if (studentIndex === 0 && parentFirstName) {
-          const parentId = await insertUser(client, teacher.school_id, passwordHash, {
-            firstName: parentFirstName,
-            lastName,
-            email: `${emailName(parentFirstName, lastName)}@${emailDomain}`,
-            role: 'parent',
-          });
-          await client.query('INSERT INTO parent_student (parent_id, student_id) VALUES ($1, $2)', [parentId, studentId]);
-        }
+        await client.query('INSERT INTO class_students (class_id, student_id, joined_at) VALUES ($1, $2, $3)', [
+          schoolClass.id,
+          studentId,
+          YEAR.start,
+        ]);
       }
       added.push(`7 students in ${schoolClass.name}`);
     }
@@ -106,6 +90,7 @@ export async function seedTeacher(email: string) {
       );
       const courseId = course.rows[0]?.id;
       if (!courseId) continue;
+      await addSpecialization(client, teacher.id, name);
 
       // One hour per day, on the first free period both the class and the teacher have
       let placed = 0;
@@ -117,7 +102,7 @@ export async function seedTeacher(email: string) {
         await client.query(
           `INSERT INTO lessons (course_id, class_id, teacher_id, start_date, end_date, weekday, start_time, end_time, room)
            SELECT id, class_id, teacher_id, start_date, end_date, $2, $3, $4, $5 FROM courses WHERE id = $1`,
-          [courseId, weekday, startTime, endTime, 'Sala 201'],
+          [courseId, weekday, startTime, endTime, null],
         );
         placed++;
       }

@@ -32,10 +32,10 @@ export async function sendInvitation(
   inviterId: string,
   locale: EmailLocale,
 ) {
-  const { inviter, school } = await findInviter(inviterId);
+  const { inviter, school, appName } = await findInviter(inviterId);
   try {
     await sendMail(
-      invitationEmail({ to: invitation.email, inviter, school, role: invitation.role, link: appLink('/invite', token), locale }),
+      invitationEmail({ to: invitation.email, inviter, school, appName, role: invitation.role, link: appLink('/invite', token), locale }),
     );
   } catch (err) {
     console.error(`Could not send the invitation to ${invitation.email}:`, err);
@@ -102,7 +102,8 @@ export function acceptAsSignedIn(invitationId: string, userId: string) {
       throw new HttpError(403, 'Confirm your email before accepting invitations', 'EMAIL_NOT_VERIFIED');
     }
 
-    const invitation = await lockPendingForEmail(client, invitationId, account.email);
+    // Invitations go to an email, so an account without one has none
+    const invitation = account.email ? await lockPendingForEmail(client, invitationId, account.email) : undefined;
     if (!invitation) throw invalidInvitation();
 
     assertCanJoin(account, invitation);

@@ -17,9 +17,26 @@ describe('session tokens', () => {
 
 describe('toSession', () => {
   it('returns a token and the user in the shape the web app stores', () => {
-    const session = toSession({ id: 'u1', email: 'a@b.ro', first_name: 'Ana', last_name: 'Pop', role: 'teacher', school_id: null });
+    const session = toSession({
+      id: 'u1',
+      email: 'a@b.ro',
+      first_name: 'Ana',
+      last_name: 'Pop',
+      role: 'teacher',
+      school_id: null,
+      locale: 'ro',
+    });
 
-    expect(session.user).toEqual({ id: 'u1', email: 'a@b.ro', firstName: 'Ana', lastName: 'Pop', role: 'teacher', schoolId: null });
+    expect(session.user).toEqual({
+      id: 'u1',
+      email: 'a@b.ro',
+      firstName: 'Ana',
+      lastName: 'Pop',
+      role: 'teacher',
+      schoolId: null,
+      // The language saved in their profile, applied when they sign in
+      locale: 'ro',
+    });
     expect(session.token).toEqual(expect.any(String));
   });
 });

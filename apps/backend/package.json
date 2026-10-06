@@ -13,6 +13,7 @@
     "migrate:down": "node-pg-migrate down",
     "test": "vitest run",
     "seed": "node scripts/run.mjs seed",
+    "create-admin": "node scripts/run.mjs create-admin",
     "holidays": "node scripts/run.mjs holidays",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",

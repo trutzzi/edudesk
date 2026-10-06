@@ -1,5 +1,6 @@
 import { withTransaction } from '../../db/transaction.js';
 import { hashPassword } from '../../lib/password.js';
+import { createSchool } from '../../modules/schools/schools.repository.js';
 import { DEMO_CODE, emailName, passwordHint, samplePassword } from './data.js';
 import { fillSchool } from './fillSchool.js';
 import { insertUser } from './users.js';
@@ -21,11 +22,7 @@ export async function seedDemoSchool(reset: boolean) {
       return;
     }
 
-    const school = await client.query<{ id: string }>('INSERT INTO schools (name, code) VALUES ($1, $2) RETURNING id', [
-      'Colegiul Național Demo',
-      DEMO_CODE,
-    ]);
-    const schoolId = school.rows[0]!.id;
+    const schoolId = await createSchool(client, 'Centrul Demo', DEMO_CODE, 'Europe/Bucharest');
     await insertUser(client, schoolId, await hashPassword(samplePassword()), {
       firstName: 'Admin',
       lastName: 'Demo',

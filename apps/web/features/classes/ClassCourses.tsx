@@ -12,12 +12,12 @@ import { colorFor } from '@/lib/colors';
 import { parseDay } from '@/lib/dates/days';
 import { CourseForm } from './CourseForm';
 import { ScheduleEditor } from './ScheduleEditor';
-import type { ClassCourse, Person } from './types';
+import type { ClassCourse, Therapist } from './types';
 
 interface Props {
   classId: string;
   courses: ClassCourse[];
-  teachers: Person[];
+  teachers: Therapist[];
   onChanged: () => void;
 }
 
@@ -59,6 +59,7 @@ export function ClassCourses({ classId, courses, teachers, onChanged }: Props) {
         <CourseForm
           classId={classId}
           teachers={teachers}
+          taken={courses.map((course) => course.name)}
           onCancel={() => setAdding(false)}
           onSaved={() => {
             setAdding(false);

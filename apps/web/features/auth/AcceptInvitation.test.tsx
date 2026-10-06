@@ -36,7 +36,7 @@ describe('AcceptInvitation', () => {
     const user = userEvent.setup();
 
     expect(await screen.findByRole('heading', { name: 'Join Liceul Demo' })).toBeInTheDocument();
-    expect(screen.getByText("You've been invited to join Liceul Demo on EduDesk as a teacher.")).toBeInTheDocument();
+    expect(screen.getByText("You've been invited to join Liceul Demo on Blue as a therapist.")).toBeInTheDocument();
     await user.type(screen.getByLabelText('First name'), 'Ion');
     await user.type(screen.getByLabelText('Last name'), 'Nou');
     await user.type(screen.getByLabelText('Password'), 'password123');

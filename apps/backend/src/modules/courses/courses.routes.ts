@@ -4,6 +4,7 @@ import { authenticateJWT, currentUser, requireRole, requireSchool, schoolIdOf, t
 import { HttpError } from '../../http/errors.js';
 import { readBody, readId } from '../../http/query.js';
 import { isDateString, isNonEmptyString, isPgError, isUuid, PG_ERRORS } from '../../lib/validation.js';
+import { therapyExists } from '../therapies/therapies.repository.js';
 import {
   createCourse,
   deleteCourse,
@@ -11,6 +12,7 @@ import {
   listWeeklyLessons,
   lockCourse,
   replaceWeeklyLessons,
+  therapistHasTherapy,
   updateCourse,
 } from './courses.repository.js';
 import { isWeeklyLesson, MAX_LESSONS_PER_COURSE } from './weeklyLessons.js';
@@ -19,6 +21,8 @@ const router = express.Router();
 router.use(authenticateJWT);
 
 const NOT_FOUND = 'Course not found';
+const NOT_SPECIALIZED = new HttpError(409, "The therapist doesn't have this therapy among their specializations", 'NOT_SPECIALIZED');
+const NOT_A_THERAPY = new HttpError(400, "The name must be one of the institution's therapies", 'NOT_A_THERAPY');
 const CLASH = new HttpError(409, 'This overlaps another lesson of the same teacher or class', 'LESSON_CLASH');
 
 // The database errors a course change can cause, as responses
@@ -34,19 +38,22 @@ router.get('/', async (req: AuthenticatedRequest, res) => {
   res.json(await listVisibleCourses(currentUser(req)));
 });
 
-// POST /api/courses: { name, description?, classId, teacherId, startDate?, endDate? }
+// POST /api/courses: { name (one of the institution's therapies), description?, classId, teacherId, startDate?, endDate? }
 router.post('/', requireRole('school_admin'), requireSchool, async (req: AuthenticatedRequest, res) => {
   const { name, description = null, classId, teacherId, startDate = null, endDate = null } = readBody(req);
-  if (!isNonEmptyString(name) || !isUuid(classId) || !isUuid(teacherId)) throw new HttpError(400, 'Name, class and teacher are required');
+  if (!isUuid(classId) || !isUuid(teacherId)) throw new HttpError(400, 'Class and teacher are required');
+  if (!isNonEmptyString(name) || !(await therapyExists(schoolIdOf(req), name))) throw NOT_A_THERAPY;
   if (description !== null && typeof description !== 'string') throw new HttpError(400, 'Description must be text');
   if ((startDate !== null && !isDateString(startDate)) || (endDate !== null && !isDateString(endDate))) {
     throw new HttpError(400, 'Dates must look like 2026-09-01');
   }
 
+  if (!(await therapistHasTherapy(null, teacherId, name))) throw NOT_SPECIALIZED;
+
   const course = await createCourse({
     classId,
     teacherId,
-    name: name.trim(),
+    name,
     description: description?.trim() || null,
     schoolId: schoolIdOf(req),
     startDate,
@@ -66,8 +73,8 @@ router.patch('/:id', requireRole('school_admin'), requireSchool, async (req: Aut
   // `description: null` clears it, so "not sent" and "sent as null" must stay different
   const hasDescription = 'description' in body;
 
+  if (name !== undefined && (!isNonEmptyString(name) || !(await therapyExists(schoolIdOf(req), name)))) throw NOT_A_THERAPY;
   if (
-    (name !== undefined && !isNonEmptyString(name)) ||
     (hasDescription && body.description !== null && typeof body.description !== 'string') ||
     (teacherId !== undefined && !isUuid(teacherId)) ||
     (startDate !== undefined && !isDateString(startDate)) ||
@@ -76,8 +83,12 @@ router.patch('/:id', requireRole('school_admin'), requireSchool, async (req: Aut
     throw new HttpError(400, 'Some fields are invalid');
   }
 
+  if ((name !== undefined || teacherId !== undefined) && (await therapistHasTherapy(courseId, teacherId ?? null, name ?? null)) === false) {
+    throw NOT_SPECIALIZED;
+  }
+
   const course = await updateCourse(courseId, schoolIdOf(req), {
-    name: name?.trim() ?? null,
+    name: name ?? null,
     description: hasDescription ? (typeof body.description === 'string' ? body.description.trim() || null : null) : undefined,
     teacherId: teacherId ?? null,
     startDate: startDate ?? null,

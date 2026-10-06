@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import Link from 'next/link';
 import { LoginForm } from '@/features/auth/LoginForm';
 import { RedirectIfSignedIn } from '@/features/auth/RedirectIfSignedIn';
 
@@ -22,12 +21,7 @@ export default async function LoginPage() {
 
       <LoginForm />
 
-      <p className="mt-8 text-center text-sm text-slate-500">
-        {t('noAccount')}{' '}
-        <Link href="/register" className="font-semibold text-indigo-600 hover:underline">
-          {t('createOne')}
-        </Link>
-      </p>
+      <p className="mt-8 text-center text-sm text-slate-500">{t('noAccount')}</p>
     </>
   );
 }

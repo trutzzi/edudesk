@@ -61,7 +61,7 @@ function ScheduleRows({ courseId, initial, onSaved }: { courseId: string; initia
           weekday: last ? (last.weekday % 5) + 1 : 1,
           startTime: last?.startTime ?? '08:00',
           endTime: last?.endTime ?? '08:50',
-          room: last?.room ?? null,
+          room: null,
         }),
       ];
     });
@@ -74,7 +74,8 @@ function ScheduleRows({ courseId, initial, onSaved }: { courseId: string; initia
       return;
     }
     setInvalid(false);
-    const lessons = rows.map(({ weekday, startTime, endTime, room }) => ({ weekday, startTime, endTime, room: room || null }));
+    // The room (Sală) already says where the therapy happens, so lessons no longer get a separate cabinet
+    const lessons = rows.map(({ weekday, startTime, endTime }) => ({ weekday, startTime, endTime, room: null }));
     const result = await send(`/api/courses/${courseId}/lessons`, { method: 'PUT', body: { lessons } });
     if (result.ok) {
       setSaved(true);
@@ -98,7 +99,6 @@ function ScheduleRows({ courseId, initial, onSaved }: { courseId: string; initia
               <th className="pb-1 font-semibold">{t('weekday')}</th>
               <th className="pb-1 font-semibold">{t('start')}</th>
               <th className="pb-1 font-semibold">{t('end')}</th>
-              <th className="pb-1 font-semibold">{t('room')}</th>
               <th className="pb-1">
                 <span className="sr-only">{t('removeLesson')}</span>
               </th>
@@ -138,16 +138,6 @@ function ScheduleRows({ courseId, initial, onSaved }: { courseId: string; initia
                     aria-label={`${t('end')} ${index + 1}`}
                     value={row.endTime}
                     onChange={(event) => update(row.key, { endTime: event.target.value })}
-                    className={`w-full ${compactControlClass}`}
-                  />
-                </td>
-                <td className="py-1 pr-2">
-                  <input
-                    aria-label={`${t('room')} ${index + 1}`}
-                    value={row.room ?? ''}
-                    placeholder={t('roomPlaceholder')}
-                    maxLength={50}
-                    onChange={(event) => update(row.key, { room: event.target.value })}
                     className={`w-full ${compactControlClass}`}
                   />
                 </td>

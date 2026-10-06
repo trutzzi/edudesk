@@ -12,6 +12,7 @@
     "migrate:up": "npm run migrate:up --prefix apps/backend",
     "migrate:down": "npm run migrate:down --prefix apps/backend",
     "seed": "npm run seed --prefix apps/backend --",
+    "create-admin": "npm run create-admin --prefix apps/backend --",
     "holidays": "npm run holidays --prefix apps/backend --",
     "test": "npm test --prefix apps/backend && npm test --prefix apps/web",
     "start:local": "npm run migrate:up && npm run dev",

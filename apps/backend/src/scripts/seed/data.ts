@@ -1,6 +1,15 @@
 export const DEMO_CODE = 'DEMO';
 export const SCHOOL_YEAR = '2026-2027';
-export const CLASS_NAME_CANDIDATES = ['9A', '9B', '10A', '10B', '11A', '11B', '12A', '12B'];
+export const CLASS_NAME_CANDIDATES = [
+  'Sala Albastră',
+  'Sala Verde',
+  'Sala Galbenă',
+  'Sala Portocalie',
+  'Sala Mov',
+  'Sala Roz',
+  'Sala Turcoaz',
+  'Sala Gri',
+];
 export const CLASSES_TO_ADD = 4;
 
 // Demo dates for 2026-2027: the full year, two semesters and a short optional module
@@ -23,25 +32,23 @@ export interface Subject {
   name: string;
   teacher: TeacherKey;
   dates: { start: string; end: string };
-  room?: string;
 }
 
-// What every class studies. Subjects in one unit share the same weekly slots: Physics runs in the
-// first semester and Chemistry in the second, in the same hours, which the clash rules allow.
+// The therapies every room runs. Therapies in one unit share the same weekly slots: Occupational therapy runs
+// in the first semester and Psychotherapy in the second, in the same hours, which the clash rules allow.
 export const UNITS: { subjects: Subject[]; hoursPerWeek: number }[] = [
-  { subjects: [{ name: 'Matematică', teacher: 'elena', dates: YEAR }], hoursPerWeek: 4 },
-  { subjects: [{ name: 'Limba română', teacher: 'mihai', dates: YEAR }], hoursPerWeek: 4 },
-  { subjects: [{ name: 'English', teacher: 'sarah', dates: YEAR }], hoursPerWeek: 3 },
+  { subjects: [{ name: 'Kineto', teacher: 'elena', dates: YEAR }], hoursPerWeek: 4 },
+  { subjects: [{ name: 'Logopedie', teacher: 'mihai', dates: YEAR }], hoursPerWeek: 4 },
+  { subjects: [{ name: 'ABA', teacher: 'sarah', dates: YEAR }], hoursPerWeek: 3 },
   {
     subjects: [
-      { name: 'Fizică', teacher: 'andrei', dates: SEMESTER_1, room: 'Laborator' },
-      { name: 'Chimie', teacher: 'andrei', dates: SEMESTER_2, room: 'Laborator' },
+      { name: 'Terapie Ocupațională', teacher: 'andrei', dates: SEMESTER_1 },
+      { name: 'Psihoterapie', teacher: 'andrei', dates: SEMESTER_2 },
     ],
     hoursPerWeek: 2,
   },
-  { subjects: [{ name: 'Istorie', teacher: 'ioana', dates: YEAR }], hoursPerWeek: 2 },
-  { subjects: [{ name: 'Informatică', teacher: 'dan', dates: YEAR, room: 'Sala IT' }], hoursPerWeek: 2 },
-  { subjects: [{ name: 'Robotică', teacher: 'sarah', dates: MODULE, room: 'Sala IT' }], hoursPerWeek: 1 },
+  { subjects: [{ name: 'Coordonare', teacher: 'ioana', dates: YEAR }], hoursPerWeek: 2 },
+  { subjects: [{ name: 'Consiliere Psihologică', teacher: 'dan', dates: MODULE }], hoursPerWeek: 1 },
 ];
 
 export const PERIODS = [
@@ -61,8 +68,6 @@ export const STUDENTS = [
   ['Daria Lungu', 'Vlad Ciobanu', 'Bianca Tudor', 'Tudor Iordache', 'Sara Munteanu', 'Luca Barbu', 'Irina Moldovan'],
   ['Mihnea Florea', 'Alexia Pavel', 'Robert Stoica', 'Teodora Ene', 'Gabriel Dinu', 'Ana-Maria Voicu', 'Cosmin Lazăr'],
 ];
-// The first student of each class gets a parent account, with these first names
-export const PARENT_FIRST_NAMES = ['Cristina', 'Adrian', 'Monica', 'Florin'];
 
 // "Ana-Maria Voicu" → "ana-maria.voicu": email addresses don't do diacritics
 export const emailName = (...parts: string[]) =>
@@ -73,17 +78,13 @@ export const emailName = (...parts: string[]) =>
     .replace(/\s+/g, '.')
     .toLowerCase();
 
-// Students for a teacher's empty classes, one list per class; the first in each also gets a parent
+// Clients for a therapist's empty rooms, one list per room
 export const TEACHER_CLASS_STUDENTS = [
   ['Mara Ilie', 'Rareș Cojocaru', 'Ilinca Dobre', 'Sebastian Mitroi', 'Sofia Pârvu', 'Darius Enache', 'Patricia Lupu'],
   ['Bogdan Tănase', 'Clara Vlad', 'Horia Neacșu', 'Diana Costache', 'Nicolas Avram', 'Ruxandra Iancu', 'Tiberiu Manole'],
 ];
-export const TEACHER_CLASS_PARENTS = ['Gabriela', 'Sorin'];
-// Courses a teacher takes on in classes they don't teach yet
-export const EXTRA_COURSES = [
-  { name: 'Biologie', hoursPerWeek: 2 },
-  { name: 'Geografie', hoursPerWeek: 1 },
-];
+// Therapies a therapist takes on in rooms they don't work in yet; none of the UNITS, so they can't clash by name
+export const EXTRA_COURSES = [{ name: 'Nirvana', hoursPerWeek: 2 }];
 
 // The sample accounts' password: SEED_PASSWORD when set (production requires it), else a well-known one
 export const DEV_PASSWORD = 'password123';

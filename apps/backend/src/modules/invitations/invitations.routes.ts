@@ -73,15 +73,17 @@ manage.get('/', async (req: AuthenticatedRequest, res) => {
   res.json(await listPending(schoolIdOf(req), sentByLimit(req)));
 });
 
-// POST /api/invitations: { email, role, classId? (students), studentId? (parents), locale? }
+// POST /api/invitations: { email, role (not parent), classId? (students), locale? }
 manage.post('/', async (req: AuthenticatedRequest, res) => {
   const { role, email: rawEmail, classId = null, studentId = null, locale } = readBody(req);
   const email = typeof rawEmail === 'string' ? rawEmail.trim().toLowerCase() : '';
   const schoolId = schoolIdOf(req);
 
   if (!EMAIL_PATTERN.test(email) || !isSchoolRole(role)) throw new HttpError(400, 'A valid email and role are required');
-  if ((classId !== null && (role !== 'student' || !isUuid(classId))) || (studentId !== null && (role !== 'parent' || !isUuid(studentId)))) {
-    throw new HttpError(400, 'Only students can be placed in a class, and only parents linked to a child');
+  // Clients' families no longer get accounts: clients are the only members besides staff
+  if (role === 'parent') throw new HttpError(400, 'Parents can no longer be invited');
+  if ((classId !== null && (role !== 'student' || !isUuid(classId))) || studentId !== null) {
+    throw new HttpError(400, 'Only students can be placed in a class');
   }
   const teacherId = sentByLimit(req);
   if (teacherId && (role !== 'student' || classId === null)) {

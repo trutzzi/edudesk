@@ -4,26 +4,26 @@ import {
   CLASS_NAME_CANDIDATES,
   CLASSES_TO_ADD,
   emailName,
-  PARENT_FIRST_NAMES,
   PERIODS,
   samplePassword,
   SCHOOL_YEAR,
   STUDENTS,
   TEACHERS,
   UNITS,
+  YEAR,
   type TeacherKey,
 } from './data.js';
 import { buildTimetable } from './timetable.js';
-import { insertUser } from './users.js';
+import { addSpecialization, insertUser } from './users.js';
 
-// Adds teachers, classes, students, parents, courses, a weekly timetable and calendar events to a school
+// Adds therapists, rooms, clients, therapies, a weekly timetable and calendar events to a school
 export async function fillSchool(client: PoolClient, schoolId: string, emailDomain: string) {
   const passwordHash = await hashPassword(samplePassword());
 
   const taken = (await client.query<{ name: string }>('SELECT name FROM classes WHERE school_id = $1', [schoolId])).rows.map(({ name }) =>
     name.toUpperCase(),
   );
-  const classNames = CLASS_NAME_CANDIDATES.filter((name) => !taken.includes(name)).slice(0, CLASSES_TO_ADD);
+  const classNames = CLASS_NAME_CANDIDATES.filter((name) => !taken.includes(name.toUpperCase())).slice(0, CLASSES_TO_ADD);
   if (classNames.length < CLASSES_TO_ADD) throw new Error('The school has no free class names left for sample data');
 
   const teacherIds = {} as Record<TeacherKey, string>;
@@ -55,19 +55,14 @@ export async function fillSchool(client: PoolClient, schoolId: string, emailDoma
         lastName,
         email: `${emailName(firstName, lastName, className)}@${emailDomain}`,
         role: 'student',
+        paymentType: studentIndex % 3 === 2 ? 'sponsored' : 'cas',
       });
-      await client.query('INSERT INTO class_students (class_id, student_id) VALUES ($1, $2)', [classId, studentId]);
-
-      if (studentIndex === 0) {
-        const parentFirstName = PARENT_FIRST_NAMES[classIndex]!;
-        const parentId = await insertUser(client, schoolId, passwordHash, {
-          firstName: parentFirstName,
-          lastName,
-          email: `${emailName(parentFirstName, lastName)}@${emailDomain}`,
-          role: 'parent',
-        });
-        await client.query('INSERT INTO parent_student (parent_id, student_id) VALUES ($1, $2)', [parentId, studentId]);
-      }
+      // In the room since the year began, so their history covers it
+      await client.query('INSERT INTO class_students (class_id, student_id, joined_at) VALUES ($1, $2, $3)', [
+        classId,
+        studentId,
+        YEAR.start,
+      ]);
     }
 
     const ids: Record<string, string> = {};
@@ -78,6 +73,7 @@ export async function fillSchool(client: PoolClient, schoolId: string, emailDoma
         [classId, teacherIds[subject.teacher], subject.name, subject.dates.start, subject.dates.end],
       );
       ids[subject.name] = course.rows[0]!.id;
+      await addSpecialization(client, teacherIds[subject.teacher], subject.name);
     }
     courseIds.push(ids);
   }
@@ -90,10 +86,25 @@ export async function fillSchool(client: PoolClient, schoolId: string, emailDoma
       await client.query(
         `INSERT INTO lessons (course_id, class_id, teacher_id, start_date, end_date, weekday, start_time, end_time, room)
          SELECT id, class_id, teacher_id, start_date, end_date, $2, $3, $4, $5 FROM courses WHERE id = $1`,
-        [courseIds[classIndex]![subject.name], slot.weekday, startTime, endTime, subject.room ?? `Sala ${101 + classIndex}`],
+        [courseIds[classIndex]![subject.name], slot.weekday, startTime, endTime, null],
       );
     }
   }
+
+  // Some absences in September, about one session in twelve, picked by a hash so reruns choose the same ones.
+  // Every other session counts as present.
+  await client.query(
+    `INSERT INTO attendance_marks (course_id, student_id, date, start_time, status)
+     SELECT l.course_id, cs.student_id, day::date, l.start_time,
+            (ARRAY['absent_notice', 'absent_late', 'cancelled'])[1 + abs(hashtext(l.id || day::text || cs.student_id)) % 3]::attendance_status
+     FROM lessons l
+     JOIN courses co ON co.id = l.course_id
+     JOIN class_students cs ON cs.class_id = l.class_id
+     CROSS JOIN generate_series(GREATEST(co.start_date, '2026-09-07'::date), '2026-09-30'::date, interval '1 day') AS day
+     WHERE l.class_id = ANY($1::uuid[]) AND EXTRACT(ISODOW FROM day) = l.weekday
+       AND abs(hashtext(cs.student_id || day::text || l.id)) % 12 = 0`,
+    [classIds],
+  );
 
   // The school calendar. School holidays also remove lessons from the timeline and timetables.
   // National public holidays come from data/holidays (npm run holidays), not from here.

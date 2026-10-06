@@ -17,10 +17,25 @@ export const notFoundHandler = (_req: Request, res: Response) => {
   res.status(404).json({ message: 'Not found' });
 };
 
+const isClientError = (err: unknown): err is { status: number; message: string } =>
+  typeof err === 'object' &&
+  err !== null &&
+  'expose' in err &&
+  err.expose === true &&
+  'status' in err &&
+  typeof err.status === 'number' &&
+  err.status >= 400 &&
+  err.status < 500;
+
 // Express 5 forwards rejected promises from async handlers here
 export const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
   if (err instanceof HttpError) {
     res.status(err.status).json({ message: err.message, ...(err.code && { code: err.code }) });
+    return;
+  }
+  // The body parsers' own errors (malformed JSON, a body over the size limit) are the client's mistake
+  if (isClientError(err)) {
+    res.status(err.status).json({ message: err.message, ...(err.status === 413 && { code: 'TOO_LARGE' }) });
     return;
   }
   console.error(`${req.method} ${req.originalUrl} failed:`, err);
