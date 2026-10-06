@@ -7,13 +7,14 @@ import { buttonClass } from '@/components/ui/button';
 import { PeriodNav } from '@/components/ui/PeriodNav';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { ApiError, errorMessage } from '@/lib/api/client';
 import { useApi } from '@/lib/api/useApi';
 import { callHref, whatsappHref } from '@/lib/contact';
 import { nowIn } from '@/lib/dates/clock';
 import { endOfMonth } from '@/lib/dates/days';
 import { fullName } from '@/lib/people';
 import { browserTimeZone } from '@/lib/useNow';
-import { formatHours, formatLongDay, formatMonth, shiftMonth } from './format';
+import { formatHours, formatLongDay, formatMonth, groupByDay, shiftMonth, summarize } from './format';
 import { StatusBadge } from './StatusBadge';
 import { ATTENDANCE_STATUSES, type ClientProfile, type ClientSession } from './types';
 
@@ -23,6 +24,7 @@ export function ClientCard({ clientId }: { clientId: string }) {
   const t = useTranslations('ClientCard');
   const tStatus = useTranslations('Attendance.statuses');
   const tPayment = useTranslations('PaymentTypes');
+  const tErrors = useTranslations('Errors');
   const locale = useLocale();
   const { user } = useAuth();
   const isStaff = user?.role === 'school_admin' || user?.role === 'teacher';
@@ -32,21 +34,14 @@ export function ClientCard({ clientId }: { clientId: string }) {
   const profile = useApi<ClientProfile>(`/api/clients/${clientId}`);
   const sessions = useApi<ClientSession[]>(`/api/clients/${clientId}/sessions?from=${month}-01&to=${endOfMonth(`${month}-01`)}`);
 
-  const summary = useMemo(() => {
-    const rows = sessions.data ?? [];
-    const counts = Object.fromEntries(ATTENDANCE_STATUSES.map((status) => [status, rows.filter((row) => row.status === status).length]));
-    const hours = rows.filter((row) => row.status === 'present').reduce((sum, row) => sum + row.hours, 0);
-    return { counts, hours, total: rows.length };
-  }, [sessions.data]);
+  const summary = useMemo(() => summarize(sessions.data ?? []), [sessions.data]);
+  const days = useMemo(() => groupByDay(sessions.data ?? []), [sessions.data]);
 
-  // Newest first, one group per day
-  const days = useMemo(() => {
-    const byDay = new Map<string, ClientSession[]>();
-    for (const row of sessions.data ?? []) byDay.set(row.date, [...(byDay.get(row.date) ?? []), row]);
-    return [...byDay.entries()].reverse();
-  }, [sessions.data]);
-
-  if (profile.error !== undefined) return <ErrorAlert>{t('notFound')}</ErrorAlert>;
+  // Only a 404 means there is no such client; a dropped connection or a server error says what happened instead
+  if (profile.error !== undefined) {
+    const notFound = profile.error instanceof ApiError && profile.error.status === 404;
+    return <ErrorAlert>{notFound ? t('notFound') : errorMessage(profile.error, tErrors)}</ErrorAlert>;
+  }
   if (!profile.data) return <Skeleton className="h-48 rounded-2xl bg-slate-200" />;
   const client = profile.data;
 

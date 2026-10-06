@@ -114,6 +114,8 @@
     "WRONG_PASSWORD": "Aceasta nu este parola contului.",
     "TEACHER_HAS_COURSES": "Acest terapeut încă are terapii. Șterge-le sau dă-le altui terapeut mai întâi.",
     "CANNOT_REMOVE_SELF": "Nu te poți elimina singur din instituție.",
+    "NO_SCHOOL": "Contul tău nu este încă asociat unei instituții.",
+    "TEACHERS_INVITE_STUDENTS": "Terapeuții pot invita clienți doar în sălile în care lucrează.",
     "NOT_A_THERAPY": "Alege o terapie din lista instituției.",
     "CONTACT_TAKEN": "Cineva are deja acest telefon sau email.",
     "INVALID_PHONE": "Acesta nu pare un număr de telefon.",

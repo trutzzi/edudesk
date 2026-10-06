@@ -114,6 +114,8 @@
     "WRONG_PASSWORD": "That's not the password for this account.",
     "TEACHER_HAS_COURSES": "This therapist still has therapies. Delete them or give them to another therapist first.",
     "CANNOT_REMOVE_SELF": "You can't remove yourself from the institution.",
+    "NO_SCHOOL": "Your account is not linked to an institution yet.",
+    "TEACHERS_INVITE_STUDENTS": "Therapists can only invite clients into the rooms they work in.",
     "NOT_A_THERAPY": "Pick one of the institution's therapies.",
     "CONTACT_TAKEN": "Someone already has this phone number or email.",
     "INVALID_PHONE": "That doesn't look like a phone number.",

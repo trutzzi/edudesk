@@ -49,6 +49,16 @@ describe('own profile', () => {
     expect(query.mock.calls[0]?.[1]).toEqual(['u1']);
   });
 
+  it("leaves how a client is paid for out of the client's own profile, and keeps it for staff", async () => {
+    query.mockResolvedValue({ rows: [{ ...profile, role: 'student', paymentType: 'cas' }] });
+    const asClient = await request(app).get('/api/me').set('Authorization', auth('student'));
+    expect(asClient.body.paymentType).toBeNull();
+
+    query.mockResolvedValue({ rows: [{ ...profile, role: 'teacher', paymentType: 'cas' }] });
+    const asTherapist = await request(app).get('/api/me').set('Authorization', auth('teacher'));
+    expect(asTherapist.body.paymentType).toBe('cas');
+  });
+
   it('saves the language, details and notes', async () => {
     const res = await request(app).patch('/api/me').set('Authorization', auth()).send({ locale: 'en', details: ' 10 ani ABA ', notes: '' });
 

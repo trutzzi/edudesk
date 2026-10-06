@@ -43,6 +43,14 @@ export const up = (pgm) => {
 };
 
 export const down = (pgm) => {
+  // People who sign in with a phone have no email to go back to: refuse before changing anything
+  pgm.sql(`
+    DO $$ BEGIN
+      IF EXISTS (SELECT 1 FROM users WHERE email IS NULL) THEN
+        RAISE EXCEPTION 'Cannot roll back: some users have no email. Give them one or remove them first.';
+      END IF;
+    END $$
+  `);
   pgm.dropTable('attendance_marks');
   pgm.dropType('attendance_status');
   pgm.dropTable('therapist_specializations');

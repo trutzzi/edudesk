@@ -2,7 +2,7 @@ import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AuthProvider } from '@/features/auth/AuthProvider';
-import { api } from '@/lib/api/client';
+import { api, ApiError } from '@/lib/api/client';
 import { renderWithIntl } from '@/test/renderWithIntl';
 import { signIn } from '@/test/signIn';
 import { AttendanceDay } from './AttendanceDay';
@@ -162,6 +162,25 @@ describe('ClientCard', () => {
     expect(await screen.findByRole('heading', { name: 'Ana Ionescu' })).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Call' })).not.toBeInTheDocument();
     expect(screen.queryByText('Sponsored')).not.toBeInTheDocument();
+  });
+});
+
+describe('ClientCard errors', () => {
+  it('says the client is missing only on a 404', async () => {
+    signIn({ role: 'teacher', id: 't1' });
+    vi.mocked(api).mockRejectedValue(new ApiError('', 404));
+    render(<ClientCard clientId="c1" />);
+
+    expect(await screen.findByText("This patient/client doesn't exist or you don't work with them.")).toBeInTheDocument();
+  });
+
+  it('shows what went wrong on a server error instead of "not found"', async () => {
+    signIn({ role: 'teacher', id: 't1' });
+    vi.mocked(api).mockRejectedValue(new ApiError('', 500));
+    render(<ClientCard clientId="c1" />);
+
+    expect(await screen.findByText('Something went wrong. Please try again.')).toBeInTheDocument();
+    expect(screen.queryByText(/doesn't exist/)).not.toBeInTheDocument();
   });
 });
 

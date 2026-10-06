@@ -34,6 +34,14 @@ export const up = (pgm) => {
     SELECT cl.school_id, co.name FROM courses co JOIN classes cl ON cl.id = co.class_id
   `);
 
+  // Specializations were free text: any name the lists above don't cover becomes a therapy too, so no one loses one
+  pgm.sql(`
+    INSERT INTO therapies (school_id, name)
+    SELECT DISTINCT u.school_id, ts.therapy FROM therapist_specializations ts JOIN users u ON u.id = ts.teacher_id
+    WHERE u.school_id IS NOT NULL
+    ON CONFLICT (school_id, name) DO NOTHING
+  `);
+
   // Specializations point at a therapy instead of repeating its name; deleting a therapy removes them
   pgm.addColumn('therapist_specializations', {
     therapy_id: { type: 'uuid', references: 'therapies', onDelete: 'CASCADE' },
@@ -43,6 +51,7 @@ export const up = (pgm) => {
     FROM users u, therapies th
     WHERE u.id = ts.teacher_id AND th.school_id = u.school_id AND th.name = ts.therapy
   `);
+  // Only therapists outside any institution are left without one
   pgm.sql('DELETE FROM therapist_specializations WHERE therapy_id IS NULL');
   pgm.dropConstraint('therapist_specializations', 'therapist_specializations_pkey');
   pgm.dropColumn('therapist_specializations', 'therapy');

@@ -12,10 +12,14 @@ import { findPasswordHash, findProfile, replaceSpecializations, updateMember, ty
 const router = express.Router();
 router.use(authenticateJWT);
 
+// How a client is paid for is for staff only, so it is left out of a client's own profile too
+const forSelf = <T extends { role: string; paymentType: unknown }>(profile: T) =>
+  profile.role === 'student' ? { ...profile, paymentType: null } : profile;
+
 async function profileOf(req: AuthenticatedRequest) {
   const profile = await findProfile(currentUser(req).id);
   if (!profile) throw new HttpError(401, 'Session expired, please sign in again');
-  return profile;
+  return forSelf(profile);
 }
 
 // GET /api/me
@@ -57,7 +61,7 @@ router.patch('/', async (req: AuthenticatedRequest, res) => {
     if (isPgError(err, PG_ERRORS.checkViolation)) throw invalid('Keep a phone number or an email, so you can sign in');
     throw toMemberError(err);
   });
-  res.json(profile);
+  res.json(profile && forSelf(profile));
 });
 
 // PUT /api/me/password: { currentPassword, newPassword }
